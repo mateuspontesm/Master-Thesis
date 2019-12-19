@@ -1,0 +1,48 @@
+
+
+ % ==== Command LIST =========================================
+
+% Labels
+ \newcommand{\bs}{\gls{bs}}
+ \newcommand{\ue}{\gls{ue}}
+
+% Variables
+
+ \newcommand{\sym}[1]{\gls{not:#1}}
+ \newcommand{\idxI}{\sym{i}}
+ \newcommand{\idxJ}{\sym{j}}
+ \newcommand{\idxL}{\sym{l}}
+ \newcommand{\channel}{\gls{not:H}}
+ \newcommand{\strRx}{\gls{not:strRx}}
+ \newcommand{\strRxMtx}{\gls{not:strRxMtx}}
+ \newcommand{\strTx}{\gls{not:strTx}}
+ \newcommand{\strTxMtx}{\gls{not:strTxMtx}}
+ \newcommand{\azm}{\gls{not:azm}}
+ \newcommand{\elev}{\gls{not:elev}}
+ \newcommand{\pathloss}{\gls{not:pathLoss}}
+ \newcommand{\userIdx}{\gls{not:l}}
+  \newcommand{\cellIdx}{\gls{not:c}}
+ \newcommand{\wave}{\gls{not:wavelength}}
+ \newcommand{\dist}{\gls{not:dist}}
+ \newcommand{\nUsers}{\gls{not:nUE}}
+ \newcommand{\nTxAnt}{\gls{not:txAnt}}
+ \newcommand{\nRxAnt}{\gls{not:rxAnt}}
+ \newcommand{\rs}{\gls{rs}~}
+
+
+
+% Functions
+
+ \newcommand{\anglePair}[2]{\ensuremath{(\azm ^{\textrm{\tiny{(#2)}}} _{#1}, \elev^{\textrm{\tiny{(#2)}}} _{#1} )}}
+ \newcommand{\argPair}[2]{\ensuremath{(#1, #2 )}}
+ \newcommand{\subArgPair}[2]{\ensuremath{_{#1,#2}}}
+ \newcommand{\subArg}[1]{\ensuremath{_{#1}}}
+ \newcommand{\inSetComplex}[2]{\ensuremath{\in} \ensuremath{\mathbb{C}^{#1 \times #2} }}
+ \newcommand{\hermitian}[1]{\ensuremath{#1 ^{H}}}
+ \newcommand{\range}[2]{\ensuremath{\left[#1,#2\right]}}
+ \newcommand{\expLetter}[1]{e^{#1}}
+ \newcommand{\expUraPhase}[2]{\ensuremath{\expLetter{\left(\jmath #1 \frac{2\pi \dist}{\wave}(\sin{\azm _{#2}}\sin{\elev _{#2}}+\cos{\elev _{#2}}) \right)}}}
+
+ \newcommand{\diag}[1]{\textrm{diag}\left(#1\right)}
+ \DeclareMathOperator{\Tr}{Tr}
+ %\newcommand{\eyeMtx}[#1]{\gls{not:eye}_{#1}}

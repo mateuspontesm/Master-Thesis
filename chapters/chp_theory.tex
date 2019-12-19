@@ -1,0 +1,216 @@
+\chapter{Conceptual Framework}%\chapter{Key Features of \acs{3GPP} \acs{5G} Standards}%\chapter{\acs{5G} Scenario}%{System Modeling}
+\label{chp:theory}
+
+\section{Transmission Structure}
+\label{sec:5gnr-trans}
+% Transport Channel Processing on 5G NR
+\Gls{mac} uses services from the physical layer in the form of transport channels.
+%
+A transport channel defines the transmission over the radio interface, by determining its characteristics and how the information is transmitted \cite{3gpp.38.212} \cite{ErikDahlman5G}.
+%
+The transport channels defined for 5G-NR in the downlink are \gls{dlsch}, \gls{pch}, and \gls{bch}. In the uplink, only one transport-channel is defined, called \gls{ulsch}.
+%
+The data transmissions in the downlink use the \gls{dlsch} and in the uplink the \gls{ulsch} \cite{AliZaidi632018}.
+%
+Data in the transport channel is organized into transport blocks. At each \gls{tti}, up to two transport blocks of dynamic size are delivered to the physical layer and transmitted over the radio interface for each component carrier.~\cite{ErikDahlman5G}
+
+The transmission process is summarized in Figure \ref{fig:transmission}.
+%
+This process is almost the same for the uplink and downlink, the only difference is an additional step of transform precoding after the layer mapping in the uplink case.
+
+\begin{figure*}[htbp]
+  \begin{centering}
+\includegraphics[width=\columnwidth]{figures/chp_theory/transmissionmodel.pdf}
+\caption{General transmission model on \gls{5g} \gls{nr}}
+\label{fig:transmission}
+\end{centering}
+\end{figure*}
+%
+
+In the modulation phase, \gls{nr} supports \gls{qpsk} and three orders of \gls{qam}, 16\gls{qam}, 64\gls{qam} and 256\gls{qam}, for both the uplink and downlink, with an additional option of $\pi/2$-BPSK in the uplink.
+%
+The \gls{fec} code in \gls{nr} for the \gls{embb} use case in data transmission is the \gls{ldpc} code, whereas in the control signaling it is used the polar codes.
+%
+
+The channel coding process in \gls{5g} \gls{nr} is a process composed of six steps \cite{ErikDahlman5G}, namely:
+\begin{itemize}
+  \item \Gls{crc} Attachment: Calculates a \gls{crc} and attaches it to each transport block. It facilitates error detection and its size can be of 16 bits or 24 bits.
+  \item Code-block segmentation: Segments the transport block in the case of it being larger in size than the supported by the \gls{ldpc} coder. \gls{cb} are of equal size.
+  \item Per-\gls{cb} \gls{crc} Attachment: A \gls{crc} is calculated and appended to each \gls{cb}.
+  \item \gls{ldpc} Encoding: The solution used in \gls{nr} is a Quasi-cyclic \gls{ldpc} with two base graphs, the two base matrices that are used to built the different parity-check matrices with different payloads and rates.
+  \item Rate Matching: It adjusts the coding to the allocated resources. Consists of bit selection and bit interleaving.
+  \item Code-Block Concatenation: Concatenates the multiple rate-matching outputs into one block.
+\end{itemize}
+
+The other blocks in Figure \ref{fig:transmission}, excluding the channel coding and the modulation, are:
+\begin{enumerate}
+  \item \gls{harq}: \gls{5g} \gls{nr} uses \gls{harq} with soft combining as the primary way to handle retransmissions. In this approach, a buffer is used to store the erroneous packet and this packet is combined with the retransmission to acquire a combined packet, which is more reliable than its components.
+  %
+  \item Scrambling: The process of scrambling is applied to the bits delivered by the \gls{harq}. Scrambling the bits makes them less prone to interference.
+  %
+  \item Layer mapping: The process of layer mapping is applied to the modulated symbols. It distributes the symbols across different transmission layers.
+  %
+  \item Multi-antenna precoding: This step uses a precoder matrix to map the transmission layers to a set of antenna ports.
+  %
+  \item Resource mapping: This process takes the symbols that mapped to be transmitted by each antenna port and these symbols are mapped to the set of available resource elements.
+  %
+  \item Physical antenna mapping: Maps each resource to a physical antenna.
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Reinforcement Learning }
+\label{sec:rl-theory}
+\Gls{rl} is a \gls{ml} technique that aims to find the best behavior in a given situation in order to maximize a notion of accumulated reward \cite{Bishop07}.
+%
+Figure \ref{fig:rlbasic} shows a simple block diagram of the \gls{rl} problem in which an agent, which is the learner and decision maker, interacts with an environment by taking actions.
+%
+By its turn, the environment responds to these actions and presents new situations, as states, to the agent \cite{sutton2018rl}.
+%
+The environment also responds by returning rewards, which the agent tries to maximize by choosing its actions.
+%
+Unlike supervised learning, where the system learns from examples of optimal outputs, the \gls{rl} agent learns from trial and error, i.e., from its experience, by interacting with the environment.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=90mm]{figures/chp_theory/rl-model.pdf}}
+\caption{Basic diagram of a \gls{rl} scheme}
+\label{fig:rlbasic}
+\end{figure}
+% another intro:
+% Reinforcement Learning (RL) is a machine Learning tech-
+% nique that aims to find the best behavior in a given situation
+% in order to maximize a notion of accumulated reward [8].
+% Figure 1 shows a simple block diagram of RL problem, in
+% which an agent interacts with an environment by taking actions
+% and evaluating the results of these actions, these results are
+% perceived by the agent as a new state and by a received reward
+% signal. Unlike supervised learning, where the system learns
+% from examples of optimal outputs, the RL agent learns from
+% trial and error.
+
+At each time step $t$, the agent receives the state of environment $s_t \in \mathcal{S}$, and based on that chooses an action $a_t \in \mathcal{A}$.
+%
+As consequence of its action, the agent receives a reward $r_{t+1} \in \mathcal{R} $, with $\mathcal{R} \subset \mathbb{R}$, and perceives a new state $s_{t+1}$.
+%
+In light of this, the basics components of a \gls{rl} problem are:
+
+\begin{itemize}
+  \item State Space $\mathcal{S}$: Set of all possible states that can be observed by the agent. The random variable $S_t$ denotes the state at time step $t$ and a sample of $S_t$ is denoted $s_t$, with $s_t \in \mathcal{S}$.
+  \item Action Space $\mathcal{A}$: Set of all actions that can be taken by agent. The random variable $A_t$ denotes the action at time step $t$ and a sample of $A_t$ is denoted $a_t$, with $a_t \in \mathcal{A}$
+  \item Transition Probability Space $\mathcal{P}: \mathcal{S} \times \mathcal{A} \times \mathcal{S} \rightarrow [0;1]$ is the transition model of the system, $p(s_{t+1} | s_t,a_t) \in \mathcal{P}$ is the probability of transitioning to state $s_{t+1}$ after taking action $a_t$ in state $s_t$.
+  \item Reward  $r_t$: This value indicates the immediate payoff from taking an action $a_t$ in a state $s_t$. $R_t$ is a random variable with a probability distribution depending only of the preceding state and action. We define the expected reward obtained from taking an action $a_t$ in a state $s_t$ as $r(s_t,a_t) = \mathbb{E}\left[R_{t+1} \, | \, S_t = s_t, A_t = a_t \right] $.
+  \item Policy $\pi(s_t) \in \mathcal{A} $: The policy maps the states to actions. More specifically, it maps the perceived states of the environment to the actions to be taken by the agent in those states. The policy can also be defined as $\pi(a_t | s_t)$, the probability of selecting action $a_t$ given the agent is at a state $s_t$.
+  % different policies can give different probabilities to each action.
+  \item Q-function $Q^{\pi}(s_t,a_t)$:  The Q-Function, called action-value function, is the overall expected reward for taking an action $a_t$ in a state $s_t$ and then following a policy $\pi$. It can also be simply denoted as $Q(s_t,a_t)$.
+\end{itemize}
+
+
+The goal of the \gls{rl} agent is to find the optimal policy $\pi^{*}(s_t)$, whose state-action mapping leads to the maximum long term reward given by $G_t = \sum_{t=0}^{\infty} \gamma^{t} r_{t+1} = r_{t+1} + \gamma G_{t+1} $ \cite{kaelbling1996reinforcement}, where $r_t$ is the received reward at time step $t$.
+%
+The agent finds its best policy by taking into consideration the value of the Q-function to a state-action pair.
+%
+Mathematically, the Q-Function is defined as \cite{2010Szepesvari}:
+\begin{equation} \label{eq.:eqQvalue}
+  Q^{\pi}(s_t, a_t)=\mathbb{E}\left[\sum_{k=0}^{\infty} \gamma^{k} R_{t+k+1} \, | \, S_t = s_t, A_t = a_t \right], s_t \in \mathcal{S}, a_t = \pi (s_t) \in \mathcal{A}
+\end{equation}
+
+
+The parameter $\gamma$ is called \textit{discount factor}, or discount rate, with $0 \leq \gamma \leq 1$.
+%
+The discount factor is used to control the importance given to future rewards in comparison with immediate rewards, so a reward received $k$ time steps later is worth only $\gamma^{k-1}$ times its value.
+%
+The infinity sum $\sum_{t=0}^{\infty} \gamma^{t} r_{t+1}$ has a finite value if $\gamma \leq 1$, as long as the sequence $\{r_k\}$ is bounded \cite{sutton2018rl}.
+%
+The process is called undiscounted if $\gamma=1$.
+
+
+The Q-values in successive steps are related according to the Bellman equation:
+\begin{equation} \label{eq.:bellmanEq}
+  %\begin{split}
+    Q^{\pi}(s_t, a_t)= \sum_{s_{t+1} \in \mathcal{S}} p\left(s_{t+1} \, | \, s_t , a_t \right) \bigg[ r\left(s_t, a_t \right)  +
+    \gamma \sum_{a_{t+1} \in \mathcal{A}} \pi\left(a_{t+1} \, | \, s_{t+1}\right) Q^{\pi}\left(s_{t+1}, a_{t+1}\right)  \bigg]
+  %\end{split}
+\end{equation}
+
+The Equations \eqref{eq.:eqQvalue} and \ref{eq.:bellmanEq} can be rewritten for the case of $\pi$ being the optimal policy.
+%
+In this case, Equation \eqref{eq.:eqQvalue} leads to \cite{sutton2018rl}:
+
+\begin{equation} \label{E_Optimal}
+    Q^{\pi^*}\left(s_t, a_t\right)=\mathbb{E}\left[R_{t+1}+\gamma \max _{a_{t+1} \in \mathcal{A}} Q^{\pi^*}\left(S_{t+1}, a_{t+1}\right) \, | \, S_t=s_t, A_t=a_t\right]
+\end{equation}
+
+Likewise, assuming the optimal policy, Equation \eqref{eq.:bellmanEq} leads to \cite{DRL_AMC}:
+
+\begin{equation} \label{eq.:bellmanOptimal}
+    Q^{\pi^*}\left(s_t, a_t\right)=r(s_t,a_t)+ \gamma \sum_{s_{t+1} \in \mathcal{S}} p\left(s_{t+1} \, | \, s_t,a_t\right) \max _{a_{t+1} \in A} Q^{\pi^*}\left(s_{t+1}, a_{t+1}\right)
+\end{equation}
+
+
+Equation \eqref{eq.:bellmanOptimal} can only be solved if we know the transition probabilities.
+%
+However, if we don't have an adequate model of the environment the agent can take actions and observe their results, then it can fine-tune the policy that decides the best action for each state.
+%
+The algorithms that explore the environment to find the best policy are called model-free, while those ones that use the transition probabilities are called model-based.
+
+
+\subsection{Exploration and Exploitation Trade-off}
+
+One of the main paradigms in \gls{rl} is the balancing of exploration and exploitation.
+%
+The agent is exploiting if is choosing the action that has the greatest estimate of action-value, these are usually called the greedy actions.
+%
+Whereas exploring is when the agent chooses the non-greedy actions, to improve their estimates.
+%
+This leads to a better decision-making because of the information the agent has about these non-greedy actions \cite{sutton2018rl}.
+%
+
+
+There are different strategies to control the exploring and exploiting trade off. The reader have a deep discussion on that topic in \cite{exploration2016}.
+%
+In this work, we make use of two strategies:
+\begin{enumerate}
+  \item $\epsilon$-greedy: One of the most common exploration strategies. It selects the greedy action with probability $1-\epsilon$, and a random action with probability $\epsilon$. So, a higher $\epsilon$ means that the agent give more importance to exploration.
+  \item adaptive $\epsilon$-greedy: There are numerous different methods that adapt the $\epsilon$ over time or as a function of the error \cite{improvingBandits}.A commonly used approach is to start with a high $\epsilon$ and decrease it over time.
+%   \item Boltzmann exploration: Also known as softmax exploration. It uses the action-values to choose an action according to the Boltzmann distribution:
+%   $$
+% \pi\left(s, a\right)=\frac{e^{Q\left(s, a\right) / T}}{\sum_{i=1}^{m} e^{Q\left(s^{\prime}, a_i\right) / T}}
+%   $$
+%   The parameter $T \geq 0$, called temperature, sets the balance between exploration and exploitation. If $T \rightarrow 0$  the agent will only exploit, if $T \rightarrow \infty$ the agent will choose actions at random.
+\end{enumerate}
+
+
+\subsection{Q-Learning}
+
+In this work, we adopt the Q-learning algorithm, which is an off-policy temporal difference (TD) algorithm.
+%
+TD methods are model-free and they update their estimates partially based on other estimates, without the need to wait for a final outcome \cite{sutton2018rl}.
+%
+An off-policy method can learn about the optimal policy at the same time it follows a different policy, called the behavior policy.
+%
+This behavior policy still has an effect on the algorithm, because it determines the choices of actions. The basic form of the action-values updates is:
+\begin{equation}\label{QlearningEq}
+%  \begin{split}
+    Q\left(s_{t}, a_{t}\right) \leftarrow  (1-\alpha) Q\left(s_{t}, a_{t}\right)
+    +\alpha\left[r_{t+1}+\gamma \max _{a_{t+1} \in A} Q\left(s_{t+1}, a_{t+1}\right)\right],
+%  \end{split}
+\end{equation}
+
+\noindent where the parameter $0 \leq \alpha \leq 1$ is called learning rate.
+%
+% The Algorithm \ref{alg1} details Q-learning algorithm \cite{sutton2018rl}.
+%
+% \begin{algorithm}[htb]
+%
+% Algorithm parameters: step size $\alpha \in (0, 1]$, small $\epsilon > 0$\;
+% Initialize $Q(s, a)$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
+% \ForEach{iteration}{
+% Initialize s\;
+%   Choose $a$ from $s$ using policy derived from $Q$ (e.g., $\epsilon$-greedy)\;
+%   Take action $a$, observe $r$, $s^{\prime}$\;
+%   $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_a Q(s',a)]$\;
+%   $s \leftarrow s^{\prime}$\;
+%
+% }
+% \caption{Q-learning (off-policy TD control) for estimating $\pi \approx \pi^* $}
+%   \label{alg1}
+% \end{algorithm}

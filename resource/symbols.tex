@@ -1,0 +1,213 @@
+% Requires \usepackage{bm}
+
+% ==== SYMBOLS LIST =========================================
+
+\newglossary[nlg]{notation}{not}{ntn}{Notation}
+
+      \newglossaryentry{not:nCell}{
+  		name=\ensuremath{C},
+  		description={number of cells},
+  		type=notation}
+
+    \newglossaryentry{not:rxAnt}{
+    	name=\ensuremath{N},
+        description={number of rx antennas},
+        type=notation}
+
+
+    \newglossaryentry{not:txAnt}{
+    	name=\ensuremath{M},
+        description={number of tx antennas},
+        type=notation}
+
+    \newglossaryentry{not:nLayers}{
+    	name=\ensuremath{\nu},
+        description={number of transmission layers},
+        type=notation}
+
+     \newglossaryentry{not:nUE}{
+     	name=\ensuremath{L},
+        description={number of users},
+        type=notation}
+
+      \newglossaryentry{not:l}{
+     	name=\ensuremath{l},
+        description={user index},
+        type=notation}
+
+    \newglossaryentry{not:nBeams}{
+     	name=\ensuremath{K},
+        description={number of beam pair per user},
+        type=notation}
+
+    \newglossaryentry{not:scatterers}{
+        name=\ensuremath{S},
+        description={number of scatterers},
+        type=notation}
+
+    \newglossaryentry{not:Wrx}{
+     	name=\ensuremath{\mathbf{F}},
+        description={codebook matrix at receiver side},
+        type=notation}
+
+
+
+    \newglossaryentry{not:Wtx}{
+     	name=\ensuremath{\mathbf{W}},
+        description={codebook matrix at transmitter side},
+        type=notation}
+
+    \newglossaryentry{not:c}{
+	name=\ensuremath{c},
+	description={cell index},
+	type=notation}
+
+    \newglossaryentry{not:i}{
+     	name=\ensuremath{i},
+        description={beam index at receiver side},
+        type=notation}
+
+    \newglossaryentry{not:I}{
+        name=\ensuremath{I},
+        description={number of beams of the rx codebook },
+        type=notation}
+
+    \newglossaryentry{not:j}{
+     	name=\ensuremath{j},
+        description={beam index at transmitter side},
+        type=notation}
+
+
+    \newglossaryentry{not:J}{
+        name=\ensuremath{J},
+        description={number of beams of the tx codebook },
+        type=notation}
+
+    \newglossaryentry{not:H}{
+     	name=\ensuremath{\mathbf{H}},
+        description={MIMO channel matrix},
+        type=notation}
+
+     \newglossaryentry{not:Herm}{
+     	name=\ensuremath{H},
+        description={Hermitian operator},
+        type=notation}
+
+     \newglossaryentry{not:y}{
+     	name = \ensuremath{y_{\gls{not:i},\gls{not:j}}},
+     	description={received measurement from rx beam \gls{not:i} with tx beam \gls{not:j}},
+        type=notation}
+
+    \newglossaryentry{not:Y}{
+        name = \ensuremath{\mathbf{y}},
+        description={received measurement vector },
+        type=notation}
+
+    \newglossaryentry{not:z}{
+        name = \ensuremath{z_{\gls{not:i},\gls{not:j}}},
+        description={discrete Gaussian noise},
+        type=notation}
+
+    \newglossaryentry{not:Z}{
+        name = \ensuremath{\mathbf{z}},
+        description={discrete Gaussian noise vector},
+        type=notation}
+
+    \newglossaryentry{not:sscl}{
+        name = \ensuremath{\mathbf{s}},
+        description={transmitted symbol},
+        type=notation}
+
+    \newglossaryentry{not:eye}{
+        name = \ensuremath{\mathbf{I}},
+        description={Identity matrix},
+        type=notation}
+
+    \newglossaryentry{not:var}{
+        name = \ensuremath{\sigma ^2},
+        description={Noise variance},
+        type=notation}
+
+    \newglossaryentry{not:beta}{
+        name = \ensuremath{\beta},
+        description={complex Gaussian random variable},
+        type=notation}
+
+    \newglossaryentry{not:betaVec}{
+        name = \ensuremath{\bm{\beta}},
+        description={vector complex Gaussian random variable},
+        type=notation}
+
+    \newglossaryentry{not:strRx}{
+        name = \ensuremath{\mathbf{v}_{\textrm{\tiny{UE}}}},
+        description={Rx sterring vector},
+        type=notation
+    }
+
+     \newglossaryentry{not:strRxMtx}{
+        name = \ensuremath{\mathbf{V}_{\textrm{\tiny{UE}}}},
+        description={Set of Rx sterring vector},
+        type=notation
+    }
+
+    \newglossaryentry{not:strTx}{
+        name = \ensuremath{\mathbf{v}_{\textrm{\tiny{BS}}}},
+        description={Tx sterring vector},
+        type=notation
+    }
+
+     \newglossaryentry{not:strTxMtx}{
+        name = \ensuremath{\mathbf{V}_{\textrm{\tiny{BS}}}},
+        description={Set of Tx sterring vector},
+        type=notation
+    }
+
+    \newglossaryentry{not:azm}{
+        name = \ensuremath{\phi},
+        description={Azimuth},
+        type=notation
+    }
+
+
+    \newglossaryentry{not:elev}{
+        name = \ensuremath{\theta},
+        description={Elevation},
+        type=notation
+    }
+
+    \newglossaryentry{not:pathLoss}{
+        name = \ensuremath{\rho},
+        description={Pathloss},
+        type=notation
+    }
+
+
+    \newglossaryentry{not:wavelength}{
+        name = \ensuremath{\lambda},
+        description={Wavelength},
+        type=notation
+    }
+
+    \newglossaryentry{not:dist}{
+        name = \ensuremath{d},
+        description={Distance between antenna elements},
+        type=notation
+    }
+
+    \newglossaryentry{not:mod}{
+        name=\ensuremath{\mu},
+        description={modulation order},
+        type=notation
+    }
+
+    \newglossaryentry{not:rate}{
+        name=\ensuremath{\nu},
+        description={code rate},
+        type=notation
+    }
+
+    \newglossaryentry{not:sub-spacing}{
+        name=\ensuremath{\Delta f},
+        description={subcarrier spacing},
+        type=notation
+    }

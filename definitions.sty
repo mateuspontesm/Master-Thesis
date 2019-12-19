@@ -1,0 +1,385 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% I had to include this package here because there was an
+%%% incompatibility with another package
+\usepackage[svgnames]{xcolor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{pdfpages}
+
+\usepackage{pbox}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Para incluir gráficos -- Formato .eps
+\graphicspath{{.}{./figures/}}
+\DeclareGraphicsExtensions{.pdf,.eps}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Incluir pacote para gerenciar espaço entre valores e unidades
+\usepackage{siunitx}
+\sisetup{%
+	binary-units,
+	per-mode = symbol,
+	detect-all,
+	list-units = single,
+	list-final-separator = { and },
+	%range-phrase={--},
+	range-units = single,
+	round-mode = places,
+	round-precision = 2,
+	product-units = single,
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{multirow}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package algorithm -- pacote para manipulação de pseudo-código.
+\RequirePackage[chapter]{algorithm}
+\RequirePackage{algorithmicx}
+\RequirePackage{algpseudocode}
+
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% Pacote para tabela
+\usepackage{threeparttable}
+
+% ---
+% Espaçamentos entre linhas e parágrafos
+% ---
+\RequirePackage{tocloft}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Para incluir figuras usando tikz/pdfplots
+\RequirePackage{tikz}% Create graphics in Latex
+% Definitions and libraries for the Tikz package
+
+% xxxxx Libraries xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc,arrows}
+\usetikzlibrary{matrix}
+\usetikzlibrary{fit}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{shapes}
+\usetikzlibrary{shadows}
+\usetikzlibrary{patterns}
+\usetikzlibrary{chains}
+\usetikzlibrary{intersections}
+\usetikzlibrary{scopes}
+\usetikzlibrary{math}
+%\usetikzlibrary{external}
+%\tikzexternalize[prefix=Figures/PDFtikz/]
+
+% xxxxx Layers xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+\pgfdeclarelayer{below background}
+\pgfdeclarelayer{background layer}
+\pgfdeclarelayer{foreground layer}
+\pgfsetlayers{below background,background layer,main,foreground layer}
+% xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+\RequirePackage{pgfplots}
+\tikzset{every mark/.append style={solid, scale=1.2}}
+\pgfplotsset{%
+	width=0.95*\columnwidth,
+	height=(1/1.618)*0.95*\columnwidth,
+	compat=1.14,
+	compat/show suggested version=false,
+	filter discard warning=false,
+	grid=major,
+	grid style={dashed,gray!30},
+	%cycle list name=black white,
+	cycle list shift=0,
+	enlargelimits=false,
+	%%%%%%%%%%%%%%%
+	tick label style = {font = \footnotesize},
+	label style = {font = \footnotesize},
+	every axis label = {font = \footnotesize},
+%	grid = both,
+	cycle list name = black white,
+	legend style={%
+		font = \footnotesize,
+		legend cell align = left,
+		nodes = {inner xsep = 2pt, inner ysep = 0.4pt, text depth = 0.15em},
+	},
+%	ylabel style = {yshift = -0.4cm}, %shifting the y line text
+	filter discard warning = false
+}
+
+% Define xtick as:
+% mytick x interval=xmin:xstep:xmax, e.g., mytick x interval=80:10:120
+\pgfplotsset{mytick x interval/.style args={#1:#2:#3}{%
+		xmin=#1,xmax=#3,xincrement={#1}{#2},
+		xtick={#1,\xval,...,#3}
+	},
+	xincrement/.code 2 args={\pgfmathparse{#1+#2}\xdef\xval{\pgfmathresult}}
+}
+
+% Define ytick as:
+% mytick y interval=ymin:ystep:ymax, e.g., mytick y interval=0:0.1:1
+\pgfplotsset{mytick y interval/.style args={#1:#2:#3}{%
+		ymin=#1,ymax=#3,yincrement={#1}{#2},
+		ytick={#1,\yval,...,#3}
+	},
+	yincrement/.code 2 args={\pgfmathparse{#1+#2}\xdef\yval{\pgfmathresult}}
+}
+
+% Style to select only points from #1 to #2 (inclusive)
+\pgfplotsset{select coords between index/.style 2 args={
+		x filter/.code={
+			\ifnum\coordindex<#1\def\pgfmathresult{}\fi
+			\ifnum\coordindex>#2\def\pgfmathresult{}\fi
+		}
+}}
+\usepgfplotslibrary{groupplots}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Used for standalone figure builds
+\RequirePackage{standalone}
+
+% Used to control file paths
+\RequirePackage{currfile}
+
+
+% Tables
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\flushright\arraybackslash}X}
+\newcolumntype{L}{>{\flushleft\arraybackslash}X}
+\newcolumntype{P}{>{\centering\arraybackslash} p{0.5\linewidth}}
+
+\RequirePackage{tabu,longtable}
+
+%% Acronyms
+\RequirePackage[acronym, % List of Acronyms
+				shortcuts, % Shortcut commands for acronyms (\ac, \acp, ...)
+				symbols, % List of Symbols
+				nomain, % Do not create the main glossary
+				sanitizesort,
+				nogroupskip, % Do not create a GAP between groups
+				nopostdot, % Do not put a dot at the end of the entry
+				nonumberlist % Do not add the backref to the entries
+				]{glossaries}
+%\newglossary{symbols}{sym}{sbl}{\symbname} % glossary for symbols
+\newglossary*{auxiliary}{Auxiliary Items} % glossary for auxiliary symbols
+%\makenoidxglossaries
+\makeglossaries
+
+\RequirePackage{scrwfile}
+
+% Style witlonder length for description https://tex.stackexchange.com/questions/21666/glossary-term-list-width
+\newglossarystyle{clong}{%
+	\renewenvironment{theglossary}%
+	{\begin{longtable}{lp{1.5\glsdescwidth}}}%
+		{\end{longtable}}%
+	\renewcommand*{\glossaryheader}{}%
+	\renewcommand*{\glsgroupheading}[1]{}%
+	\renewcommand*{\glossaryentryfield}[5]{%
+		\glstarget{##1}{##2} & ##3\glspostdescription\space ##5\\}%
+	\renewcommand*{\glossarysubentryfield}[6]{%
+		& \glstarget{##2}{\strut}##4\glspostdescription\space ##6\\}%
+	%\renewcommand*{\glsgroupskip}{ & \\}%
+}
+
+\newcommand{\acro}[2]{\newacronym{#1}{#1}{#2}}
+
+% Work around for the TTI and the BS symbols
+\NewDocumentCommand{\symbdefwo}{m m O{#2} m}{
+	\newglossaryentry{#1} {
+		name = \ensuremath{#3},
+		user1 = \ensuremath{#2},
+		description = {#4},
+		type = symbols
+	}
+
+	\expandafter\def\csname #1\endcsname{\glsuseri{#1}}%
+}
+
+% \symbdef{name}{symbol}[how to present]{definition}
+\NewDocumentCommand{\symbdef}{s m m O{#3} m O{#4}} {
+	\IfBooleanTF{#1} {
+		\newglossaryentry{#2} {
+			name = \ensuremath{#4},
+			user1 = \ensuremath{#3},
+			sort = \ensuremath{#6},
+			description = {#5},
+			type = auxiliary
+		}
+		\expandafter\NewDocumentCommand\csname #2\endcsname{e{^_}}{
+			\IfNoValueTF{##1} {
+				\IfNoValueTF{##2} {
+					\glsuseri*{#2}
+				} {
+					\glsuseri*{#2}[_{##2}]
+				}
+			} {
+				\IfNoValueTF{##2} {
+					\glsuseri*{#2}[^{##1}]
+				} {
+					\glsuseri*{#2}[^{##1}_{##2}]
+				}
+			}
+		}%
+	} {
+		\newglossaryentry{#2} {
+			name = \ensuremath{#4},
+			user1 = \ensuremath{#3},
+			sort = \ensuremath{#6},
+			description = {#5},
+			type = symbols
+		}
+		\expandafter\NewDocumentCommand\csname #2\endcsname{e{^_}}{
+			\IfNoValueTF{##1} {
+				\IfNoValueTF{##2} {
+					\glsuseri{#2}
+				} {
+					\glsuseri{#2}[_{##2}]
+				}
+			} {
+				\IfNoValueTF{##2} {
+					\glsuseri{#2}[^{##1}]
+				} {
+					\glsuseri{#2}[^{##1}_{##2}]
+				}
+			}
+		}%
+	}
+}
+
+% \fundef{name}{symbol}[how to present]{function argument}{definition}
+\NewDocumentCommand{\fundef}{s m m O{#3} m m O{#4}} {
+	\IfBooleanTF{#1} {
+		\newglossaryentry{#2} {
+			name = \ensuremath{#4 \left( #5 \right)},
+			user1 = \ensuremath{#3},
+			sort = \ensuremath{#7},
+			description = {#6},
+			type = auxiliary
+		}
+		\expandafter\NewDocumentCommand\csname #2\endcsname{e{^_} m}{
+			\IfNoValueTF{##1} {
+				\IfNoValueTF{##2} {
+					\glsuseri*{#2}\left(##3\right)
+				} {
+					\glsuseri*{#2}[_{##2}]\left(##3\right)
+				}
+			} {
+				\IfNoValueTF{##2} {
+					\glsuseri*{#2}[^{##1}]\left(##3\right)
+				} {
+					\glsuseri*{#2}[^{##1}_{##2}]\left(##3\right)
+				}
+			}
+		}%
+	} {
+		\newglossaryentry{#2} {
+			name = \ensuremath{#4 \left( #5 \right)},
+			user1 = \ensuremath{#3},
+			sort = \ensuremath{#7},
+			description = {#6},
+			type = symbols
+		}
+		\expandafter\NewDocumentCommand\csname #2\endcsname{e{^_} m}{
+			\IfNoValueTF{##1} {
+				\IfNoValueTF{##2} {
+					\glsuseri{#2}\left(##3\right)
+				} {
+					\glsuseri{#2}[_{##2}]\left(##3\right)
+				}
+			} {
+				\IfNoValueTF{##2} {
+					\glsuseri{#2}[^{##1}]\left(##3\right)
+				} {
+					\glsuseri{#2}[^{##1}_{##2}]\left(##3\right)
+				}
+			}
+		}%
+
+	}
+}
+
+%\NewDocumentCommand{\procdef}{m m O{#2} m}  {
+%	\newglossaryentry{#1} {
+%		name = \ensuremath{#3},
+%		user1 = #2,
+%		description = {#4},
+%		type = symbols
+%	}
+%
+%	\expandafter\NewDocumentCommand\csname #1\endcsname{o}{
+%		\IfNoValueTF{##1} {
+%			\glsuseri{#1}
+%		} {
+%			\glsuseri{#1}\left[##1\right]
+%		}
+%	}%
+%}
+
+%\NewDocumentCommand{\vardef}{m m o m}  {
+%	\IfNoValueTF{#3} {
+%		\newglossaryentry{#1} {
+%			name = \ensuremath{#2},
+%			user1 = #2,
+%			description = {#3},
+%			type = symbols
+%		}
+%	} {
+%		\newglossaryentry{#1} {
+%			name = \ensuremath{#3},
+%			user1 = #2,
+%			description = {#4},
+%			type = symbols
+%		}
+%	}
+%
+%	\expandafter\NewDocumentCommand\csname #1\endcsname{e{^_}}{
+%		\IfNoValueTF{##1} {
+%			\IfNoValueTF{##2} {
+%				\gls{#1}
+%			} {
+%				\glsuseri{#1}_{##2}
+%			}
+%		} {
+%			\IfNoValueTF{##2} {
+%				\glsuseri{#1}^{##1}
+%			} {
+%				\glsuseri{#1}^{##1}_{##2}
+%			}
+%		}
+%	}%
+%}
+
+%\NewDocumentCommand{\vardef}{m m O{#2} m}  {
+%	\newglossaryentry{#1} {
+%		name = \ensuremath{#3},
+%		user1 = #2,
+%		description = {#4},
+%		type = symbols
+%	}
+%
+%	\expandafter\NewDocumentCommand\csname #1\endcsname{e{^_}}{
+%		\IfNoValueTF{##1} {
+%			\IfNoValueTF{##2} {
+%				\gls{#1}
+%			} {
+%				\glsuseri{#1}[_{##2}]
+%			}
+%		} {
+%			\IfNoValueTF{##2} {
+%				\glsuseri{#1}[^{##1}]
+%			} {
+%				\glsuseri{#1}[^{##1}_{##2}]
+%			}
+%		}
+%	}%
+%}
+
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---

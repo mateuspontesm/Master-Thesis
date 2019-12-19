@@ -1,0 +1,214 @@
+
+\documentclass[doutorado, brazil, english]{gtelabnt}
+\usepackage{definitions}
+
+\addto\captionsbrazil{
+	\renewcommand{\symbolname}{Lista de Símbolos}
+	\renewcommand{\acronymname}{Lista de Abreviações e Acrônimos}
+}
+\addto\captionsenglish{
+	\renewcommand{\symbolname}{List of Symbols}
+	\renewcommand{\acronymname}{List of Abbreviations and Acronyms}
+}
+% \usepackage[acronyms]{glossaries}
+\usepackage{bm}
+\usepackage{csquotes}
+% Declare í for the bibliography
+\DeclareUnicodeCharacter{0301}{\'{i}}
+
+\newboolean{fastcompilation}
+\setboolean{fastcompilation}{true}
+\ifthenelse{\boolean{fastcompilation}}{
+	%% https://tex.stackexchange.com/questions/114764/calc-and-settocdepth-break-tikzexternalize
+	\robustify\setcounter
+	\robustify\addtocounter
+	\robustify\setlength
+	\robustify\addtolength
+	%
+	\usetikzlibrary{external}
+	\tikzexternalize[
+		prefix=tikz/,
+		mode=list and make,
+	]
+	\tikzset{external/system call={pdflatex \tikzexternalcheckshellescape -halt-on-error -interaction=batchmode -jobname "\image" "\texsource"}}
+
+
+}
+{}
+\renewcommand*{\glstextformat}[1]{\textcolor{black}{#1}} %red
+%\addbibresource{../../Common/Bibs/3gpp.bib}
+%\addbibresource{../../Common/Bibs/IEEEfull.bib}
+%\addbibresource{../../Common/Bibs/full.bib}
+%\addbibresource{../../Common/Bibs/5Gran.bib}
+\addbibresource{resource/ref.bib}
+\input{resource/acronyms}
+% \input{resource/symbols}
+% \input{resource/command}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% https://tex.stackexchange.com/questions/274436/highlight-an-author-in-bibliography-using-biblatex-allowing-bibliography-style-t
+\usepackage{xpatch}% or use https://tex.stackexchange.com/a/40705
+
+\newbibmacro*{name:emph}[2]{%
+	\def\do##1{\iffieldequalstr{hash}{##1}{\bfseries\listbreak}{}}%
+	\dolistloop{\emphnames}%
+}
+
+\newcommand*{\emphnames}{}
+
+\xpretobibmacro{name:family}{\begingroup\usebibmacro{name:emph}{#1}{#2}}{}{}
+\xpretobibmacro{name:given-family}{\begingroup\usebibmacro{name:emph}{#1}{#2}}{}{}
+\xpretobibmacro{name:family-given}{\begingroup\usebibmacro{name:emph}{#1}{#2}}{}{}
+\xpretobibmacro{name:delim}{\begingroup\normalfont}{}{}
+
+\xapptobibmacro{name:family}{\endgroup}{}{}
+\xapptobibmacro{name:given-family}{\endgroup}{}{}
+\xapptobibmacro{name:family-given}{\endgroup}{}{}
+\xapptobibmacro{name:delim}{\endgroup}{}{}
+
+\renewcommand*{\emphnames}{}
+\forcsvlist{\listadd\emphnames}{{cbc77fb9bf2fc6edefc748e3962c8961}} % Hash of my name in the bbl file
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Create a command to print the full citation with all authors
+\newcommand{\printpublication}[1]{\AtNextCite{\defcounter{maxnames}{99}}\fullcite{#1}}
+
+
+% Informações de dados para CAPA e FOLHA DE ROSTO
+%\titulo{Addressing Reliability and Complexity in 5G Based on Multi-Connectivity and Channel Hardening Occurrence}
+\titulo{Reinforcement Learning Solutions for Link Adaptation}
+\autor{Mateus Pontes Mota}
+\local{Fortaleza}
+\data{2020}
+\orientador{Prof. Dr. André Lima Ferrer de Almeida}{Universidade Federal do Ceará}
+\coorientador{Prof. Dr. Francisco Rodrigo Porto Cavalcanti}{Universidade Federal do Ceará}
+\dataaprovacao{xx/xx/2020}
+
+\addmembro{Prof. Dr. cccccc dddddd}{Universidade aaaa bbbbb}
+
+\usepackage[referable,flushleft]{threeparttablex}
+\AtBeginEnvironment{tablenotes}{\footnotesize} % font size for footnotes after tables
+
+% Frequently shortcuts
+\newcommand{\StepRef}[2][]{Step#1~\ref{#2}}
+\newcommand{\ChapRef}[2][]{Chapter#1~\ref{#2}}
+\newcommand{\SecRef}[2][]{Section#1~\ref{#2}}
+\newcommand{\SubsecRef}[2][]{Subsection#1~\ref{#2}}
+\newcommand{\FigRef}[2][]{Fig.#1~\ref{#2}}
+\newcommand{\FigSubRef}[2][]{Fig.#1~\subref{#2}}
+\newcommand{\TabRef}[2][]{Table#1~\ref{#2}}
+\newcommand{\EqRef}[2][]{Equation#1~\eqref{#2}}
+\newcommand{\AlgRef}[2][]{Alg.#1~\ref{#2}}%{Algorithm#1~\ref{#2}}
+\newcommand{\AppRef}[2][]{Appendix#1~\ref{#2}}
+
+\newcommand{\SubItem}[1]{
+	{\setlength\itemindent{15pt} \item[-] #1}
+}
+
+
+\begin{document}
+
+\frenchspacing
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+% Capa
+\imprimircapa
+
+% Folha de rosto (* indica que haverá a ficha bibliográfica)
+\imprimirfolhaderosto
+
+% Ficha Bibliográfica
+%\pdfbookmark[0]{Catalouguing}{cat}
+%\include{pretextual/fichabibliografica}
+
+% Errata
+%\include{pretextual/errata}
+
+% Folha de Aprovação
+%\imprimirfolhadeaprovacao
+
+% Dedicatória
+%\include{pretextual/dedicatory}
+
+% Agradecimentos
+\include{pretextual/acknowledgement}
+
+% Epígrafe
+%\include{pretextual/epigraph}
+
+% RESUMOS
+\include{abstract/english}
+\include{abstract/portuguese}
+
+\glsresetall
+
+% Lista de ilustrações
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+
+% Lista de tabelas
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+
+% Abreviaturas e Siglas
+\pdfbookmark[0]{\acronymname}{loa}
+\printglossary[
+%\printnoidxglossary[
+	type = \acronymtype,
+	style = clong,
+	title = \acronymname,
+	toctitle = \acronymname,
+]
+\cleardoublepage
+
+% Símbolos
+\pdfbookmark[0]{\symbolname}{los}
+%\printnoidxglossary[
+\printglossary[
+	type = symbols,
+	style = clong,
+	title = \symbolname,
+	toctitle = \symbolname,
+]
+%\glsaddall[types = symbols]
+\cleardoublepage
+
+% Sumário
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+\include{chapters/chp_introduction}
+
+\include{chapters/chp_theory}
+
+\include{chapters/chp_amc}
+
+\include{chapters/chp_la}
+
+\include{chapters/chp_conclusion}
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+%\postextual
+
+% Referências bibliográficas
+% \printbibliography
+
+% Apêndices
+% \appendix
+% \include{chapters/appendix_RRMcomplexity}
+%\end{otherlanguage*}
+
+
+\end{document}
