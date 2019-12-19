@@ -108,12 +108,15 @@ acs-*.bib
 *.glg
 *.glo
 *.gls
+*.auxiliary-glg
+*.auxiliary-glo
+*.auxiliary-gls
 *.glsdefs
 *.lzo
 *.lzs
 
 # uncomment this for glossaries-extra (will ignore makeindex's style files!)
-# *.ist
+*.ist
 
 # gnuplottex
 *-gnuplottex-*
@@ -274,3 +277,7 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+
+*.slg
+*.slo
+*.sls
