@@ -1,6 +1,8 @@
 
 \documentclass[doutorado, brazil, english]{gtelabnt}
 \usepackage{definitions}
+% \usepackage[ruled,longend,linesnumbered]{algorithm2e}
+% \newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}
 % \usepackage[acronyms]{glossaries}
 % \addto\captionsbrazil{
 % 	\renewcommand{\symbolname}{Lista de Símbolos}
@@ -17,6 +19,8 @@
 \DeclareUnicodeCharacter{0301}{\'{i}}
 \DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 \newboolean{fastcompilation}
 \setboolean{fastcompilation}{true}
 \ifthenelse{\boolean{fastcompilation}}{

@@ -160,4 +160,456 @@ where $p_{\gls{not:sscl}}$ is the the power of transmitted symbol.
 % \subsection{Channel Description}
 %The model in \eqref{eq.:rx_signal} assumes a narrowband block-fading channel, so the channel is almost constant within a time-frequency resource block \cite{alkhateeb2014}.
 
+\subsection{Channel Model}
+
+We assume a geometric channel model with limited number \gls{not:scatterers} of scatterers.
+%
+Each scatterer contributes with a single path between \gls{bs} and \gls{ue}. Therefore, the channel model can be expressed as
+%
+\begin{equation}\label{eq.:amc-channelModel}
+\channel _t= \sqrt{\pathloss}\sum_{i=0}^{\gls{not:scatterers} - 1 } \gls{not:beta}_i \strRx \anglePair{i,t}{ue} \hermitian{\strTx  \anglePair{i,t}{bs}} e^{ \mathrm{j} 2 \pi f_i tT_s} ,
+\end{equation}
+\noindent where $T_s$ is the \gls{ofdm} symbol period, $\pathloss$ denotes the pathloss, \gls{not:beta} is the complex gain of the $k$th path and $f_i$ is the Doppler frequency for the $i$th path.
+%
+The parameters \azm~$\in$ \range{0}{2\pi} and \elev~$\in$ \range{0}{\pi} denote the azimuth and elevation angles at the \bs \, (\gls{aod}) and the \ue \, (\gls{aoa}).
+%
+We assume a \gls{ura}, the response of which is written as:
+%
+\begin{equation*}
+  \begin{split}
+    \strTx \anglePair{i,t}{bs} = & \frac{1}{\sqrt{\gls{not:txAnt}}} \bigg[ 1, \expUraPhase{}{i,t}{bs}, \\ & \ldots ,\expUraPhase{(\gls{not:txAnt} -1 )}{i,t}{bs} \bigg],
+  \end{split}
+\end{equation*}
+where \dist ~is the antenna element spacing, and \wave~is the signal wavelength. The array response at \gls{ue} can be written similarly.
+
+The expression in \eqref{eq.:amc-channelModel} can be expressed compactly as
+\begin{equation}
+\label{eq.:amc-channelModelMtx}
+\channel _t = \strRxMtx \diag{\gls{not:betaVec}_t} \hermitian{\strTxMtx},
+\end{equation}
+where $\gls{not:betaVec}_t = \left[ \gls{not:beta}_0 e^{ \mathrm{j} 2 \pi f_0 t T_s}, \ldots, \gls{not:beta}_{\gls{not:scatterers}-1} e^{ \mathrm{j} 2 \pi f_{S-1} t T_s} \right]$, and the matrices \strRxMtx~and \strTxMtx~are formed by the concatenation of array response vector at the \bs~and \ue, respectively.
+
+\subsection{Transmission Model}
+\label{subsec:la-trans}
+The transmission process takes into account the channel coding and modulation blocks.
+%
+In this work, we implement all the steps specified in the \gls{nr} channel coding block except the rate matching \cite{3gpp.38.212}.
+%
+The \gls{cb} segmentation divides the transport block of $n_{bits}$ bits to fit the input size accepted by the \gls{ldpc} encoder, padding whenever necessary.
+%
+At the \gls{mcs} decision points, shown in Figure \ref{fig:amc-system-timing}, the  \gls{ue} reports the measured \gls{cqi} to the \gls{bs}, which decides the \gls{mcs} accordingly.
+%
+The selected \gls{mcs} is informed to the \gls{ue} through the \gls{pdcch} as a part of the \gls{dci}. This process is shown in Figure \ref{fig:amc-system-model}.
+%
+
+We considered a subset of the \gls{mcs}s in Table 5.1.3.1-1 in \cite{3gpp.38.214}, from the \gls{mcs} indexes 3 to 27. For our \gls{rl} based solution, the \gls{cqi} is a quantized measure of the \gls{snr}, and the number of possible \gls{cqi}s is defined by $N_{cqis}$. The \gls{cqi} metric for the \gls{rl}-\gls{amc} is defined as:
+\begin{equation}\label{eq:amc-cqi}
+    CQI =
+    \begin{cases}
+    0, \text{if } SNR \leq SNR_{min}\\
+    (N_{cqi}-1), \text{if } SNR \geq SNR_{max}\\
+    \floor[\Big]{\frac{(SNR - SNR_{min})(N_{cqi}-1)}{SNR_{max}-SNR_{min}}}
+    \end{cases}
+\end{equation}
+\noindent Note that each \gls{cqi}, except the minimum and the maximum ones, comprises \gls{snr} intervals having the same length.
+% , since the \gls{snr} inside the range $[snr_{min},snr_{max}]$ is divided equally into \gls{cqi}s in this calculation.
+
+At each \gls{tti} the \gls{bs} makes a transmission of a \gls{tb} of $n_{bits}$ at the chosen \gls{mcs}. The \gls{ue} receives a \gls{tb} from the \gls{bs} and, in possession of the chosen \gls{mcs}, decodes the \gls{tb} and calculates its \gls{ber}, \gls{bler} and spectral efficiency.
+%
+%The \gls{ber} is the Hamming distance between the decoded \gls{tb} and transmitted \gls{tb}.
+%
+% The \gls{bler} is a ratio of blocks with \gls{ber} above $0.1$. The spectral efficiency $\eta$, in $bit/s/Hz$, is calculated in terms of number of bits per modulation symbol \gls{not:mod} and the code rate \gls{not:rate} as:
+The \gls{bler} is the ratio of incorrectly received blocks over the total number of received blocks. %where a block is the result of the code block segmentation.
+%
+The spectral efficiency $\eta$, in $bit/s/Hz$, is calculated as $(1-\gls{bler})\gls{not:mod}\gls{not:rate}$, where \gls{not:mod} is the number of bits per modulation symbol and \gls{not:rate} is the code rate.
+%\begin{equation}
+%  \label{eq.:spec-eff}
+%  \eta = (1-\gls{bler})\gls{not:mod}\gls{not:rate}.
+%\end{equation}
+
+\begin{figure}[tb]
+\centerline{\includegraphics[width=40mm]{figures/chp_amc/system-model-mateus.pdf}}
+\caption{Exchange of signals involved in the AMC procedure}
+\label{fig:amc-system-model}
+\end{figure}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Proposed Solution}
+
+The proposed solution is a Q-learning based link adaptation scheme, herein referred to as \gls{ql-amc}.
+%
+In the proposed approach, the \gls{bs} selects the \gls{mcs} based on the state-action mapping obtained from the Q-learning algorithm.
+%
+More specifically, the \gls{bs} chooses the \gls{mcs} using the Q-table obtained from the \gls{rl} algorithm.
+%
+The \gls{rl} based solution enables the system to learn the particularities of the environment and adapt to it.
+
+A diagram adapting the model from Figure \ref{fig:rlbasic} to the \gls{amc} problem is shown in Figure \ref{fig:amc-rl-frame}.
+%
+\begin{figure}[t]
+\centerline{\includegraphics[width=55mm]{figures/chp_amc/rl-framework-mateus.pdf}}
+\caption{Basic diagram of the proposed AMC scheme}
+\label{fig:amc-rl-frame}
+\end{figure}
+%
+
+In the proposed \gls{amc} problem, the state space is the set of all possible \gls{cqi}s, from $0$ to $(N_{cqi}-1)$; the action space is the set of all possible \gls{mcs}s. As for the reward, we consider two different metrics.
+%
+The first reward function is a non-linear one defined as:
+\begin{equation}\label{eq.:rewardBler}
+  R_1 = \begin{cases}
+  \gls{not:mod} \gls{not:rate}, \text{ if } BLER \leq BLER_T \\
+  -1, \text{ else.}
+\end{cases}
+\end{equation}
+\noindent where \gls{not:mod} is the number of bits per modulation symbol, \gls{not:rate} is the code rate and $BLER_T$ is the target \gls{bler} of the system, $10\%$ in case of \gls{embb} \cite{3gpp.38.214}.
+%
+The goal of this reward function is to allow the agent to choose the best \gls{mcs} that satisfies the \gls{bler} target. The second reward is defined in terms of the spectral efficiency (in bits/second/hertz):
+\begin{equation}\label{eq.:rewardSE}
+    R_2 = (1-BLER) \gls{not:mod} \gls{not:rate} \text{.}
+\end{equation}
+\noindent With this function, the agent will try to maximize the spectral efficiency.
+% A summary of the proposed \gls{ql-amc} algorithm is shown in Algorithm \ref{amc-alg}.
+
+
+
+
+%As will be shown in the next section, we will evaluate the impact and importance of on the system's \gls{bler} and spectral efficiency, and the difference between linear and non-linear rewards.
+%
+% The Table \ref{tab:ql-amc-def} summarizes the definitions of state, action and reward.
+%
+% \begin{table}[!hb]
+% \centering
+% \caption{\gls{rl} elements}
+% \label{tab:ql-amc-def}
+% \begin{tabularx}{0.55\columnwidth}{X r}
+% \toprule
+% \textbf{Element} 	      & \textbf{Definition} \\
+% \midrule
+% State                   & \gls{cqi} \\
+% Action                  & \gls{mcs} \\
+% Reward                  & Eq: \eqref{eq.:reward1}, \eqref{eq.:rewardBler}, \eqref{eq.:rewardSE} \\
+% \bottomrule
+% \end{tabularx}
+% \end{table}
+% %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Simulations and Results}
+\label{sec:amc-simulation}
+\subsection{Simulation Parameters}
+We assess the system performance with one \gls{bs} that serves one \gls{ue}.
+%
+The system has a bandwidth $B$ with a frequency carrier of $28$ GHz. Each resource block has a total of $12$ subcarriers and a subcarrier spacing $\gls{not:sub-spacing}= 120 \text{KHz}$.
+%
+%The frame is composed by 10 subframes, and each subframe is composed of multiple slots, where each slot has 14 symbols.
+We consider the channel model defined in \eqref{eq.:amc-channelModel}.
+%
+The path loss follows a urban macro (UMa) model with non-line-of-sight (NLOS). Shadowing is modeled according to a log-normal distribution with standard deviation of $6$ dB \cite{AliZaidi632018}.
+%
+The noise power is fixed at $-123.185$ dBm.
+%
+A summary of the main simulation parameters is provided in Table~\ref{tab:amc-sim-params}, while the parameters of the proposed \gls{ql-amc} algortihm are listed in Table \ref{tab:amc-rl-params}.
+
+
+\begin{table}[t]
+\centering
+\caption{Simulation Parameters}
+\label{tab:amc-sim-params}
+\begin{tabularx}{0.8\columnwidth}{X r}
+\toprule
+\textbf{Parameter} 	& \textbf{Value} \\
+\midrule
+\gls{bs} height & 15 m\\
+\gls{ue} height & 1.5 m\\
+\gls{ue} track & rectilinear\\
+\gls{bs}  antenna model & omnidirectional \\
+\gls{bs}  antennas & 64 \\
+\gls{ue} antenna model & omnidirectional \\
+\gls{ue} antennas & 1 \\
+Transmit power & 43 dBm\\
+Frequency & 28 GHz\\
+Bandwidth & 1440 MHz\\
+Number of subcarriers  & 12\\
+Subcarrier spacing & 120 kHz\\
+Number of subframes & 10\\
+Number of symbols & 14\\
+Number of information bits per TTI & 1024\\
+Azimuth angle spread & $[-60^{\circ}, 60^{\circ}]$\\
+Azimuth angle mean & $0^{\circ}$\\
+Elevation angle spread & $[60^{\circ}, 120^{\circ}]$\\
+Elevation angle mean & $90^{\circ}$\\
+
+Number of paths & 10\\
+Path loss & UMa NLOS\\
+Shadowing standard deviation & 6 dB\\
+%Noise spectral density & -123 & dBm/Hz\\
+\bottomrule
+\end{tabularx}
+\end{table}
+%
+
+
+\begin{table}[tb]
+	\centering
+	\caption{QL-AMC Parameters}
+	\label{tab:amc-rl-params}
+	\begin{tabularx}{0.8\columnwidth}{l r}
+		\toprule
+		\textbf{Parameter} 	   & \textbf{Value} \\
+    \midrule
+    $SNR_{min}$ for Eq. \eqref{eq:amc-cqi} & $-5$ \\
+    $SNR_{max}$ for Eq. \eqref{eq:amc-cqi} & $40$ \\
+		Discount factor ($\gamma$) & 0.10\\
+		Learning rate ($\alpha$) & 0.90\\
+		Maximum exploration rate ($\epsilon_{\max}$) & 0.50\\
+    Minimum exploration rate ($\epsilon_{\min}$) & 0.05\\
+    Cardinality of state space & $\{10,15,30,60 \}$\\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+% \begin{algorithm}[b]
+%   \caption{\strut QL-AMC}
+%     \label{amc-alg}
+%  \nonl Initialize $Q(s, a) = 0$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
+%  \nonl \ForEach{MCS Decision Point (see Fig. \ref{fig:amc-system-timing})}{
+%   The UE \emph{observes the state} $s: \gls{cqi}$\ and feeds it back to the BS;\\
+%   The BS \emph{takes an action} $a: MCS$ using the policy driven by $Q$ (e.g., $\epsilon$-greedy);\\
+%   The BS \emph{perceives a reward} $r$ (c.f. Eqs. (\ref{eq.:rewardBler}) or (\ref{eq.:rewardSE})) and observes the next state $s^{\prime}$\;
+%   The BS update the Q-table: $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_a Q(s',a)]$\;
+%   $s \leftarrow s^{\prime}$\;
+% \nonl }
+%
+% \end{algorithm}
+
+\subsection{Baseline Solutions}
+
+% We compare the \gls{ql-amc} against the \gls{amc} based on the channel state \cite{fantacci2009adaptive} and target \gls{bler}, which produces a look-up table and also against the \gls{olla} technique \cite{Sarret2015}.
+%
+We compare the \gls{ql-amc} against the \gls{amc} based on a fixed look-up table \cite{fantacci2009adaptive} and also against the \gls{olla} technique from \cite{Pedersen2007}.
+% We consider two fixed \gls{mcs}, the first is the QPSK with code rate of $1/3$ and the second is 16\gls{qam} with rate of $2/3$. In the results they are referred as "fixed 1" and "fixed 2".
+%
+In the fixed look-up table approach, a static mapping of \gls{snr} to \gls{cqi} is obtained by analyzing the \gls{bler} curves and selecting the best \gls{mcs}, in terms of throughput, that satisfies the target \gls{bler} \cite{bruno2014robust}.
+%
+The process of analyzing the \gls{bler} curves gives the \gls{snr} thresholds that separate each \gls{cqi}, as such the \gls{snr} to \gls{cqi} mapping for the look-up table and the \gls{olla} algorithm is different from the \gls{ql-amc} defined in Eq. \eqref{eq:amc-cqi}.
+%
+We assumed a direct mapping of \gls{cqi} to \gls{mcs}, i.e., each \gls{cqi} is mapped to one \gls{mcs} only .
+% \begin{table}[tb]
+% \centering
+% \caption{Look-up Table}
+% \label{tab:look-up}
+% \begin{tabularx}{0.5\columnwidth}{l X r}
+% \toprule
+%  CQI   & Modulation   & Rate \\
+% \midrule
+%  0     & QPSK         & 1/3   \\
+%  1     & QPSK         & 1/2   \\
+%  2     & QPSK         & 2/3   \\
+%  3     & 16QAM        & 1/2   \\
+%  4     & 16QAM        & 2/3   \\
+%  5     & 16QAM        & 3/4   \\
+%  6     & 64QAM        & 2/3   \\
+%  7     & 64QAM        & 3/4   \\
+%  8     & 64QAM        & 5/6   \\
+% \bottomrule
+% \end{tabularx}
+% \end{table}
+The \gls{olla} technique consists of improveing the conventional MCS look-up table by adjusting the \gls{snr} thresholds according to the \gls{acknack} from previous transmissions.
+%
+This adjustment is made by adding an offset to the estimated \gls{snr} to correct the \gls{mcs}s.
+%
+The \gls{snr} that is transformed to \gls{cqi} is:
+\begin{equation}
+\textrm{SNR}_{olla} = \textrm{SNR} + \Delta_{olla}
+\end{equation}
+\noindent where the $\Delta_{olla}$ is updated at each time step according to the Eq. \eqref{eq.:olla} \cite{Blanquez-Casado2016}:
+\begin{equation}\label{eq.:olla}
+  \Delta_{olla} \leftarrow \Delta_{olla} + \Delta_{up} * e_{blk} - \Delta_{down} *(1 - e_{blk}),
+\end{equation}
+\noindent where $e_{blk} = 1$ in case of NACK, or $e_{blk} = 0$ if the transmission is successful.
+%
+The parameters $\Delta_{up}$, $\Delta_{down}$ and the target \gls{bler}, $BLER_{T}$, are inter-related. In fact, by fixing the $\Delta_{up}$ and the $BLER_{T}$, the $\Delta_{down}$ can be calculated as \cite{Pedersen2007}:
+$$
+\Delta_{down} = \frac{\Delta_{up}}{\frac{1}{BLER_{T}} -1}.
+$$
+The target \gls{bler} for the \gls{olla} algorithm is fixed at $0.1$, while we assume three values for $\Delta_{up}$: 0.01dB, 0.1dB and  1dB.
+
+\subsection{Experiment Description and Results}
+
+The experiment devised to assess the performance of the \gls{ql-amc} in comparison to the baseline solutions (look-up table and OLLA) is composed of two phases, namely the learning phase and the deployment phase.
+%
+We also evaluate the effect of the type of reward function considered (i.e., Eqs. \eqref{eq.:rewardBler} or \eqref{eq.:rewardSE}), and the different number of \gls{cqi}s. As such, each \gls{ql-amc} configuration is defined in terms of the cardinality of the state space and the reward function.
+%
+The action space is the set of all possible modulations orders and code rates, being the same for all configurations.
+
+
+\subsubsection{Learning Phase}
+In the first phase, the \gls{rl} agent populates the Q-table to learn the environment.
+%
+Each configuration of the \gls{ql-amc} passes through this phase only one time. Our simulation time starts with the \gls{ue} positioned at a radial distance of $20m$ from the \gls{bs}. The UE moves away from the \gls{bs} up to a distance of 100m. Then, the \gls{ue} comes back to its original position following the same path in the reverse direction.
+%
+The \gls{ue} has a speed of $5km/h$ and the simulation runs for a time equivalent to $160s$ of the network time, which corresponds to the transmission of 32.000 frames.
+%
+
+
+% %
+% The Table \ref{tab:train-results} summarizes the results, providing average values, of the metrics for each configuration of the \gls{ql-amc}.
+% %
+% SE is the spectral efficiency given by Equation \eqref{eq.:spec-eff}.
+% %
+% \begin{table}[!htb]
+% \centering
+% \caption{Training Phase Results}
+% \label{tab:train-results}
+% \begin{tabularx}{0.75\columnwidth}{l X X X r}
+% \toprule
+% Length & Reward &  BLER &  SE &   BER \\
+% \midrule
+% 10 &           2 & 0.0270 &  5.0850 & 0.0065 \\
+% 10 &           3 & 0.0288 &  5.1696 & 0.0070 \\
+% 15 &           2 & 0.0263 &  5.0827 & 0.0065 \\
+% 15 &           3 & 0.0289 &  5.1054 & 0.0071 \\
+% 30 &           2 & 0.0264 &  5.1463 & 0.0065 \\
+% 30 &           3 & 0.0286 &  5.1227 & 0.0070 \\
+% 60 &           2 & 0.0283 &  5.0852 & 0.0068 \\
+% 60 &           3 & 0.0279 &  5.1701 & 0.0068 \\
+% \bottomrule
+% \end{tabularx}
+% \end{table}
+%
+% Table \ref{tab:train-results} reveals that configurations adopting the spectral efficiency (reward 2) as the reward function, with state space of lengths 10 or 60, achieve the best results in terms of spectral efficiency.
+% %
+% This is coherent since reward 2 is the own spectral efficiency.
+% %
+% When the performance metric is the \gls{bler}, the non-linear reward function (reward 1, Eq. \eqref{eq.:rewardBler}) provides the best results with lengths of 15 and 30.
+% %
+% Figures \ref{fig:train-spceff} and \ref{fig:train-bler} shows respectively the average spectral efficiency and the average \gls{bler} of these four possible configurations.
+% %
+% Figure \ref{fig:train-spceff} shows that the length of the state space indeed has an important influence on the learning speed.
+% %
+% The smaller the length is, the faster is the learning speed, as expected.
+% %
+% The \gls{ql-amc} with length 60 has the worst performance before $10s$, but after $20s$ the performance of all configurations is approximately the same.
+% %
+%
+% \begin{figure}[!htbp]
+% \centerline{\includegraphics[width=\columnwidth]{figs/Spec-Eff-Train.pdf}}
+% \caption{Mean spectral efficiency on training phase}
+% \label{fig:train-spceff}
+% \end{figure}
+%
+% \begin{figure}[!htbp]
+% \centerline{\includegraphics[width=\columnwidth]{figs/BLER-Train.pdf}}
+% \caption{Mean \gls{bler} on training phase}
+% \label{fig:train-bler}
+% \end{figure}
+%
+% The performances of the \gls{ql-amc}s in terms of \gls{bler} are similar for all configurations in Figure \ref{fig:train-bler}.
+% %
+% Before the $20s$ mark the curves are close, whereas the configuration with length 10 degrades slightly compared to other configurations after this time mark.
+
+
+\subsubsection{Deployment phase}
+The second phase uses the knowledge from the first phase, but with an $\epsilon$-greedy policy with a fixed value of $\epsilon = 0.05$, accordingly to the minimum value of the $\epsilon$-decreasing in the training phase.
+%
+The goal is to have an assessment of how the \gls{rl} agent performs in the long run.
+%
+
+In the deployment phase, we compare the proposed \gls{ql-amc} solution with the baseline solutions (look-up table and OLLA).
+%
+We perform $200$ Monte Carlo runs. At each run, the \gls{ue} starts at a random position between $25m$ and $90m$ of the \gls{bs}.
+%
+The \gls{ue} moves in a random rectilinear direction with a random speed between $10km/h$ and $20km/h$. This corresponds to a total of $K=125$ frames. Recall that each frame comprises a beam sweeping procedure, followed by data transmission jointly with a MCS selection procedure, as shown in Figure \ref{fig:amc-system-timing}.
+%
+
+
+Table \ref{tab:amc-deploy-results} summarizes the results in the deployment phase in terms of average values for each configuration of the \gls{ql-amc} and baseline solution.
+%
+The first column represents the type of solution adopted.
+%
+% The two fixed \gls{mcs} schemes (denoted as "Fixed 1" and "Fixed 2") consider QPSK with code rate of 1/3 and 16QAM with code rate of 2/3, respectively.
+%
+We consider three \gls{olla} schemes, denoted as \gls{olla} 1, 2 and 3, which consider $\Delta_{up}$ 0.01dB, 0.1dB and 1dB, respectively.
+%
+The conventional \gls{amc} with a fixed look-up table is denoted as "Table".
+%
+The second column represents the number of \gls{cqi}s and the type column represents the reward function used, defined by Eqs. \eqref{eq.:rewardBler}, \eqref{eq.:rewardSE}, and denoted as \gls{bler} and SE.
+%
+
+\begin{table}[tb]
+\centering
+\caption{Deployment Phase Results (Average over 200 runs)}
+\label{tab:amc-deploy-results}
+\begin{tabularx}{\columnwidth}{l X X X X r}
+  \toprule
+  Type    & Cardinality &      Reward  &  BLER &     SE  &    BER \\
+  \midrule
+   QL-AMC &     10 &           BLER   & 0.0320 &  3.6700 & 0.0088 \\
+   QL-AMC &     15 &           BLER   & 0.0306 &  3.3238 & 0.0087 \\
+   QL-AMC &     30 &           BLER   & 0.0302 &  3.5594 & 0.0087 \\
+   QL-AMC &     60 &           BLER   & 0.0306 &  3.8783 & 0.0087 \\
+   QL-AMC &     10 &           SE     & 0.0306 &  3.9187 & 0.0086 \\
+   QL-AMC &     15 &           SE     & 0.0301 &  3.8207 & 0.0085 \\
+   QL-AMC &     30 &           SE     & 0.0310 &  3.9922 & 0.0086 \\
+   QL-AMC &     60 &           SE     & 0.0311 &  4.1553 & 0.0086 \\
+    Table &      - &           -      & 0.0311 &  3.8704 & 0.0088 \\
+   OLLA 1 &      - &           -      & 0.0309 &  3.6700 & 0.0088 \\
+   OLLA 2 &      - &           -      & 0.0330 &  1.8511 & 0.0090 \\
+   OLLA 3 &      - &           -      & 0.0343 &  0.9999 & 0.0092 \\
+  \bottomrule
+\end{tabularx}
+\end{table}
+
+Analyzing Table \ref{tab:amc-deploy-results}, we see that the two \gls{ql-amc} configurations presenting the best results in terms of spectral efficiency are those with cardinality 30 and 60, adopting the reward function $R_1$ of Eq. \eqref{eq.:rewardSE}.
+% %
+% The knowledge learned in the training phase is passed through to the deployment phase, as these two configurations already demonstrated the best performance in the training phase.
+%
+
+\begin{figure}[tb]
+\centerline{\includegraphics[width=\columnwidth]{figures/chp_amc/SpecEff-Deploy.pdf}}
+\vspace{-2ex}
+\caption{CDF of average spectral efficiency (bps/Hertz)}
+\label{fig:amc-dep-spceff}
+\end{figure}
+
+Figure \ref{fig:amc-dep-spceff} shows the cumulative distribution of the average spectral efficiency, in each Monte Carlo run, for the different \gls{ql-amc} configurations, with cardinality 30 and 60, which are labeled \gls{ql-amc} 1 and 2, respectively. We consider the reward function $R_2$ defined in Eq. \eqref{eq.:rewardSE}.
+It can be seen that the proposed \gls{ql-amc} algorithm outperforms the baseline solutions in terms of spectral efficiency.
+%comparison against to the baseline solutions.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Conclusions and Perspectives}
+\label{sec:amc-conclusion}
+We demonstrate through simulations that the \gls{rl} provides a self-exploratory framework that enables the \bs~ to choose a suitable \gls{mcs} that maximizes the spectral efficiency.
+%
+Basically, the \gls{bs} decides a specific \gls{mcs} at a certain time instant. The \ue~ measures the reward of that action and report it to the \bs.
+%
+Comparing with the fixed look-up table and \gls{olla} solutions, the proposed QL-AMC solution has achieved higher spectral efficiencies and lower BLERs.
+%
+Between the two rewards considered, the second one that is in function of the spectral efficiency has achieved the best performance.
+%
+As a perspective, we highlight extensions to multi-layer MIMO transmission. Moreover, a comparison with other RL-based algorithms such as multi-armed bandits (MABs) \cite{zhou2015survey} or deep RL solutions \cite{DeepRLSurvey} is envisioned.
+%
+% When considering multi-layer transmission, our \gls{rl}-based solution should be adapted to select both the \gls{amc} scheme and the number of spatial layers.
+% %
+% It is also worth mentioning that different spatial layers are associated with different \gls{cqi}s, which increases the number of possible actions and states of the proposed \gls{rl}-based \gls{amc} solution.
+% %
+% Hence, deep reinforcement learning should be investigated to deal with this increase in complexity.
+%
+% In addition, since \gls{nr} is a beam-based system, including the beam domain is another perspective.
+% %
+% In other words, our \gls{rl}-based solutions can also incorporate the selection of the best beam to transmit/receive data, among a set of choices (codebook).
+% %
+% These perspectives will be addressed in a follow-up work.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
