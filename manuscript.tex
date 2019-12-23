@@ -1,15 +1,15 @@
 
 \documentclass[doutorado, brazil, english]{gtelabnt}
 \usepackage{definitions}
-
-\addto\captionsbrazil{
-	\renewcommand{\symbolname}{Lista de Símbolos}
-	\renewcommand{\acronymname}{Lista de Abreviações e Acrônimos}
-}
-\addto\captionsenglish{
-	\renewcommand{\symbolname}{List of Symbols}
-	\renewcommand{\acronymname}{List of Abbreviations and Acronyms}
-}
+\usepackage[acronyms]{glossaries}
+% \addto\captionsbrazil{
+% 	\renewcommand{\symbolname}{Lista de Símbolos}
+% 	\renewcommand{\acronymname}{Lista de Abreviações e Acrônimos}
+% }
+% \addto\captionsenglish{
+% 	\renewcommand{\symbolname}{List of Symbols}
+% 	\renewcommand{\acronymname}{List of Abbreviations and Acronyms}
+% }
 % \usepackage[acronyms]{glossaries}
 \usepackage{bm}
 \usepackage{csquotes}
@@ -42,8 +42,8 @@
 %\addbibresource{../../Common/Bibs/5Gran.bib}
 \addbibresource{resource/ref.bib}
 \input{resource/acronyms}
-% \input{resource/symbols}
-% \input{resource/command}
+\input{resource/symbols}
+\input{resource/command}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %% https://tex.stackexchange.com/questions/274436/highlight-an-author-in-bibliography-using-biblatex-allowing-bibliography-style-t

@@ -6,17 +6,19 @@
 % Transport Channel Processing on 5G NR
 \Gls{mac} uses services from the physical layer in the form of transport channels.
 %
-A transport channel defines the transmission over the radio interface, by determining its characteristics and how the information is transmitted \cite{3gpp.38.212} \cite{ErikDahlman5G}.
+A transport channel defines how the information is transmitted over the radio interface \cite{3gpp.38.212} \cite{ErikDahlman5G}.
 %
-The transport channels defined for 5G-NR in the downlink are \gls{dlsch}, \gls{pch}, and \gls{bch}. In the uplink, only one transport-channel is defined, called \gls{ulsch}.
+% The transport channels defined for 5G-NR in the downlink are \gls{dlsch}, \gls{pch}, and \gls{bch}. In the uplink, only one transport-channel is defined, called \gls{ulsch}.
+Downlink transmissions make use of  \gls{dlsch}, \gls{pch} and \gls{bch}. In the uplink, the transport channel is called \gls{ulsch}.
 %
-The data transmissions in the downlink use the \gls{dlsch} and in the uplink the \gls{ulsch} \cite{AliZaidi632018}.
+% The data transmissions in the downlink use the \gls{dlsch} and in the uplink the \gls{ulsch} \cite{AliZaidi632018}.
+Downlink data uses the \gls{dlsch}, while the uplink uses the \gls{ulsch} \cite{AliZaidi632018}.
 %
 Data in the transport channel is organized into transport blocks. At each \gls{tti}, up to two transport blocks of dynamic size are delivered to the physical layer and transmitted over the radio interface for each component carrier.~\cite{ErikDahlman5G}
-
+%
 The transmission process is summarized in Figure \ref{fig:transmission}.
 %
-This process is almost the same for the uplink and downlink, the only difference is an additional step of transform precoding after the layer mapping in the uplink case.
+This process is similar for the uplink and downlink, the only difference being the additional step of transform precoding after the layer mapping in the uplink case.
 
 \begin{figure*}[htbp]
   \begin{centering}
@@ -26,35 +28,34 @@ This process is almost the same for the uplink and downlink, the only difference
 \end{centering}
 \end{figure*}
 %
-
-In the modulation phase, \gls{nr} supports \gls{qpsk} and three orders of \gls{qam}, 16\gls{qam}, 64\gls{qam} and 256\gls{qam}, for both the uplink and downlink, with an additional option of $\pi/2$-BPSK in the uplink.
+In the modulation phase, \gls{nr} supports \gls{qpsk} and three orders of \gls{qam}, namely 16\gls{qam}, 64\gls{qam} and 256\gls{qam}, for both the uplink and downlink, with an additional option of $\pi/2$-BPSK in the uplink.
 %
-The \gls{fec} code in \gls{nr} for the \gls{embb} use case in data transmission is the \gls{ldpc} code, whereas in the control signaling it is used the polar codes.
+The \gls{fec} code for the \gls{embb} use case in data transmission is the \gls{ldpc} code, whereas in the control signaling polar codes are used..
 %
 
-The channel coding process in \gls{5g} \gls{nr} is a process composed of six steps \cite{ErikDahlman5G}, namely:
+The overall \gls{5g} \gls{nr} channel coding process comprises six steps \cite{ErikDahlman5G}, namely:
 \begin{itemize}
-  \item \Gls{crc} Attachment: Calculates a \gls{crc} and attaches it to each transport block. It facilitates error detection and its size can be of 16 bits or 24 bits.
-  \item Code-block segmentation: Segments the transport block in the case of it being larger in size than the supported by the \gls{ldpc} coder. \gls{cb} are of equal size.
-  \item Per-\gls{cb} \gls{crc} Attachment: A \gls{crc} is calculated and appended to each \gls{cb}.
-  \item \gls{ldpc} Encoding: The solution used in \gls{nr} is a Quasi-cyclic \gls{ldpc} with two base graphs, the two base matrices that are used to built the different parity-check matrices with different payloads and rates.
-  \item Rate Matching: It adjusts the coding to the allocated resources. Consists of bit selection and bit interleaving.
-  \item Code-Block Concatenation: Concatenates the multiple rate-matching outputs into one block.
+	\item \Gls{crc} Attachment: Calculates a \gls{crc} and attaches it to each transport block. It facilitates error detection and its size can be of 16 bits or 24 bits.
+	\item Code-block segmentation: Segments the transport block in the case of it being larger in size than the supported by the \gls{ldpc} coder. \gls{cb} are of equal size.
+	\item Per-\gls{cb} \gls{crc} Attachment: A \gls{crc} is calculated and appended to each \gls{cb}.
+	\item \gls{ldpc} Encoding: The solution used in \gls{nr} is a Quasi-cyclic \gls{ldpc} with two base graphs, the two base matrices that are used to built the different parity-check matrices with different payloads and rates.
+	\item Rate Matching: It adjusts the coding to the allocated resources. It consists of bit selection and bit interleaving.
+	\item Code-Block Concatenation: Concatenates the multiple rate-matching outputs into one block.
 \end{itemize}
 
 The other blocks in Figure \ref{fig:transmission}, excluding the channel coding and the modulation, are:
 \begin{enumerate}
-  \item \gls{harq}: \gls{5g} \gls{nr} uses \gls{harq} with soft combining as the primary way to handle retransmissions. In this approach, a buffer is used to store the erroneous packet and this packet is combined with the retransmission to acquire a combined packet, which is more reliable than its components.
-  %
-  \item Scrambling: The process of scrambling is applied to the bits delivered by the \gls{harq}. Scrambling the bits makes them less prone to interference.
-  %
-  \item Layer mapping: The process of layer mapping is applied to the modulated symbols. It distributes the symbols across different transmission layers.
-  %
-  \item Multi-antenna precoding: This step uses a precoder matrix to map the transmission layers to a set of antenna ports.
-  %
-  \item Resource mapping: This process takes the symbols that mapped to be transmitted by each antenna port and these symbols are mapped to the set of available resource elements.
-  %
-  \item Physical antenna mapping: Maps each resource to a physical antenna.
+	\item \Gls{harq}: \gls{5g} \gls{nr} uses \gls{harq} with soft combining as the primary way to handle retransmissions. In this approach, a buffer is used to store the erroneous packet and this packet is combined with the retransmission to acquire a combined packet, which is more reliable than its components.
+	%
+	\item Scrambling: The process of scrambling is applied to the bits delivered by the \gls{harq}. Scrambling the bits makes them less prone to interference.
+	%
+	\item Layer mapping: The process of layer mapping is applied to the modulated symbols. It distributes the symbols across different transmission layers.
+	%
+	\item Multi-antenna precoding: This step uses a precoder matrix to map the transmission layers to a set of antenna ports.
+	%
+	\item Resource mapping: This process takes the symbols that should be transmitted by each antenna port and maps these to the set of available resource elements.
+	%
+	\item Physical antenna mapping: Maps each resource to a physical antenna.
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
