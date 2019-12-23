@@ -1,7 +1,7 @@
 
 \documentclass[doutorado, brazil, english]{gtelabnt}
 \usepackage{definitions}
-\usepackage[acronyms]{glossaries}
+% \usepackage[acronyms]{glossaries}
 % \addto\captionsbrazil{
 % 	\renewcommand{\symbolname}{Lista de Símbolos}
 % 	\renewcommand{\acronymname}{Lista de Abreviações e Acrônimos}
@@ -15,7 +15,8 @@
 \usepackage{csquotes}
 % Declare í for the bibliography
 \DeclareUnicodeCharacter{0301}{\'{i}}
-
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \newboolean{fastcompilation}
 \setboolean{fastcompilation}{true}
 \ifthenelse{\boolean{fastcompilation}}{
