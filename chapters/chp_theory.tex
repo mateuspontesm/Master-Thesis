@@ -1,19 +1,31 @@
 \chapter{Conceptual Framework}%\chapter{Key Features of \acs{3GPP} \acs{5G} Standards}%\chapter{\acs{5G} Scenario}%{System Modeling}
 \label{chp:theory}
 
-\section{Transmission Structure}
+This chapter is divided into two parts, in each one we give an overview of a subject, mainly:
+\begin{enumerate}
+    \item The first part will give an overview of the transmission of downlink data, as well as some of the \gls{phy} procedures associated with it.
+    \item The second part will give an overview of some fundamental concepts of \gls{rl}.
+\end{enumerate}
+
+\section{Transmission Procedures}
 \label{sec:5gnr-trans}
 % Transport Channel Processing on 5G NR
 \Gls{mac} uses services from the physical layer in the form of transport channels.
 %
 A transport channel defines how the information is transmitted over the radio interface \cite{3gpp.38.212} \cite{ErikDahlman5G}.
 %
-% The transport channels defined for 5G-NR in the downlink are \gls{dlsch}, \gls{pch}, and \gls{bch}. In the uplink, only one transport-channel is defined, called \gls{ulsch}.
-Downlink transmissions make use of  \gls{dlsch}, \gls{pch} and \gls{bch}. In the uplink, the transport channel is called \gls{ulsch}.
+The transport channels defined for 5G-NR in the downlink are \gls{dlsch}, \gls{pch}, and \gls{bch}. In the uplink there are two transport channels, \gls{ulsch} and \gls{rach}.
+% Downlink transmissions make use of  \gls{dlsch}, \gls{pch} and \gls{bch}. In the uplink, the transport channel is called \gls{ulsch}.
 %
 % The data transmissions in the downlink use the \gls{dlsch} and in the uplink the \gls{ulsch} \cite{AliZaidi632018}.
 Downlink data uses the \gls{dlsch}, while the uplink uses the \gls{ulsch} \cite{AliZaidi632018}.
 %
+
+
+The physical channels
+Physical channels correspond to a set of time-frequency resources used for transmission of particular transport channel data, control information, or indicator information. Each transport channel data, control information, and indicator information is mapped to its corresponding physical channel.
+The physical channels used in x
+
 Data in the transport channel is organized into transport blocks. At each \gls{tti}, up to two transport blocks of dynamic size are delivered to the physical layer and transmitted over the radio interface for each component carrier.~\cite{ErikDahlman5G}
 %
 The transmission process is summarized in Figure \ref{fig:transmission}.
