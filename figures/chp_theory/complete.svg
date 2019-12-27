@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="138.79036mm"
-   height="37.884758mm"
-   viewBox="0 0 138.79036 37.884758"
+   width="145.79036mm"
+   height="44.884758mm"
+   viewBox="0 0 145.79036 44.884758"
    version="1.1"
    id="svg8"
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
@@ -178,19 +178,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8"
-     inkscape:cx="295.91329"
-     inkscape:cy="77.22467"
+     inkscape:zoom="3.959798"
+     inkscape:cx="241.01781"
+     inkscape:cy="90.451722"
      inkscape:document-units="mm"
-     inkscape:current-layer="g5062"
+     inkscape:current-layer="g1647"
      showgrid="false"
-     fit-margin-top="1"
-     fit-margin-left="1"
-     fit-margin-right="1"
-     fit-margin-bottom="1"
-     inkscape:window-width="2560"
-     inkscape:window-height="1043"
-     inkscape:window-x="1920"
+     fit-margin-top="4.5"
+     fit-margin-left="4.5"
+     fit-margin-right="4.5"
+     fit-margin-bottom="4.5"
+     inkscape:window-width="1366"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <metadata
@@ -209,7 +209,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-26.449837,-168.06541)">
+     transform="translate(-22.949837,-164.56541)">
     <g
        id="g5062">
       <text
@@ -350,7 +350,7 @@
              x="88.611588"
              y="177.44199"
              style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:4px;font-family:Cantarell;-inkscape-font-specification:Cantarell;text-align:center;text-anchor:middle;stroke-width:0.26458332"
-             id="tspan4840">DL-PSCH</tspan></text>
+             id="tspan4840">DL-SCH</tspan></text>
         <text
            xml:space="preserve"
            style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:4px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"

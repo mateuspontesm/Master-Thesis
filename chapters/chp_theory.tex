@@ -26,19 +26,26 @@ The physical channels
 Physical channels correspond to a set of time-frequency resources used for transmission of particular transport channel data, control information, or indicator information. Each transport channel data, control information, and indicator information is mapped to its corresponding physical channel.
 The physical channels used in x
 
+\begin{figure}[htbp]
+
+\centerline{\includegraphics[width=\columnwidth]{figures/chp_theory/complete.pdf}}
+\caption{Mapping of transport channels to physical channels}
+\source{Created by the author based on \cite{ErikDahlman5G}}
+\label{fig:chanel-mapping}
+\end{figure}
+
+
 Data in the transport channel is organized into transport blocks. At each \gls{tti}, up to two transport blocks of dynamic size are delivered to the physical layer and transmitted over the radio interface for each component carrier.~\cite{ErikDahlman5G}
 %
 The transmission process is summarized in Figure \ref{fig:transmission}.
 %
 This process is similar for the uplink and downlink, the only difference being the additional step of transform precoding after the layer mapping in the uplink case.
 
-\begin{figure*}[htbp]
-  \begin{centering}
+\begin{figure}[htbp]
 \includegraphics[width=\columnwidth]{figures/chp_theory/transmissionmodel.pdf}
 \caption{General transmission model on \gls{5g} \gls{nr}}
 \label{fig:transmission}
-\end{centering}
-\end{figure*}
+\end{figure}
 %
 In the modulation phase, \gls{nr} supports \gls{qpsk} and three orders of \gls{qam}, namely 16\gls{qam}, 64\gls{qam} and 256\gls{qam}, for both the uplink and downlink, with an additional option of $\pi/2$-BPSK in the uplink.
 %
