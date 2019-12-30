@@ -21,26 +21,45 @@ The transport channels defined for 5G-NR in the downlink are \gls{dlsch}, \gls{p
 Downlink data uses the \gls{dlsch}, while the uplink uses the \gls{ulsch} \cite{AliZaidi632018}.
 %
 
+Each transport channel is mapped to some physical channel, with a physical channel corresponding to a set of time-frequency resources used for transmission.
+%
+This transmission can be of transport channel data, control information, or indicator information.
+%
+The physical channels without the corresponding transport channel are used for conveying the \gls{dci} and \gls{uci} \cite{ErikDahlman5G}.
+%
+The physical channels defined for \gls{5g} \gls{nr} are \cite{3gpp.38.211}:
 
-The physical channels
-Physical channels correspond to a set of time-frequency resources used for transmission of particular transport channel data, control information, or indicator information. Each transport channel data, control information, and indicator information is mapped to its corresponding physical channel.
-The physical channels used in x
+\begin{enumerate}
+    \item \Gls{pdsch}: used not only for downlink data transmission, but also for random-acess response messages, parts of the system information and paging information.
+    %
+    \item \Gls{pdcch}: used for \gls{dci}, that includes scheduling decisions needed for the reception of downlink data and scheduling grants for uplink data transmission.
+    %
+    \item \Gls{pbch}: used for broadcasting system information needed by the device to access the network.
+    %
+    \item \Gls{pusch}: used for uplink data transmission.
+    %
+    \item \Gls{pucch}: used for \gls{uci}, that includes \gls{harq} acknowledgments, scheduling request and downlink \gls{csi}.
+    %
+    \item \Gls{prach}: used for random access.
+\end{enumerate}
 
-\begin{figure}[tbp]
+The mapping of transport channels and control information to physical channels is depicted in Figure \ref{fig:channel-mapping}.
+
+\begin{figure}[htbp]
     \centerline{\includegraphics[width=\columnwidth]{figures/chp_theory/complete.pdf}}
     \caption{Mapping of transport channels to physical channels}
     \source{Created by the author based on \cite{ErikDahlman5G}}
-    \label{fig:chanel-mapping}
+    \label{fig:channel-mapping}
 \end{figure}
 
 
-Data in the transport channel is organized into transport blocks. At each \gls{tti}, up to two transport blocks of dynamic size are delivered to the physical layer and transmitted over the radio interface for each component carrier.~\cite{ErikDahlman5G}
+Data in the transport channel is organized into transport blocks. At each \gls{tti}, up to two transport blocks of dynamic size are delivered to the physical layer and transmitted over the radio interface for each component carrier \cite{ErikDahlman5G}.
 %
 The transmission process is summarized in Figure \ref{fig:transmission}.
 %
 This process is similar for the uplink and downlink, the only difference being the additional step of transform precoding after the layer mapping in the uplink case.
 
-\begin{figure}[tbp]
+\begin{figure}[htbp]
 \includegraphics[width=\columnwidth]{figures/chp_theory/transmissionmodel.pdf}
 \caption{General transmission model on \gls{5g} \gls{nr}}
 \label{fig:transmission}
