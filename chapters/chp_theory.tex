@@ -70,7 +70,7 @@ In the modulation phase, \gls{nr} supports \gls{qpsk} and three orders of \gls{q
 The \gls{fec} code for the \gls{embb} use case in data transmission is the \gls{ldpc} code, whereas in the control signaling polar codes are used.
 %
 
-The overall \gls{5g} \gls{nr} channel coding process comprises six steps \cite{ErikDahlman5G}, namely:
+In our work, we are mainly concerned with the \gls{pdsch} transmissions, in this case the overall \gls{5g} \gls{nr} channel coding process comprises six steps \cite{ErikDahlman5G}, namely:
 \begin{itemize}
 	\item \Gls{crc} Attachment: Calculates a \gls{crc} and attaches it to each transport block. It facilitates error detection and its size can be of 16 bits or 24 bits.
 	\item Code-block segmentation: Segments the transport block in the case of it being larger in size than the supported by the \gls{ldpc} coder. \gls{cb} are of equal size.
@@ -95,10 +95,35 @@ The other blocks in Figure \ref{fig:transmission}, excluding the channel coding 
 	\item Physical antenna mapping: Maps each resource to a physical antenna.
 \end{enumerate}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The \gls{pdsch} }
+The \gls{pdsch} has only one defined transmission scheme \cite{3gpp.38.214}.
+%
+In this scheme the downlink transmission can be performed with up to 8 transmission layers on antenna ports 1000-1011.
+%
+In the following subsections we give a more detailed explanation of some of the \gls{pdsch} procedures in Figure \ref{fig:transmission}.
 
-In our work, we are mainly concerned with the \gls{pdsch} transmissions, 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{\Acl{mcs} and \acl{tbs} determination}
+
+To start the decoding process the \gls{ue} must first determine the modulation order, the target code rate and the \glspl{tbs} in the \gls{pdsch}.
+%
+To determine this the \gls{ue} needs some information:
+
+\begin{enumerate}
+    \item The \gls{mcs} index, $I_{mcs}$, which is a 5-bit field in the \gls{dci}.
+    %
+    \item The redundancy version, which is used for the \gls{harq} functionality on the rate-matching step of the channel coding and is a 2-bit field included in the \gls{dci}.
+    %
+    \item The number of layers.
+    \item The number of allocated \glspl{prb} before the rate matching.
+\end{enumerate}
+
+The \gls{mcs} index is used alongside a table to determine the modulation order and the target code rate.
+%
+Until the writing of this work the technical specification only three tables were defined \cite{3gpp.38.214}, the process 
+
+
+
+
 
 
 
