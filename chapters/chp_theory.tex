@@ -168,10 +168,17 @@ In this work we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up
 \source{\cite[Table 5.1.3.1-2]{3gpp.38.214}}
 \end{table}
 
+The \gls{tbs} determination process is defined in \cite[Section 5.1.3.2]{3gpp.38.214}, and it depends on the following parameters:
 
+\begin{enumerate}
+    \item $N_{sc}^{RB}$: The number of subcarriers in a \gls{rb}, 12.
+    \item $N_{symb}^{sh}$: Number of symbols of the \gls{pdsch} allocation within the slot.
+    \item $N_{DMRS}^{PRB}$: Number of \glspl{re} for \gls{dmrs} per \gls{prb} in the scheduled duration including the overhead of the \gls{dmrs} \gls{cdm} groups without data.
+    \item $N_{oh}^{PRB}$: Overhead configured by a higher layer parameter. Set to 0 if not configured.
+    \item $n_{PRB}$: Total number of allocated \glspl{prb} for the \gls{ue}.
+\end{enumerate}
 
-
-
+With the above information, the total number of \glspl{re} in the \gls{pdsch} allocation can be determined, which will be used to calculate the \gls{tbs} using also the number of transmission layers, \gls{not:nLayers}, the target code rate, \gls{not:rate}, and the modulation order, \gls{not:mod}. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
