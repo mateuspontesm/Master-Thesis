@@ -121,15 +121,15 @@ The \gls{mcs} index is used alongside a table to determine the modulation order 
 %
 Until the writing of this work only three \gls{mcs} tables were defined in the the technical specification \cite{3gpp.38.214}, two of modulation order up to 64\gls{qam}, with one of those used for a low spectral efficiency case, and one with modulation order going up to 256\gls{qam}.
 %
-In this work we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up to 256\gls{qam}, reproduced in Table \ref{tab:mcs-table}, where R represents the target code rate:
+In this work we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up to 256\gls{qam}, reproduced in Table \ref{tab:mcs-table}, where \gls{not:rate} is the target code rate:
 
 \begin{table}[tb]
 \centering
 \caption{\gls{mcs} index table 2 for \gls{pdsch}}
 \label{tab:mcs-table}
-\begin{tabularx}{0.85\columnwidth}{l X X r}
+\begin{tabularx}{0.8\columnwidth}{l X X r}
   \toprule
-  \gls{mcs} index  & Modulation Order & R x 1024  &  Spectral efficiency \\
+  \gls{mcs} index  & Modulation order & \gls{not:rate} x 1024  &  Spectral efficiency \\
   \midrule
   0  &  2   & 120       &  0.2344 \\
   1  &  2   & 193       &  0.3770 \\
@@ -178,7 +178,16 @@ The \gls{tbs} determination process is defined in \cite[Section 5.1.3.2]{3gpp.38
     \item $n_{PRB}$: Total number of allocated \glspl{prb} for the \gls{ue}.
 \end{enumerate}
 
-With the above information, the total number of \glspl{re} in the \gls{pdsch} allocation can be determined, which will be used to calculate the \gls{tbs} using also the number of transmission layers, \gls{not:nLayers}, the target code rate, \gls{not:rate}, and the modulation order, \gls{not:mod}. 
+With the above information, the total number of \glspl{re} in the \gls{pdsch} allocation can be determined, which will be used to calculate the \gls{tbs} using also the number of transmission layers, \gls{not:nLayers}, the target code rate, \gls{not:rate}, and the modulation order, \gls{not:mod}.
+
+At the transmitter side, \gls{bs}, a \gls{tb} of size \gls{tbs} is delivered from the \gls{mac} to the \gls{phy} where the process of Figure \ref{fig:transmission} happens.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{\gls{crc} attachment}
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
