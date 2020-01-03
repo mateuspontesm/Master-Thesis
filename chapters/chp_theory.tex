@@ -119,9 +119,54 @@ To determine this the \gls{ue} needs some information:
 
 The \gls{mcs} index is used alongside a table to determine the modulation order and the target code rate.
 %
-Until the writing of this work the technical specification only three tables were defined \cite{3gpp.38.214}, the process 
+Until the writing of this work only three \gls{mcs} tables were defined in the the technical specification \cite{3gpp.38.214}, two of modulation order up to 64\gls{qam}, with one of those used for a low spectral efficiency case, and one with modulation order going up to 256\gls{qam}.
+%
+In this work we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up to 256\gls{qam}, reproduced in Table \ref{tab:mcs-table}, where R represents the target code rate:
 
-
+\begin{table}[tb]
+\centering
+\caption{\gls{mcs} index table 2 for \gls{pdsch}}
+\label{tab:mcs-table}
+\begin{tabularx}{0.85\columnwidth}{l X X r}
+  \toprule
+  \gls{mcs} index  & Modulation Order & R x 1024  &  Spectral efficiency \\
+  \midrule
+  0  &  2   & 120       &  0.2344 \\
+  1  &  2   & 193       &  0.3770 \\
+  2  &  2   & 308       &  0.6016 \\
+  3  &  2   & 449       &  0.8770 \\
+  4  &  2   & 602       &  1.1758 \\
+  5  &  4   & 378       &  1.4766 \\
+  6  &  4   & 434       &  1.6953 \\
+  7  &  4   & 490       &  1.9141 \\
+  8  &  4   & 553       &  2.1602 \\
+  9  &  4   & 616       &  2.4063 \\
+  10 &  4   & 658       &  2.5703 \\
+  11 &  6   & 466       &  2.7305 \\
+  12 &  6   & 517       &  3.0293 \\
+  13 &  6   & 567       &  3.3223 \\
+  14 &  6   & 616       &  3.6094 \\
+  15 &  6   & 666       &  3.9023 \\
+  16 &  6   & 719       &  4.2129 \\
+  17 &  6   & 772       &  4.5234 \\
+  18 &  6   & 822       &  4.8164 \\
+  19 &  6   & 873       &  5.1152 \\
+  20 &  8   & 682.5     &  5.3320 \\
+  21 &  8   & 711       &  5.5547 \\
+  22 &  8   & 754       &  5.8906 \\
+  23 &  8   & 797       &  6.2266 \\
+  24 &  8   & 841       &  6.5703 \\
+  25 &  8   & 885       &  6.9141 \\
+  26 &  8   & 916.5     &  7.1602 \\
+  27 &  8   & 948       &  7.4063 \\
+  28 &  2   & Reserved  & Reserved \\
+  29 &  4   & Reserved  & Reserved \\
+  30 &  6   & Reserved  & Reserved \\
+  31 &  8   & Reserved  & Reserved \\
+  \bottomrule
+\end{tabularx}
+\source{\cite[Table 5.1.3.1-2]{3gpp.38.214}}
+\end{table}
 
 
 
