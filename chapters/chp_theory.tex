@@ -123,7 +123,7 @@ Until the writing of this work only three \gls{mcs} tables were defined in the t
 %
 In this work we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up to 256\gls{qam}, reproduced in Table \ref{tab:mcs-table}, where \gls{not:rate} is the target code rate:
 
-\begin{table}[tb]
+\begin{table}[htb]
 \centering
 \caption{\gls{mcs} index table 2 for \gls{pdsch}}
 \label{tab:mcs-table}
@@ -185,6 +185,22 @@ At the transmitter side, \gls{bs}, a \gls{tb} of size \gls{tbs} is delivered fro
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{\gls{crc} attachment}
+
+The \gls{crc} bits are calculated from a cyclic generator polynomial. In the \gls{pdsch} procedure there are three polynomials that can be used \cite{3gpp.38.212}:
+
+\begin{equation} \label{eq.:crc24a}
+    \begin{split}
+        g_{\mathrm{CRC24A}}(D) = & [ D^{24} + D^{23} + D^{18} + D^{17} +  D^{14} + D^{10} \\ & + D^{7} + D^{7} + D^{5} + D^{4} + D^{3} + D + 1 ]
+    \end{split}
+\end{equation}
+
+\begin{equation}\label{eq.:crc24b}
+    g_{\mathrm{CRC24B}}(D) = \left[ D^{24} + D^{23} + D^{6} + D^{5} + D + 1 \right]
+\end{equation}
+
+\begin{equation} \label{eq.:crc16}
+    g_{\mathrm{CRC16}}(D) = \left[ D^{16} + D^{12} + D^{5} + 1 \right]
+\end{equation}
 
 
 
