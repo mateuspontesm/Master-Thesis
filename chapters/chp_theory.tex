@@ -73,7 +73,7 @@ The \gls{fec} code for the \gls{embb} use case in data transmission is the \gls{
 In our work, we are mainly concerned with the \gls{pdsch} transmissions, in this case the overall \gls{5g} \gls{nr} channel coding process comprises six steps \cite{ErikDahlman5G}, namely:
 \begin{itemize}
 	\item \Gls{crc} Attachment: Calculates a \gls{crc} and attaches it to each transport block. It facilitates error detection and its size can be of 16 bits or 24 bits.
-	\item Code-block segmentation: Segments the transport block in the case of it being larger in size than the supported by the \gls{ldpc} coder. \gls{cb} are of equal size.
+	\item Code-block segmentation: Segments the transport block in the case of it being larger in size than the supported by the \gls{ldpc} coder. Produces \gls{cb} are of equal size.
 	\item Per-\gls{cb} \gls{crc} Attachment: A \gls{crc} is calculated and appended to each \gls{cb}.
 	\item \gls{ldpc} Encoding: The solution used in \gls{nr} is a Quasi-cyclic \gls{ldpc} with two base graphs, the two base matrices that are used to built the different parity-check matrices with different payloads and rates.
 	\item Rate Matching: It adjusts the coding to the allocated resources. It consists of bit selection and bit interleaving.
@@ -186,7 +186,9 @@ At the transmitter side, \gls{bs}, a \gls{tb} of size \gls{tbs} is delivered fro
 
 \subsection{\gls{crc} attachment}
 
-The \gls{crc} bits are calculated from a cyclic generator polynomial. In the \gls{pdsch} procedure there are three polynomials that can be used \cite{3gpp.38.212}:
+The \gls{crc} bits are calculated from a cyclic generator polynomial.
+%
+In the \gls{pdsch} procedure there are three polynomials that can be used \cite{3gpp.38.212}:
 
 \begin{equation} \label{eq.:crc24a}
     \begin{split}
@@ -202,6 +204,32 @@ The \gls{crc} bits are calculated from a cyclic generator polynomial. In the \gl
     g_{\mathrm{CRC16}}(D) = \left[ D^{16} + D^{12} + D^{5} + 1 \right]
 \end{equation}
 
+
+The \gls{crc} makes possible for the receiver to detect errors in the decoded \gls{tb}.
+%
+For each \gls{tb} delivered from the \gls{mac} to the \gls{phy} a \gls{crc} is calculated and attached to it.
+%
+In case the \gls{tbs} is greater than 3824, the \gls{crc} has a length of 24 bits with the generator polynomial $g_{\mathrm{CRC24A}}$, Equation \eqref{eq.:crc24a}, being used.
+%
+Generator polynomial $g_{\mathrm{CRC16}}$, Equation \eqref{eq.:crc16}, is used otherwise, producing a 16-bit \gls{crc}.
+
+When \gls{cb} segmentation occurs each \gls{cb} receives a \gls{crc} of 24 bits, which is calculated from the generator polynomial $g_{\mathrm{CRC24B}}$, Equation \eqref{eq.:crc24b}.
+%
+This process is ilustrated in Figure \ref{fig:cbcrc}.
+%
+If only one \gls{cb} is produced, no additional \gls{crc} is attached to it \cite{ErikDahlman5G}.
+
+\begin{figure}[htb]
+    \includegraphics[width=\columnwidth]{figures/chp_theory/crc.pdf}
+    \caption{\gls{crc} attachements and \gls{cb} segmentation}
+    \label{fig:cbcrc}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{The \gls{5g} \gls{nr} \gls{ldpc}}
+
+Before explaining the \gls{cb} segmentation and the \gls{ldpc} encoding, we will present some introduction to the coding solution applied to the \gls{embb} use case in the \gls{5g} \gls{nr}.
 
 
 
