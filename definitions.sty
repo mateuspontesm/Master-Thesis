@@ -161,9 +161,10 @@
 				sanitizesort,
 				nogroupskip, % Do not create a GAP between groups
 				nopostdot, % Do not put a dot at the end of the entry
-				nonumberlist % Do not add the backref to the entries
+				nonumberlist, % Do not add the backref to the entries
+                noredefwarn, % Don't show redef warning
 				]{glossaries}
-%\newglossary{symbols}{sym}{sbl}{\symbname} % glossary for symbols
+% \newglossary{symbols}{sym}{sbl}{\symbname} % glossary for symbols
 \newglossary*{auxiliary}{Auxiliary Items} % glossary for auxiliary symbols
 \newglossary[nlg]{notation}{not}{ntn}{Notation}
 %\makenoidxglossaries

@@ -1,6 +1,8 @@
 \chapter{Conceptual Framework}%\chapter{Key Features of \acs{3GPP} \acs{5G} Standards}%\chapter{\acs{5G} Scenario}%{System Modeling}
 \label{chp:theory}
 
+%\addbibresource{../resource/ref.bib}
+
 This chapter is divided into two parts, in each one we give an overview of a subject, mainly:
 \begin{enumerate}
     \item The first part will give an overview of the transmission of downlink data, as well as some of the \gls{phy} procedures associated with it.
@@ -46,14 +48,14 @@ The physical channels defined for \gls{5g} \gls{nr} are \cite{3gpp.38.211}:
 The mapping of transport channels and control information to physical channels is depicted in Figure \ref{fig:channel-mapping}.
 
 \begin{figure}[htbp]
-    \centerline{\includegraphics[width=\columnwidth]{figures/chp_theory/complete.pdf}}
+    \includegraphics[width=0.95\columnwidth]{figures/chp_theory/complete.pdf}
     \caption{Mapping of transport channels to physical channels}
     \source{Created by the author based on \cite{ErikDahlman5G}}
     \label{fig:channel-mapping}
 \end{figure}
 
 
-Data in the transport channel is organized into transport blocks. At each \gls{tti}, up to two transport blocks of dynamic size are delivered to the physical layer and transmitted over the radio interface for each component carrier \cite{ErikDahlman5G}.
+Data in the transport channel is organized into transport blocks. For each component carrier and at each \gls{tti}, up to two \glspl{tb} are conveyed to the physical layer and transmitted over the radio interface  \cite{ErikDahlman5G}.
 %
 The transmission process is summarized in Figure \ref{fig:transmission}.
 %
@@ -99,7 +101,46 @@ The \gls{pdsch} has only one defined transmission scheme \cite{3gpp.38.214}.
 %
 In this scheme the downlink transmission can be performed with up to 8 transmission layers on antenna ports 1000-1011.
 %
-In the following subsections we give a more detailed explanation of some of the \gls{pdsch} procedures in Figure \ref{fig:transmission}.
+
+
+In the following subsections we give an overview of the \gls{5g} \gls{nr} \gls{ldpc} coding solution and a more detailed explanation of some of the \gls{pdsch} procedures in Figure \ref{fig:transmission}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{The \gls{5g} \gls{nr} \gls{ldpc}}
+
+% %
+% Before explaining the \gls{cb} segmentation and the \gls{ldpc} encoding, we will present some introduction to the coding solution applied to the \gls{embb} use case in the \gls{5g} \gls{nr}.
+% %
+
+\Gls{ldpc} codes are a class of linear block codes based on a sparse \gls{pcm}  originally proposed by Gallager \cite{gallager1962}.
+%
+Several standards have incorporated \gls{ldpc} codes, such as IEEE 802.11n, IEEE 802.16e (WiMAX) and \gls{dvb-s2} \cite{AliZaidi632018}.
+%
+In the third and forth generations (3G and 4G) turbo codes were the primary coding scheme \cite{Richardson2018} and were one of the candidates for the \gls{5g} \gls{nr} along with polar codes and \gls{ldpc} codes \cite{Hamidi8417496}.
+%
+The \gls{5g} \gls{nr} will make a transition on the error correcting codes with the \gls{ldpc} codes being used for the data channel and polar codes being used for the control information, on both the \gls{embb} and in the release-15 \gls{urllc} use cases \cite{bae_abotabl_lin_song_lee_2019}.
+
+Although turbo codes and \gls{ldpc} codes have similar error-correcting capabilities \cite{ErikDahlman5G}, \gls{ldpc} codes provide the following advantages \cite{Hui2018}:
+
+\begin{enumerate}
+    \item Higher coding gains
+    \item Lower error floors
+    \item Higher achievable peak throughput
+    \item Lower decoding complexity and improved decoding latency, particularly on high code rates
+    \item Can achieve greater parallelism when decoding
+\end{enumerate}
+
+
+In a $(n, k)$ \gls{ldpc} code, the \gls{pcm} is a $ (n-k) \times n$ sparse matrix, with $k$ being the number of information bits and $n$ being the number of code-word bits, i.e information bits plus parity bits.
+%
+The sparseness of the \gls{pcm} enables a relatively simple decoding by making use of low-complexity iterative decoding algorithms.
+%
+The \gls{pcm} can also be represented by a graph connecting $n$ variable nodes with $(n-k)$ check nodes, corresponding to the parity-check equations.
+%
+This bipartite graph representation is known as Tanner graph \cite{TannerGraph} and is the reason that the term \glsfirst{bg} is used in the \gls{nr} specifications.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\Acl{mcs} and \acl{tbs} determination}
@@ -127,7 +168,7 @@ In this work we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up
 \centering
 \caption{\gls{mcs} index table 2 for \gls{pdsch}}
 \label{tab:mcs-table}
-\begin{tabularx}{0.8\columnwidth}{l X X r}
+\begin{tabularx}{0.95\columnwidth}{l X X r}
   \toprule
   \gls{mcs} index  & Modulation order & \gls{not:rate} x 1024  &  Spectral efficiency \\
   \midrule
@@ -225,11 +266,8 @@ If only one \gls{cb} is produced, no additional \gls{crc} is attached to it \cit
     \label{fig:cbcrc}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{The \gls{5g} \gls{nr} \gls{ldpc}}
-
-Before explaining the \gls{cb} segmentation and the \gls{ldpc} encoding, we will present some introduction to the coding solution applied to the \gls{embb} use case in the \gls{5g} \gls{nr}.
+%
 
 
 
