@@ -133,12 +133,12 @@
               skip = 0pt,
               singlelinecheck = false}
 
-\captionsetup[subfigure]{font = singlespacing,
-	format = plain,
-	font=small,
-	justification = justified,
-	skip = 0pt,
-	singlelinecheck = false}
+% \captionsetup[subfigure]{font = singlespacing,
+% 	format = plain,
+% 	font=small,
+% 	justification = justified,
+% 	skip = 0pt,
+% 	singlelinecheck = false}
 
 \captionsetup[table]{font = singlespacing,
 					 format = hang,
@@ -252,11 +252,11 @@
 \numberwithin{table}{chapter}
 
 % Pacotes de formatação do texto
+\RequirePackage{cmap}				% Mapeia caracteres especiais no PDF
 \RequirePackage[T1]{fontenc}		% Seleção de códigos de fonte.
 \RequirePackage[utf8]{inputenc}		% Codificação do documento (conversão automática dos acentos)
 \RequirePackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
 \RequirePackage{microtype} 			% Para melhorias de justificação
-\RequirePackage{cmap}				% Mapeia caracteres especiais no PDF
 %\RequirePackage[charter, bigdelims, vvarbb]{newtxmath} % Fontes matemáticas melhores
 
 % Pacotes adicionais
