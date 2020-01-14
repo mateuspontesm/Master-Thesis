@@ -54,6 +54,10 @@
 %% https://tex.stackexchange.com/questions/274436/highlight-an-author-in-bibliography-using-biblatex-allowing-bibliography-style-t
 \usepackage{xpatch}% or use https://tex.stackexchange.com/a/40705
 
+%%%%%%%%%%%%%%%% Clear abstract from bibliography:
+\AtEveryBibitem{\clearfield{abstract}}
+
+
 \newbibmacro*{name:emph}[2]{%
 	\def\do##1{\iffieldequalstr{hash}{##1}{\bfseries\listbreak}{}}%
 	\dolistloop{\emphnames}%
@@ -208,7 +212,8 @@
 %\postextual
 
 % Referências bibliográficas
-% \printbibliography
+
+\printbibliography
 
 % Apêndices
 % \appendix
