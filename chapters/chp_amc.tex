@@ -90,7 +90,7 @@ Consider a single cell system whose \gls{bs} is equipped with \gls{not:txAnt} an
 %Assume that the user is synchronized with the  \gls{bs}, and they periodically measure their associated \gls{not:nBeams}  beam pairs.
 %Assume that the \gls{bs} sends periodically synchronization signal (SS) blocks used by the \gls{ue} to measure a set of beam pairs and then selecting that one with highest \gls{snr}.
 %
-%The \bs~and \ue~are assumed to apply \gls{not:Wtx} \inSetComplex{\gls{not:txAnt}}{\gls{not:nBeams}} and \gls{not:Wrx} \inSetComplex{\gls{not:rxAnt}}{\gls{not:nBeams}}, respectively.
+%The \base~and \ue~are assumed to apply \gls{not:Wtx} \inSetComplex{\gls{not:txAnt}}{\gls{not:nBeams}} and \gls{not:Wrx} \inSetComplex{\gls{not:rxAnt}}{\gls{not:nBeams}}, respectively.
 
 During the transmission of the SS blocks, the BS measures all possible combinations of transmit and receive beams from the codebooks \gls{not:Wtx} \inSetComplex{\gls{not:txAnt}}{\gls{not:nBeams}} and \gls{not:Wrx} \inSetComplex{\gls{not:rxAnt}}{\gls{not:nBeams}}, respectively,  to select the beam pair with the highest \gls{snr}.
 %
@@ -100,7 +100,7 @@ The selected beam pair for the $k$-th frame is expressed as
   \{ \bar{\mathbf{w}}_k, \bar{\mathbf{f}}_k \}= \argmax_{\mathbf{w}, \mathbf{f}} \frac{\|\mathbf{w}^H \mathbf{H}_t \mathbf{f}\|}{\sigma ^2},
 \end{equation}
 %
-\noindent where $\mathbf{f}$ and $\mathbf{w}$ are columns of \gls{not:Wtx} and \gls{not:Wrx}, respectively,  $\channel _t $ \inSetComplex{\gls{not:rxAnt}}{\gls{not:txAnt}} is the channel between the \bs~ and the \ue at time $t$. We assume that the channel remains constant during the beam sweeping period $T_{BS}$.
+\noindent where $\mathbf{f}$ and $\mathbf{w}$ are columns of \gls{not:Wtx} and \gls{not:Wrx}, respectively,  $\channel _t $ \inSetComplex{\gls{not:rxAnt}}{\gls{not:txAnt}} is the channel between the \base~ and the \ue at time $t$. We assume that the channel remains constant during the beam sweeping period $T_{BS}$.
 %
 The update of $\{ \bar{\mathbf{w}}_k, \bar{\mathbf{f}}_k \}$ depends on the periodicity $T_{SS}$ of the synchronization signal blocks, which can be  \{5, 10, 20 , 40, 80, 160\} (ms) \cite{giordani21}.
 %
@@ -171,7 +171,7 @@ Each scatterer contributes with a single path between \gls{bs} and \gls{ue}. The
 \end{equation}
 \noindent where $T_s$ is the \gls{ofdm} symbol period, $\pathloss$ denotes the pathloss, \gls{not:beta} is the complex gain of the $k$th path and $f_i$ is the Doppler frequency for the $i$th path.
 %
-The parameters \azm~$\in$ \range{0}{2\pi} and \elev~$\in$ \range{0}{\pi} denote the azimuth and elevation angles at the \bs \, (\gls{aod}) and the \ue \, (\gls{aoa}).
+The parameters \azm~$\in$ \range{0}{2\pi} and \elev~$\in$ \range{0}{\pi} denote the azimuth and elevation angles at the \base \, (\gls{aod}) and the \ue \, (\gls{aoa}).
 %
 We assume a \gls{ura}, the response of which is written as:
 %
@@ -187,7 +187,7 @@ The expression in \eqref{eq.:amc-channelModel} can be expressed compactly as
 \label{eq.:amc-channelModelMtx}
 \channel _t = \strRxMtx \diag{\gls{not:betaVec}_t} \hermitian{\strTxMtx},
 \end{equation}
-where $\gls{not:betaVec}_t = \left[ \gls{not:beta}_0 e^{ \mathrm{j} 2 \pi f_0 t T_s}, \ldots, \gls{not:beta}_{\gls{not:scatterers}-1} e^{ \mathrm{j} 2 \pi f_{S-1} t T_s} \right]$, and the matrices \strRxMtx~and \strTxMtx~are formed by the concatenation of array response vector at the \bs~and \ue, respectively.
+where $\gls{not:betaVec}_t = \left[ \gls{not:beta}_0 e^{ \mathrm{j} 2 \pi f_0 t T_s}, \ldots, \gls{not:beta}_{\gls{not:scatterers}-1} e^{ \mathrm{j} 2 \pi f_{S-1} t T_s} \right]$, and the matrices \strRxMtx~and \strTxMtx~are formed by the concatenation of array response vector at the \base~and \ue, respectively.
 
 \subsection{Transmission Model}
 \label{subsec:la-trans}
@@ -590,9 +590,9 @@ It can be seen that the proposed \gls{ql-amc} algorithm outperforms the baseline
 
 \section{Conclusions and Perspectives}
 \label{sec:amc-conclusion}
-We demonstrate through simulations that the \gls{rl} provides a self-exploratory framework that enables the \bs~ to choose a suitable \gls{mcs} that maximizes the spectral efficiency.
+We demonstrate through simulations that the \gls{rl} provides a self-exploratory framework that enables the \base~ to choose a suitable \gls{mcs} that maximizes the spectral efficiency.
 %
-Basically, the \gls{bs} decides a specific \gls{mcs} at a certain time instant. The \ue~ measures the reward of that action and report it to the \bs.
+Basically, the \gls{bs} decides a specific \gls{mcs} at a certain time instant. The \ue~ measures the reward of that action and report it to the \base.
 %
 Comparing with the fixed look-up table and \gls{olla} solutions, the proposed QL-AMC solution has achieved higher spectral efficiencies and lower BLERs.
 %

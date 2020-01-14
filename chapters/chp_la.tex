@@ -110,7 +110,7 @@ The discrete received signal model at the receiver is represented as
 \gls{not:Wrx}
 \gls{not:Z} \;,
 \end{equation}
-\noindent where $\channel $ \inSetComplex{\gls{not:rxAnt}}{\gls{not:txAnt}} represents the channel between the \bs~ and the \ue, $\gls{not:sscl}$ represents the transmitted symbols at each layer to the \ue, and \gls{not:Z} is the Gaussian noise with zero mean and variance \gls{not:var}.
+\noindent where $\channel $ \inSetComplex{\gls{not:rxAnt}}{\gls{not:txAnt}} represents the channel between the \base~ and the \ue, $\gls{not:sscl}$ represents the transmitted symbols at each layer to the \ue, and \gls{not:Z} is the Gaussian noise with zero mean and variance \gls{not:var}.
 %
 The filter \gls{not:Wrx} is calculated from the channel perceived by the receiver, $\channel_{\textrm{rx}} = \channel \gls{not:Wtx}$, as:
 
@@ -161,7 +161,7 @@ Each scatterer contributes with a single path between \gls{bs} and \gls{ue}. The
 \end{equation}
 \noindent where $\pathloss$ denotes the pathloss, \gls{not:beta} is the complex gain of the $k$th path.
 %
-The azimuth \azm~$\in$ \range{0}{2\pi} and the elevation \elev~$\in$ \range{0}{\pi} are the \gls{aod} and \gls{aoa} at the \bs~and \ue , respectively.
+The azimuth \azm~$\in$ \range{0}{2\pi} and the elevation \elev~$\in$ \range{0}{\pi} are the \gls{aod} and \gls{aoa} at the \base~and \ue , respectively.
 %
 We assume a \glspl{ura} at the \gls{bs} and \gls{ue}. There are $\gls{not:txAnt}_{v}$ vertical antenna elements and  $\gls{not:txAnt}_{h}$ horizontal antennas elements, such that $\gls{not:txAnt} = \gls{not:txAnt}_{v} \gls{not:txAnt}_{h}$. The array response at the \gls{bs} is expressed as
 %
@@ -547,7 +547,7 @@ We can note that the single stream \gls{ql-la} has a similar performance to the 
 
 \section{Conclusions and Perspectives}
 \label{sec:la-conclusion}
-The \gls{rl} provides a self-exploratory framework that enables the \bs~ to choose a suitable \gls{mcs} and multi-antenna precoding matrix that maximizes the throughput.
+The \gls{rl} provides a self-exploratory framework that enables the \base~ to choose a suitable \gls{mcs} and multi-antenna precoding matrix that maximizes the throughput.
 %
 % Basically, the \gls{bs} decides a specific \gls{mcs} and \gls{pmi} at a certain time instant. And the \gls{bs}, in possession of the \gls{acknack} of the \gls{ue} calculates the performance of each agent.
 %
