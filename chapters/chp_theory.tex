@@ -131,15 +131,21 @@ Although turbo codes and \gls{ldpc} codes have similar error-correcting capabili
     \item Lower decoding complexity and improved decoding latency, particularly on high code rates
     \item Can achieve greater parallelism when decoding
 \end{enumerate}
-
+aa
 
 In a $(n, k)$ \gls{ldpc} code, the \gls{pcm} is a $ (n-k) \times n$ sparse matrix, with $k$ being the number of information bits and $n$ being the number of code-word bits, i.e information bits plus parity bits.
 %
 The sparseness of the \gls{pcm} enables a relatively simple decoding by making use of low-complexity iterative decoding algorithms.
 %
-The \gls{pcm} can also be represented by a graph connecting $n$ variable nodes with $(n-k)$ check nodes, corresponding to the parity-check equations.
+The \gls{pcm} can also be represented by a graph connecting $n$ variable nodes with $(n-k)$ check nodes, the check nodes correspond to the parity-check equations.
+%
+In this graph there is an edge between a variable node and a check node if the corresponding entry on the \gls{pcm} is not-null \cite{Richardson2018}.
 %
 This bipartite graph representation is known as Tanner graph \cite{TannerGraph} and is the reason that the term \glsfirst{bg} is used in the \gls{nr} specifications.
+%
+aaaa
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

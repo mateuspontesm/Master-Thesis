@@ -115,6 +115,8 @@ acs-*.bib
 *.glsdefs
 *.lzo
 *.lzs
+*.not
+*.ntn
 
 # uncomment this for glossaries-extra (will ignore makeindex's style files!)
 *.ist

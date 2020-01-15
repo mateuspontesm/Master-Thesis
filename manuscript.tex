@@ -55,7 +55,7 @@
 \usepackage{xpatch}% or use https://tex.stackexchange.com/a/40705
 
 %%%%%%%%%%%%%%%% Clear abstract from bibliography:
-\AtEveryBibitem{\clearfield{abstract}}
+\AtEveryBibitem{\clearfield{abstract}}    % clears abstract field
 
 
 \newbibmacro*{name:emph}[2]{%
@@ -178,7 +178,7 @@
 \pdfbookmark[0]{\symbolname}{los}
 %\printnoidxglossary[
 \printglossary[
-	type = symbols,
+	type = notation,
 	style = clong,
 	title = \symbolname,
 	toctitle = \symbolname,
