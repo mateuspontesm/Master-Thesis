@@ -148,21 +148,23 @@ This bipartite graph representation is known as Tanner graph \cite{TannerGraph} 
 
 The \gls{nr} \gls{ldpc} codes are \gls{qc} \gls{ldpc} codes, a class of photograph codes \cite{bae_abotabl_lin_song_lee_2019}.
 %
-In \gls{qc}-\gls{ldpc} the \gls{pcm} is constructed based on a smaller photograph, also called base matrix or base graph, that describes the macroscopic structure of the code \cite{Richardson2018}.
+In \gls{qc}-\gls{ldpc} the \gls{pcm} is constructed based on a smaller photograph, also called base matrix or \gls{bg}, that describes the macroscopic structure of the code \cite{Richardson2018}.
 %
 The \gls{pcm} can then be constructed by replacing each entry of the base matrix by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ cyclic permutation matrix, this process is called lifting and $\gls{not:lift-factor}$ is the lifting size.
 %
-In a Tanner graph representation, the lifting procedure is equivalent to having the larger graph being formed by $\gls{not:lift-factor}$ copies of the base graph and permuting the edges \cite{bae_abotabl_lin_song_lee_2019}.
+In a Tanner graph representation, the lifting procedure is equivalent to having the larger graph being formed by $\gls{not:lift-factor}$ copies of the \gls{bg} and permuting the edges \cite{bae_abotabl_lin_song_lee_2019}.
 %
-One important consequence of this structure is that, with the higher possible parallelism, the decode complexity is a function of the base graph size, not of the actual \gls{pcm} size, since it can be achieved a degree of parallelism of $\gls{not:lift-factor}$ \cite{bae_abotabl_lin_song_lee_2019}.
+One important consequence of this structure is that, with the higher possible parallelism, the decode complexity is a function of the \gls{bg} size, not of the actual \gls{pcm} size, since it can be achieved a degree of parallelism of $\gls{not:lift-factor}$ \cite{bae_abotabl_lin_song_lee_2019}.
 % The \gls{nr} specifies the maximum $\gls{not:lift-factor}$ to $384$.
 
 % TODO: Figure of tanner graph here
 
 
-In the \gls{5g} \gls{nr} \gls{ldpc} code, each ``0'' in the base graph is replaced by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ all-zero matrix and each ``1'' is replaced by a circularly shifted identity matrix, shifted by the corresponding shifting coefficient \cite{ErikDahlman5G}.
+In the \gls{5g} \gls{nr} \gls{ldpc} code, each ``0'' in the \gls{bg} is replaced by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ all-zero matrix and each ``1'' is replaced by a circularly shifted identity matrix, shifted by the corresponding shifting coefficient \cite{ErikDahlman5G}.
 %
-In the technical specification \cite{3gpp.38.212}, $51$ lifting sizes are specified and they are divided in $8$ groups, called set index $\gls{not:set-index}$, each set index corresponds to a different permutation design, i.e different shifting coefficients, this structure is resumed in the Table \ref{tab:lift-table}.
+In the technical specification \cite{3gpp.38.212}, 51 lifting sizes are specified and they are divided in 8 groups, called set index $\gls{not:set-index}$, each set index corresponds to a different permutation design, i.e different shifting coefficients, this structure is resumed in the Table \ref{tab:lift-table}.
+%
+This design means that there are 51 \glspl{pcm} for each of the two \glspl{bg}.
 
 \begin{table}[htb]
 \centering
@@ -184,6 +186,11 @@ In the technical specification \cite{3gpp.38.212}, $51$ lifting sizes are specif
 \end{tabular}
 \source{\cite[Table 5.3.2-1]{3gpp.38.212}}
 \end{table}
+
+
+Two \glspl{bg} are specified in \gls{5g} \gls{nr}, in order to guarantee efficiency for all the payload sizes and code rates.
+%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\Acl{mcs} and \acl{tbs} determination}

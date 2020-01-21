@@ -31,7 +31,7 @@
 	\setmainfont{Times New Roman}
 \else
 %	\usepackage{mathptmx}
-	\usepackage{bookman}
+	\usepackage{utopia}
 \fi
 
 %%%%%% Modificações de acordo com o guia de normalização da UFC
