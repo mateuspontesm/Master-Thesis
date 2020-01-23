@@ -110,123 +110,7 @@ In the following subsections we give an overview of the \gls{5g} \gls{nr} \gls{l
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\subsection{The \gls{5g} \gls{nr} \gls{ldpc}}
 
-% %
-% Before explaining the \gls{cb} segmentation and the \gls{ldpc} encoding, we will present some introduction to the coding solution applied to the \gls{embb} use case in the \gls{5g} \gls{nr}.
-% %
-
-\Gls{ldpc} codes are a class of linear block codes based on a sparse \gls{pcm}  originally proposed by Gallager \cite{gallager1962}.
-%
-Several standards have incorporated \gls{ldpc} codes, such as IEEE 802.11n, IEEE 802.16e (WiMAX) and \gls{dvb-s2} \cite{AliZaidi632018}.
-%
-In the third and forth generations (3G and 4G) turbo codes were the primary coding scheme \cite{Richardson2018} and were one of the candidates for the \gls{5g} \gls{nr} along with polar codes and \gls{ldpc} codes \cite{Hamidi8417496}.
-%
-The \gls{5g} \gls{nr} will make a transition on the error correcting codes with the \gls{ldpc} codes being used for the data channel and polar codes being used for the control information, on both the \gls{embb} and in the release-15 \gls{urllc} use cases \cite{bae_abotabl_lin_song_lee_2019}.
-
-Although turbo codes and \gls{ldpc} codes have similar error-correcting capabilities \cite{ErikDahlman5G}, \gls{ldpc} codes provide the following advantages \cite{Hui2018}:
-
-\begin{enumerate}
-    \item Higher coding gains
-    \item Lower error floors
-    \item Higher achievable peak throughput
-    \item Lower decoding complexity and improved decoding latency, particularly on high code rates
-    \item Can achieve greater parallelism when decoding
-\end{enumerate}
-
-In a $(\gls{not:coded-bits}, \gls{not:info-bits})$ \gls{ldpc} code, the \gls{pcm} is a $ (\gls{not:coded-bits}-\gls{not:info-bits}) \times n$ sparse matrix, with $\gls{not:info-bits}$ being the number of information bits and $\gls{not:coded-bits}$ being the number of code-word bits, i.e information bits plus parity bits.
-%
-The sparseness of the \gls{pcm} enables a relatively simple decoding by making use of low-complexity iterative decoding algorithms.
-%
-The \gls{pcm} can also be represented by a graph connecting $\gls{not:coded-bits}$ variable nodes with $(\gls{not:coded-bits}-\gls{not:info-bits})$ check nodes, the check nodes correspond to the parity-check equations.
-%
-In this graph there is an edge between a variable node and a check node if the corresponding entry on the \gls{pcm} is not-null \cite{Richardson2018}.
-%
-This bipartite graph representation is known as Tanner graph \cite{TannerGraph} and is the reason that the term \glsfirst{bg} is used in the \gls{nr} specifications.
-%
-
-
-The \gls{nr} \gls{ldpc} codes are \gls{qc} \gls{ldpc} codes, a class of photograph codes \cite{bae_abotabl_lin_song_lee_2019}.
-%
-In \gls{qc}-\gls{ldpc} the \gls{pcm} is constructed based on a smaller photograph, also called base matrix or \gls{bg}, that describes the macroscopic structure of the code \cite{Richardson2018}.
-%
-The \gls{pcm} can then be constructed by replacing each entry of the base matrix by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ cyclic permutation matrix, this process is called lifting and $\gls{not:lift-factor}$ is the lifting size.
-%
-In a Tanner graph representation, the lifting procedure is equivalent to having the larger graph being formed by $\gls{not:lift-factor}$ copies of the \gls{bg} and permuting the edges \cite{bae_abotabl_lin_song_lee_2019}.
-%
-One important consequence of this structure is that, with the higher possible parallelism, the decode complexity is a function of the \gls{bg} size, not of the actual \gls{pcm} size, since it can be achieved a degree of parallelism of $\gls{not:lift-factor}$ \cite{bae_abotabl_lin_song_lee_2019}.
-% The \gls{nr} specifies the maximum $\gls{not:lift-factor}$ to $384$.
-
-% TODO: Figure of tanner graph here
-
-
-In the \gls{5g} \gls{nr} \gls{ldpc} code, each ``0'' in the \gls{bg} is replaced by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ all-zero matrix and each ``1'' is replaced by a circularly shifted identity matrix, shifted by the corresponding shifting coefficient \cite{ErikDahlman5G}.
-%
-In the technical specification \cite{3gpp.38.212}, 51 lifting sizes are specified and they are divided in 8 groups, called set index $\gls{not:set-index}$, each set index corresponds to a different permutation design, i.e different shifting coefficients, this structure is resumed in the Table \ref{tab:lift-table}.
-%
-This design means that there are 51 \glspl{pcm} for each of the two \glspl{bg}.
-
-\begin{table}[htb]
-\centering
-\caption{Sets of \gls{ldpc} lifting sizes}
-\label{tab:lift-table}
-\begin{tabular}{l c}
-  \toprule
-  Set index $\gls{not:set-index}$   & Set of lifting sizes $\gls{not:lift-factor}$ \\
-  \midrule
-  0  &  2, 4, 8, 16, 32, 64, 128, 256 \\
-  1  &  3, 6, 12, 24, 48, 96, 192, 384 \\
-  2  &  5, 10, 20, 40, 80, 160, 320 \\
-  3  &  7, 14, 28, 56, 112, 224 \\
-  4  &  9, 18, 36, 72, 144, 288 \\
-  5  &  11, 22, 44, 88, 176, 352 \\
-  6  &  13, 26, 52, 104, 208 \\
-  7  &  15, 30, 60, 120, 240 \\
-  \bottomrule
-\end{tabular}
-\source{\cite[Table 5.3.2-1]{3gpp.38.212}}
-\end{table}
-
-
-Two \glspl{bg} are specified in \gls{5g} \gls{nr}, in order to guarantee efficiency for all the payload sizes and code rates.
-%
-The \gls{bg}1 has dimensions of $46 \times 68$, meaning 22 systematic columns, while \gls{bg}2 has dimensions of $42 \times 52$, which converts to 10 systematic columns.
-%
-The first 2 columns of the \gls{bg}, which correspond to the first $2 \gls{not:lift-factor}$ columns in the \gls{pcm} are punctured, meaning the the corresponding bits are not actually transmitted, but need to be recovered at the receiver.
-%
-\Gls{bg}2 is designed to low code rates, between $1/5$ and $5/6$ and shorter block sizes, up to 3840, whereas \gls{bg}1 is used for larger block sizes, up to 8448, and higher code rates, between $1/3$ and $22/24$.
-%
-Puncturing can increase the highest code rate while repetition can be used to achieve lower code rates \cite{ErikDahlman5G,AliZaidi632018,Hui2018}.
-%
-The information about the two \glspl{bg} is summarized in Table \ref{tab:base-graphs}.
-
-\begin{table}[htb]
-\centering
-\caption{Parameters of the \glspl{bg}}
-\label{tab:base-graphs}
-\begin{tabularx}{0.9\columnwidth}{l c c}
-  \toprule
-  Parameter         &     \Glsentrylong{bg} 1     & \Glsentrylong{bg} 2         \\
-  \midrule
-  Matrix Dimensions &   $46 \times 68$  & $42 \times 52$    \\
-  Number of systematic columns & 22     & 10                \\
-  Maximum information payload & $22 \times 384 = 8448$ & $10 \times 384 = 3840$ \\
-  Minimum designed code rate & $\frac{1}{3} ( \frac{22}{66} )$ & $\frac{1}{5} ( \frac{10}{50} )$ \\
-  \bottomrule
-\end{tabularx}
-\source{\cite[Table 1]{Hui2018}}
-\end{table}
-
-
-\begin{figure}[htbp]
-\includegraphics[width=\columnwidth]{figures/chp_theory/figureBG.pdf}
-\caption{Base Graphs}
-\source{Created by the author based on \cite{Hui2018}}
-\label{fig:transmission}
-\end{figure}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\Acl{mcs} and \acl{tbs} determination}
 
 To start the decoding process the \gls{ue} must first determine the modulation order, the target code rate and the \glspl{tbs} in the \gls{pdsch}.
@@ -309,6 +193,148 @@ At the transmitter side, \gls{bs}, a \gls{tb} of size \gls{tbs} is delivered fro
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+\subsection{The \gls{5g} \gls{nr} \gls{ldpc}}
+
+
+Before explaining the procedures in Figure \ref{fig:transmission}, we will present some introduction to the \gls{ldpc} coding solution applied to the \gls{embb} use case in the \gls{5g} \gls{nr}.
+%
+
+\Gls{ldpc} codes are a class of linear block codes based on a sparse \gls{pcm}  originally proposed by Gallager \cite{gallager1962}.
+%
+Several standards have incorporated \gls{ldpc} codes, such as IEEE 802.11n, IEEE 802.16e (WiMAX) and \gls{dvb-s2} \cite{AliZaidi632018}.
+%
+In the third and forth generations (3G and 4G) turbo codes were the primary coding scheme \cite{Richardson2018} and were one of the candidates for the \gls{5g} \gls{nr} along with polar codes and \gls{ldpc} codes \cite{Hamidi8417496}.
+%
+The \gls{5g} \gls{nr} will make a transition on the error correcting codes with the \gls{ldpc} codes being used for the data channel and polar codes being used for the control information, on both the \gls{embb} and in the release-15 \gls{urllc} use cases \cite{bae_abotabl_lin_song_lee_2019}.
+
+Although turbo codes and \gls{ldpc} codes have similar error-correcting capabilities \cite{ErikDahlman5G}, \gls{ldpc} codes provide the following advantages \cite{Hui2018}:
+
+\begin{enumerate}
+    \item Higher coding gains
+    \item Lower error floors
+    \item Higher achievable peak throughput
+    \item Lower decoding complexity and improved decoding latency, particularly on high code rates
+    \item Can achieve greater parallelism when decoding
+\end{enumerate}
+
+In a $(\gls{not:coded-bits}, \gls{not:info-bits})$ \gls{ldpc} code, the \gls{pcm} is a $ (\gls{not:coded-bits}-\gls{not:info-bits}) \times n$ sparse matrix, with $\gls{not:info-bits}$ being the number of information bits and $\gls{not:coded-bits}$ being the number of code-word bits, i.e information bits plus parity bits.
+%
+The sparseness of the \gls{pcm} enables a relatively simple decoding by making use of low-complexity iterative decoding algorithms.
+
+
+The \gls{pcm} can also be represented by a graph connecting $\gls{not:coded-bits}$ variable nodes with $(\gls{not:coded-bits}-\gls{not:info-bits})$ check nodes, the check nodes correspond to the parity-check equations.
+%
+In this graph, there is an edge between a variable node and a check node if the corresponding entry on the \gls{pcm} is not-null \cite{Richardson2018}.
+%
+This bipartite graph representation is known as Tanner graph \cite{TannerGraph} and is the reason that the term \glsfirst{bg} is used in the \gls{nr} specifications.
+%
+
+
+The \gls{nr} \gls{ldpc} codes are \gls{qc} \gls{ldpc} codes, a class of photograph codes \cite{bae_abotabl_lin_song_lee_2019}.
+%
+In \gls{qc}-\gls{ldpc} the \gls{pcm} is constructed based on a smaller photograph, also called base matrix or \gls{bg}, that describes the macroscopic structure of the code \cite{Richardson2018}.
+%
+The \gls{pcm} can then be constructed by replacing each entry of the base matrix by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ cyclic permutation matrix, this process is called lifting and $\gls{not:lift-factor}$ is the lifting size \cite{AliZaidi632018}.
+
+
+In a Tanner graph representation, the lifting procedure is equivalent to having the larger graph being formed by $\gls{not:lift-factor}$ copies of the \gls{bg} and permuting the edges, as shown in \ref{fig:graph-lifting}.
+%
+One important consequence of this structure is that, with the higher possible parallelism, the decode complexity is a function of the \gls{bg} size, not of the actual \gls{pcm} size, since it can be achieved a degree of parallelism of $\gls{not:lift-factor}$ \cite{bae_abotabl_lin_song_lee_2019}.
+% The \gls{nr} specifies the maximum $\gls{not:lift-factor}$ to $384$.
+
+\begin{figure}[htbp]
+\includegraphics[width=\columnwidth]{figures/chp_theory/tanner_drawio.pdf}
+\caption{Construction of a larger graph from a base graph using a lifting size of 2}
+\label{fig:graph-lifting}
+\end{figure}
+
+
+In the \gls{5g} \gls{nr} \gls{ldpc} code, each ``0'' in the \gls{bg} is replaced by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ all-zero matrix and each ``1'' is replaced by a circularly shifted identity matrix, shifted by the corresponding shifting coefficient \cite{ErikDahlman5G}.
+%
+In the technical specification \cite{3gpp.38.212}, 51 lifting sizes are specified and they are divided in 8 groups, called set index $\gls{not:set-index}$, each set index corresponds to a different permutation design, i.e different shifting coefficients, this structure is resumed in the Table \ref{tab:lift-table}.
+%
+This design means that there are 51 \glspl{pcm} for each of the two \glspl{bg}.
+
+\begin{table}[htb]
+\centering
+\caption{Sets of \gls{ldpc} lifting sizes}
+\label{tab:lift-table}
+\begin{tabular}{l c}
+  \toprule
+  Set index $\gls{not:set-index}$   & Set of lifting sizes $\gls{not:lift-factor}$ \\
+  \midrule
+  0  &  2, 4, 8, 16, 32, 64, 128, 256 \\
+  1  &  3, 6, 12, 24, 48, 96, 192, 384 \\
+  2  &  5, 10, 20, 40, 80, 160, 320 \\
+  3  &  7, 14, 28, 56, 112, 224 \\
+  4  &  9, 18, 36, 72, 144, 288 \\
+  5  &  11, 22, 44, 88, 176, 352 \\
+  6  &  13, 26, 52, 104, 208 \\
+  7  &  15, 30, 60, 120, 240 \\
+  \bottomrule
+\end{tabular}
+\source{\cite[Table 5.3.2-1]{3gpp.38.212}}
+\end{table}
+
+
+Two \glspl{bg} are specified in \gls{5g} \gls{nr}, in order to guarantee efficiency for all the payload sizes and code rates.
+%
+The \gls{bg}1 has dimensions of $46 \times 68$, meaning 22 systematic columns, while \gls{bg}2 has dimensions of $42 \times 52$, which converts to 10 systematic columns.
+%
+The first 2 columns of the \gls{bg}, which correspond to the first $2 \gls{not:lift-factor}$ columns in the \gls{pcm} are punctured, meaning the the corresponding bits are not actually transmitted, but need to be recovered at the receiver.
+%
+\Gls{bg}2 is designed to low code rates, between $1/5$ and $5/6$ and shorter information block sizes, up to 3840, whereas \gls{bg}1 is used for larger information block sizes, up to 8448, and higher code rates, between $1/3$ and $22/24$.
+%
+\Gls{cb} segmentation is used whenever \gls{not:info-bits} is larger than the maximum designed information block size.
+%
+Puncturing can increase the highest code rate while repetition can be used to achieve lower code rates \cite{ErikDahlman5G,AliZaidi632018,Hui2018}.
+%
+The information about the two \glspl{bg} is summarized in Table \ref{tab:base-graphs}.
+
+\begin{table}[htb]
+\centering
+\caption{Parameters of the \glspl{bg}}
+\label{tab:base-graphs}
+\begin{tabularx}{0.9\columnwidth}{l c c}
+  \toprule
+  Parameter         &     \Glsentrylong{bg} 1     & \Glsentrylong{bg} 2         \\
+  \midrule
+  Matrix Dimensions &   $46 \times 68$  & $42 \times 52$    \\
+  Number of systematic columns & 22     & 10                \\
+  Maximum information payload & $22 \times 384 = 8448$ & $10 \times 384 = 3840$ \\
+  Minimum designed code rate & $\frac{1}{3} ( \frac{22}{66} )$ & $\frac{1}{5} ( \frac{10}{50} )$ \\
+  \bottomrule
+\end{tabularx}
+\source{\cite[Table 1]{Hui2018}}
+\end{table}
+
+The choice of the base graph is made based on the target code rate, \gls{not:rate}, and the \gls{tbs}.
+%
+The information block size \gls{not:info-bits} is formed by the \gls{tbs} and the \gls{crc} bits.
+%
+Generally the \gls{bg} that performs better for a certain range of rates and information block sizes is used \cite{Hui2018}.
+%
+Figure \ref{fig:rate-vs-k} illustrates the regions in which each \gls{bg} is used, and the rules are \cite{3gpp.38.212}:
+
+\begin{itemize}
+    \item \Gls{bg} 2 is used if:
+    \begin{enumerate}
+        \item $\mathrm{\gls{tbs}} \leq 292 $
+        \item $\mathrm{\gls{tbs}} \leq 3824 $ and $\gls{not:rate} \leq 0.67 $
+        \item $\gls{not:rate} \leq 0.25 $
+    \end{enumerate}
+    \item Otherwise \gls{bg} 1 is used.
+\end{itemize}
+
+\begin{figure}[htbp]
+\includegraphics[width=\columnwidth]{figures/chp_theory/figureBG.pdf}
+\caption{Base Graphs}
+\source{Created by the author based on \cite{Hui2018}}
+\label{fig:rate-vs-k}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{\gls{crc} attachment}
 
 The \gls{crc} bits are calculated from a cyclic generator polynomial.
@@ -470,11 +496,11 @@ In this work, we make use of two strategies:
 \begin{enumerate}
   \item $\epsilon$-greedy: One of the most common exploration strategies. It selects the greedy action with probability $1-\epsilon$, and a random action with probability $\epsilon$. So, a higher $\epsilon$ means that the agent give more importance to exploration.
   \item adaptive $\epsilon$-greedy: There are numerous different methods that adapt the $\epsilon$ over time or as a function of the error \cite{improvingBandits}.A commonly used approach is to start with a high $\epsilon$ and decrease it over time.
-%   \item Boltzmann exploration: Also known as softmax exploration. It uses the action-values to choose an action according to the Boltzmann distribution:
-%   $$
-% \pi\left(s, a\right)=\frac{e^{Q\left(s, a\right) / T}}{\sum_{i=1}^{m} e^{Q\left(s^{\prime}, a_i\right) / T}}
-%   $$
-%   The parameter $T \geq 0$, called temperature, sets the balance between exploration and exploitation. If $T \rightarrow 0$  the agent will only exploit, if $T \rightarrow \infty$ the agent will choose actions at random.
+  \item Boltzmann exploration: Also known as softmax exploration. It uses the action-values to choose an action according to the Boltzmann distribution:
+  $$
+\pi\left(s, a\right)=\frac{e^{Q\left(s, a\right) / T}}{\sum_{i=1}^{m} e^{Q\left(s^{\prime}, a_i\right) / T}}
+  $$
+  The parameter $T \geq 0$, called temperature, sets the balance between exploration and exploitation. If $T \rightarrow 0$  the agent will only exploit, if $T \rightarrow \infty$ the agent will choose actions at random.
 \end{enumerate}
 
 
@@ -495,21 +521,21 @@ This behavior policy still has an effect on the algorithm, because it determines
 \end{equation}
 
 \noindent where the parameter $0 \leq \alpha \leq 1$ is called learning rate.
-%
-% The Algorithm \ref{alg1} details Q-learning algorithm \cite{sutton2018rl}.
-%
-% \begin{algorithm}[htb]
-%
-% Algorithm parameters: step size $\alpha \in (0, 1]$, small $\epsilon > 0$\;
-% Initialize $Q(s, a)$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
-% \ForEach{iteration}{
-% Initialize s\;
-%   Choose $a$ from $s$ using policy derived from $Q$ (e.g., $\epsilon$-greedy)\;
-%   Take action $a$, observe $r$, $s^{\prime}$\;
-%   $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_a Q(s',a)]$\;
-%   $s \leftarrow s^{\prime}$\;
-%
-% }
-% \caption{Q-learning (off-policy TD control) for estimating $\pi \approx \pi^* $}
-%   \label{alg1}
-% \end{algorithm}
+
+The Algorithm \ref{alg1} details Q-learning algorithm \cite{sutton2018rl}.
+
+\begin{algorithm}[htb]
+
+Algorithm parameters: step size $\alpha \in (0, 1]$, small $\epsilon > 0$\;
+Initialize $Q(s, a)$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
+\ForEach{iteration}{
+Initialize s\;
+  Choose $a$ from $s$ using policy derived from $Q$ (e.g., $\epsilon$-greedy)\;
+  Take action $a$, observe $r$, $s^{\prime}$\;
+  $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_a Q(s',a)]$\;
+  $s \leftarrow s^{\prime}$\;
+
+}
+\caption{Q-learning (off-policy TD control) for estimating $\pi \approx \pi^* $}
+  \label{alg1}
+\end{algorithm}

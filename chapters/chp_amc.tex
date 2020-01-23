@@ -1,84 +1,84 @@
 \chapter{\Acl{amc}}
 \label{chp:amc}
-\section{Introduction}
-\label{sec:amc-intro}
-
-
-Link adaptation is a key enabling technology for broadband mobile internet, and has been part of the \gls{5g} \gls{nr} access technology.
+% \section{Introduction}
+% \label{sec:amc-intro}
 %
-In this context, \gls{amc} refers to the selection of the appropriate \gls{mcs} as a function of the channel quality, in order to keep the \gls{bler} below a predefined threshold.
 %
-In 4G long term evolution (LTE), the \gls{bler} target is fixed at 10\% \cite{3gpp.36.213}. However, 5G systems will cover a wider spectrum of services, requiring potentially different \gls{bler} targets \cite{Amin_2016,fantacci2009adaptive}.
-
-%
-% \Gls{5g} wireless communication systems are being designed to provide high data and transmission rates \cite{Amin_2016}.
+% Link adaptation is a key enabling technology for broadband mobile internet, and has been part of the \gls{5g} \gls{nr} access technology.
 % %
-% Because of this, a reliable link adaptation process for \gls{5g} \gls{nr} is needed for coping with the need of increasing the data rate that can be accurately transmitted \cite{chu01}.
+% In this context, \gls{amc} refers to the selection of the appropriate \gls{mcs} as a function of the channel quality, in order to keep the \gls{bler} below a predefined threshold.
+% %
+% In 4G long term evolution (LTE), the \gls{bler} target is fixed at 10\% \cite{3gpp.36.213}. However, 5G systems will cover a wider spectrum of services, requiring potentially different \gls{bler} targets \cite{Amin_2016,fantacci2009adaptive}.
+%
+% %
+% % \Gls{5g} wireless communication systems are being designed to provide high data and transmission rates \cite{Amin_2016}.
+% % %
+% % Because of this, a reliable link adaptation process for \gls{5g} \gls{nr} is needed for coping with the need of increasing the data rate that can be accurately transmitted \cite{chu01}.
+% % %
+% %
+% % In this context, the link adaptation technique of \gls{amc} is of great interest.
+% % %
+% % \Gls{amc} is a resource allocation technique used in link adaptation that allows the system to select the most appropriate \gls{mcs} to better cope with the changing channel conditions \cite{fantacci2009adaptive}.
+% % %
+%
+% \Gls{amc} is a good solution to match the link throughput to the time-varying nature of the wireless channel under mobility.
+% %
+% Periodically, the \gls{ue} measures the channel quality and maps this information into a \gls{cqi}.
+% %
+% The \gls{bs} uses the \gls{cqi} reported by the \gls{ue} to define the \gls{mcs}.
+% %
+% Typically, each \gls{cqi} is associated with a given \gls{snr} interval \cite{Blanquez-Casado2016}.
+% %
+% Considering \gls{lte} as an example, the \gls{bs} uses \gls{dci} embedded into the \gls{pdcch} to inform the \gls{ue} about each new \gls{mcs} selection \cite{ErikDahlman5G}.
+%
+% %
+% % In the downlink \gls{amc} procedure, the \gls{ue} suggests to the \gls{bs} an appropriate \gls{mcs} in the \gls{amc} set to be used \cite{Sang2014}.
+% % %
+% % This proposed \gls{mcs} is informed to the \gls{bs} by means of a \gls{cqi}, typically each \gls{cqi} represents a \gls{snr} interval \cite{Blanquez-Casado2016}.
+% % %
+% % In possession of this information, the \gls{bs} selects an \gls{mcs} to transmit and reports  its selection to the \gls{ue}.
+%
+% Conventional solutions to the \gls{amc} problem includes the fixed look-up table \cite{fantacci2009adaptive}, also called \gls{illa}, and the \gls{olla} technique, which further improves the look-up table by adapting the \gls{snr} thresholds.
+% %
+% The \gls{olla} technique was first proposed in \cite{Sampath1997}, and was also addressed in \cite{Pedersen2007,Sarret2015, Blanquez-Casado2016}.
+%
+% \Gls{ml} has become an attractive tool to devise novel \gls{amc} solutions in the context of complex emerging \gls{5g} systems and services.
+% %
+% In particular the drive towards self-organizing networks is potentially addressed by machine learning.
+% %
+% While in \gls{lte}, a look-up table provides fixed \gls{amc} rules for all the users, the emerging systems need a more flexible approach that can automatically adjust physical layer parameters (such as the modulation and coding scheme) according to the user channel state and service type.
+% %
+% \Gls{rl} refers to a category of \gls{ml} techniques \cite{survey-son} that has been applied to problems such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
+% % The goal of the \gls{amc} is an automatic choice of the best parameters, in this case the \gls{mcs}, depending on the user and applications requirements.
+% % %
+% % As such, \gls{ml} algorithms are well suited to this application, because of their capabilities of learning patterns, forecasting behaviors and generating models \cite{survey-son}.
+% %
+% % A \gls{ml} category of particular interest to cellular systems is the \gls{rl}, because of its applicability in optimization problems \cite{survey-son}, such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
+% There are few works that use \gls{rl} to solve the \gls{amc} problem.
+% %
+% In \cite{continuousState}, the selection of the \gls{mcs} is based on the received \gls{sinr}.
+% %
+% In this case, the state space is continuous, and the learning algorithm must handle a large state space.
+% %
+% In \cite{bruno2014robust} a Q-learning algorithm is proposed to solve the \gls{amc} problem in the context of a 4G \gls{lte} network.
+% %
+% A deep reinforcement learning approach is adopted in \cite{DRL_AMC} in the context of a cognitive heterogeneous network.
 % %
 %
-% In this context, the link adaptation technique of \gls{amc} is of great interest.
+%
+% This work proposes a novel 5G \gls{amc} solution based on a \gls{rl} framework.
 % %
-% \Gls{amc} is a resource allocation technique used in link adaptation that allows the system to select the most appropriate \gls{mcs} to better cope with the changing channel conditions \cite{fantacci2009adaptive}.
+% The proposed solution consists of collecting channel measurements at specific time instants to train an agent using the Q-learning algorithm.
 % %
-
-\Gls{amc} is a good solution to match the link throughput to the time-varying nature of the wireless channel under mobility.
-%
-Periodically, the \gls{ue} measures the channel quality and maps this information into a \gls{cqi}.
-%
-The \gls{bs} uses the \gls{cqi} reported by the \gls{ue} to define the \gls{mcs}.
-%
-Typically, each \gls{cqi} is associated with a given \gls{snr} interval \cite{Blanquez-Casado2016}.
-%
-Considering \gls{lte} as an example, the \gls{bs} uses \gls{dci} embedded into the \gls{pdcch} to inform the \gls{ue} about each new \gls{mcs} selection \cite{ErikDahlman5G}.
-
-%
-% In the downlink \gls{amc} procedure, the \gls{ue} suggests to the \gls{bs} an appropriate \gls{mcs} in the \gls{amc} set to be used \cite{Sang2014}.
+% The trained agent selects  a \gls{mcs} according to SNR measurements to maximize the current spectral efficiency.
 % %
-% This proposed \gls{mcs} is informed to the \gls{bs} by means of a \gls{cqi}, typically each \gls{cqi} represents a \gls{snr} interval \cite{Blanquez-Casado2016}.
+% We assume  a beam-based \gls{5g}-\gls{nr} as access technology, where the transmit and receive beams are selected using the beam sweeping procedure from \cite{giordani21}. The proposed \gls{amc} acts between any two consecutive points of sweeping.
 % %
-% In possession of this information, the \gls{bs} selects an \gls{mcs} to transmit and reports  its selection to the \gls{ue}.
-
-Conventional solutions to the \gls{amc} problem includes the fixed look-up table \cite{fantacci2009adaptive}, also called \gls{illa}, and the \gls{olla} technique, which further improves the look-up table by adapting the \gls{snr} thresholds.
-%
-The \gls{olla} technique was first proposed in \cite{Sampath1997}, and was also addressed in \cite{Pedersen2007,Sarret2015, Blanquez-Casado2016}.
-
-\Gls{ml} has become an attractive tool to devise novel \gls{amc} solutions in the context of complex emerging \gls{5g} systems and services.
-%
-In particular the drive towards self-organizing networks is potentially addressed by machine learning.
-%
-While in \gls{lte}, a look-up table provides fixed \gls{amc} rules for all the users, the emerging systems need a more flexible approach that can automatically adjust physical layer parameters (such as the modulation and coding scheme) according to the user channel state and service type.
-%
-\Gls{rl} refers to a category of \gls{ml} techniques \cite{survey-son} that has been applied to problems such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
-% The goal of the \gls{amc} is an automatic choice of the best parameters, in this case the \gls{mcs}, depending on the user and applications requirements.
+% We consider that the \gls{snr} between two consecutive points of sweeping tends to decrease due to the \ue~mobility  since it causes a mismatch among beams and the channel paths.
 % %
-% As such, \gls{ml} algorithms are well suited to this application, because of their capabilities of learning patterns, forecasting behaviors and generating models \cite{survey-son}.
-%
-% A \gls{ml} category of particular interest to cellular systems is the \gls{rl}, because of its applicability in optimization problems \cite{survey-son}, such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
-There are few works that use \gls{rl} to solve the \gls{amc} problem.
-%
-In \cite{continuousState}, the selection of the \gls{mcs} is based on the received \gls{sinr}.
-%
-In this case, the state space is continuous, and the learning algorithm must handle a large state space.
-%
-In \cite{bruno2014robust} a Q-learning algorithm is proposed to solve the \gls{amc} problem in the context of a 4G \gls{lte} network.
-%
-A deep reinforcement learning approach is adopted in \cite{DRL_AMC} in the context of a cognitive heterogeneous network.
-%
-
-
-This work proposes a novel 5G \gls{amc} solution based on a \gls{rl} framework.
-%
-The proposed solution consists of collecting channel measurements at specific time instants to train an agent using the Q-learning algorithm.
-%
-The trained agent selects  a \gls{mcs} according to SNR measurements to maximize the current spectral efficiency.
-%
-We assume  a beam-based \gls{5g}-\gls{nr} as access technology, where the transmit and receive beams are selected using the beam sweeping procedure from \cite{giordani21}. The proposed \gls{amc} acts between any two consecutive points of sweeping.
-%
-We consider that the \gls{snr} between two consecutive points of sweeping tends to decrease due to the \ue~mobility  since it causes a mismatch among beams and the channel paths.
-%
-The agent uses the trained Q-table and the current measured \gls{snr} to properly select a \gls{mcs}.
-%
-To the best of authors' knowledge, previous works in \gls{amc} do not address the mismatch among beams and channel paths, while our solution works within the 5G-NR framework.
+% The agent uses the trained Q-table and the current measured \gls{snr} to properly select a \gls{mcs}.
+% %
+% To the best of authors' knowledge, previous works in \gls{amc} do not address the mismatch among beams and channel paths, while our solution works within the 5G-NR framework.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{System Model}
@@ -111,7 +111,7 @@ Therefore, the each beam pair solution remains constant within the time period $
 
 %% explanation of figure
 \begin{figure}[tb]
-\centerline{\includegraphics[width=\columnwidth]{figures/chp_amc/amc_q_learning.pdf}}
+\centerline{\includegraphics[width=0.7\columnwidth]{figures/chp_amc/amc_q_learning.pdf}}
 \caption{Model of time scheduling of operations.}
 \label{fig:amc-system-timing}
 \end{figure}
@@ -221,14 +221,15 @@ At each \gls{tti} the \gls{bs} makes a transmission of a \gls{tb} of $n_{bits}$ 
 % The \gls{bler} is a ratio of blocks with \gls{ber} above $0.1$. The spectral efficiency $\eta$, in $bit/s/Hz$, is calculated in terms of number of bits per modulation symbol \gls{not:mod} and the code rate \gls{not:rate} as:
 The \gls{bler} is the ratio of incorrectly received blocks over the total number of received blocks. %where a block is the result of the code block segmentation.
 %
-The spectral efficiency $\eta$, in $bit/s/Hz$, is calculated as $(1-\gls{bler})\gls{not:mod}\gls{not:rate}$, where \gls{not:mod} is the number of bits per modulation symbol and \gls{not:rate} is the code rate.
-%\begin{equation}
-%  \label{eq.:spec-eff}
-%  \eta = (1-\gls{bler})\gls{not:mod}\gls{not:rate}.
-%\end{equation}
+The spectral efficiency $\eta$, in $bit/s/Hz$, is calculated as:
+\begin{equation}
+ \label{eq.:spec-eff}
+ \eta = (1-\gls{bler})\gls{not:mod}\gls{not:rate} \, ,
+\end{equation}
+\noindent where \gls{not:mod} is the number of bits per modulation symbol and \gls{not:rate} is the code rate.
 
-\begin{figure}[tb]
-\centerline{\includegraphics[width=40mm]{figures/chp_amc/system-model-mateus.pdf}}
+\begin{figure}[htb]
+\centerline{\includegraphics[width=0.4\columnwidth]{figures/chp_amc/system-model-mateus.pdf}}
 \caption{Exchange of signals involved in the AMC procedure}
 \label{fig:amc-system-model}
 \end{figure}
@@ -251,8 +252,8 @@ The \gls{rl} based solution enables the system to learn the particularities of t
 
 A diagram adapting the model from Figure \ref{fig:rlbasic} to the \gls{amc} problem is shown in Figure \ref{fig:amc-rl-frame}.
 %
-\begin{figure}[t]
-\centerline{\includegraphics[width=55mm]{figures/chp_amc/rl-framework-mateus.pdf}}
+\begin{figure}[htb]
+\centerline{\includegraphics[width=0.5\columnwidth]{figures/chp_amc/rl-framework-mateus.pdf}}
 \caption{Basic diagram of the proposed AMC scheme}
 \label{fig:amc-rl-frame}
 \end{figure}
@@ -274,30 +275,42 @@ The goal of this reward function is to allow the agent to choose the best \gls{m
     R_2 = (1-BLER) \gls{not:mod} \gls{not:rate} \text{.}
 \end{equation}
 \noindent With this function, the agent will try to maximize the spectral efficiency.
-% A summary of the proposed \gls{ql-amc} algorithm is shown in Algorithm \ref{amc-alg}.
+A summary of the proposed \gls{ql-amc} algorithm is shown in Algorithm \ref{amc-alg}.
+
+\begin{algorithm}[htb]
+  \caption{\strut QL-AMC}
+    \label{amc-alg}
+ \nonl Initialize $Q(s, a) = 0$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
+ \nonl \ForEach{MCS Decision Point (see Fig. \ref{fig:amc-system-timing})}{
+  The UE \emph{observes the state} $s: \gls{cqi}$\ and feeds it back to the BS;\\
+  The BS \emph{takes an action} $a: MCS$ using the policy driven by $Q$ (e.g., $\epsilon$-greedy);\\
+  The BS \emph{perceives a reward} $r$ (c.f. Eqs. (\ref{eq.:rewardBler}) or (\ref{eq.:rewardSE})) and observes the next state $s^{\prime}$\;
+  The BS update the Q-table: $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_a Q(s',a)]$\;
+  $s \leftarrow s^{\prime}$\;
+\nonl }
+
+\end{algorithm}
 
 
+As will be shown in the next section, we will evaluate the impact and importance of on the system's \gls{bler} and spectral efficiency, and the difference between linear and non-linear rewards.
 
+The Table \ref{tab:ql-amc-def} summarizes the definitions of state, action and reward.
 
-%As will be shown in the next section, we will evaluate the impact and importance of on the system's \gls{bler} and spectral efficiency, and the difference between linear and non-linear rewards.
+\begin{table}[htb]
+\centering
+\caption{\gls{rl} elements}
+\label{tab:ql-amc-def}
+\begin{tabularx}{0.55\columnwidth}{X r}
+\toprule
+\textbf{Element} 	      & \textbf{Definition} \\
+\midrule
+State                   & \gls{cqi} \\
+Action                  & \gls{mcs} \\
+Reward                  & Eq: \eqref{eq.:rewardBler}, \eqref{eq.:rewardSE} \\
+\bottomrule
+\end{tabularx}
+\end{table}
 %
-% The Table \ref{tab:ql-amc-def} summarizes the definitions of state, action and reward.
-%
-% \begin{table}[!hb]
-% \centering
-% \caption{\gls{rl} elements}
-% \label{tab:ql-amc-def}
-% \begin{tabularx}{0.55\columnwidth}{X r}
-% \toprule
-% \textbf{Element} 	      & \textbf{Definition} \\
-% \midrule
-% State                   & \gls{cqi} \\
-% Action                  & \gls{mcs} \\
-% Reward                  & Eq: \eqref{eq.:reward1}, \eqref{eq.:rewardBler}, \eqref{eq.:rewardSE} \\
-% \bottomrule
-% \end{tabularx}
-% \end{table}
-% %
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -318,7 +331,7 @@ The noise power is fixed at $-123.185$ dBm.
 A summary of the main simulation parameters is provided in Table~\ref{tab:amc-sim-params}, while the parameters of the proposed \gls{ql-amc} algortihm are listed in Table \ref{tab:amc-rl-params}.
 
 
-\begin{table}[t]
+\begin{table}[htb]
 \centering
 \caption{Simulation Parameters}
 \label{tab:amc-sim-params}
@@ -356,7 +369,7 @@ Shadowing standard deviation & 6 dB\\
 %
 
 
-\begin{table}[tb]
+\begin{table}[htb]
 	\centering
 	\caption{QL-AMC Parameters}
 	\label{tab:amc-rl-params}
@@ -374,20 +387,6 @@ Shadowing standard deviation & 6 dB\\
 		\bottomrule
 	\end{tabularx}
 \end{table}
-
-% \begin{algorithm}[b]
-%   \caption{\strut QL-AMC}
-%     \label{amc-alg}
-%  \nonl Initialize $Q(s, a) = 0$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
-%  \nonl \ForEach{MCS Decision Point (see Fig. \ref{fig:amc-system-timing})}{
-%   The UE \emph{observes the state} $s: \gls{cqi}$\ and feeds it back to the BS;\\
-%   The BS \emph{takes an action} $a: MCS$ using the policy driven by $Q$ (e.g., $\epsilon$-greedy);\\
-%   The BS \emph{perceives a reward} $r$ (c.f. Eqs. (\ref{eq.:rewardBler}) or (\ref{eq.:rewardSE})) and observes the next state $s^{\prime}$\;
-%   The BS update the Q-table: $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_a Q(s',a)]$\;
-%   $s \leftarrow s^{\prime}$\;
-% \nonl }
-%
-% \end{algorithm}
 
 \subsection{Baseline Solutions}
 
@@ -459,61 +458,61 @@ The \gls{ue} has a speed of $5km/h$ and the simulation runs for a time equivalen
 %
 
 
-% %
-% The Table \ref{tab:train-results} summarizes the results, providing average values, of the metrics for each configuration of the \gls{ql-amc}.
-% %
-% SE is the spectral efficiency given by Equation \eqref{eq.:spec-eff}.
-% %
-% \begin{table}[!htb]
-% \centering
-% \caption{Training Phase Results}
-% \label{tab:train-results}
-% \begin{tabularx}{0.75\columnwidth}{l X X X r}
-% \toprule
-% Length & Reward &  BLER &  SE &   BER \\
-% \midrule
-% 10 &           2 & 0.0270 &  5.0850 & 0.0065 \\
-% 10 &           3 & 0.0288 &  5.1696 & 0.0070 \\
-% 15 &           2 & 0.0263 &  5.0827 & 0.0065 \\
-% 15 &           3 & 0.0289 &  5.1054 & 0.0071 \\
-% 30 &           2 & 0.0264 &  5.1463 & 0.0065 \\
-% 30 &           3 & 0.0286 &  5.1227 & 0.0070 \\
-% 60 &           2 & 0.0283 &  5.0852 & 0.0068 \\
-% 60 &           3 & 0.0279 &  5.1701 & 0.0068 \\
-% \bottomrule
-% \end{tabularx}
-% \end{table}
 %
-% Table \ref{tab:train-results} reveals that configurations adopting the spectral efficiency (reward 2) as the reward function, with state space of lengths 10 or 60, achieve the best results in terms of spectral efficiency.
-% %
-% This is coherent since reward 2 is the own spectral efficiency.
-% %
-% When the performance metric is the \gls{bler}, the non-linear reward function (reward 1, Eq. \eqref{eq.:rewardBler}) provides the best results with lengths of 15 and 30.
-% %
-% Figures \ref{fig:train-spceff} and \ref{fig:train-bler} shows respectively the average spectral efficiency and the average \gls{bler} of these four possible configurations.
-% %
-% Figure \ref{fig:train-spceff} shows that the length of the state space indeed has an important influence on the learning speed.
-% %
-% The smaller the length is, the faster is the learning speed, as expected.
-% %
-% The \gls{ql-amc} with length 60 has the worst performance before $10s$, but after $20s$ the performance of all configurations is approximately the same.
-% %
+The Table \ref{tab:amc-train-results} summarizes the results, providing average values, of the metrics for each configuration of the \gls{ql-amc}.
 %
-% \begin{figure}[!htbp]
-% \centerline{\includegraphics[width=\columnwidth]{figs/Spec-Eff-Train.pdf}}
-% \caption{Mean spectral efficiency on training phase}
-% \label{fig:train-spceff}
-% \end{figure}
+SE is the spectral efficiency given by Equation \eqref{eq.:spec-eff}.
 %
-% \begin{figure}[!htbp]
-% \centerline{\includegraphics[width=\columnwidth]{figs/BLER-Train.pdf}}
-% \caption{Mean \gls{bler} on training phase}
-% \label{fig:train-bler}
-% \end{figure}
+\begin{table}[htb]
+\centering
+\caption{Training Phase Results}
+\label{tab:amc-train-results}
+\begin{tabularx}{0.75\columnwidth}{l X X X r}
+\toprule
+Length & Reward &  BLER &  SE &   BER \\
+\midrule
+10 &           2 & 0.0270 &  5.0850 & 0.0065 \\
+10 &           3 & 0.0288 &  5.1696 & 0.0070 \\
+15 &           2 & 0.0263 &  5.0827 & 0.0065 \\
+15 &           3 & 0.0289 &  5.1054 & 0.0071 \\
+30 &           2 & 0.0264 &  5.1463 & 0.0065 \\
+30 &           3 & 0.0286 &  5.1227 & 0.0070 \\
+60 &           2 & 0.0283 &  5.0852 & 0.0068 \\
+60 &           3 & 0.0279 &  5.1701 & 0.0068 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Table \ref{tab:amc-train-results} reveals that configurations adopting the spectral efficiency (reward 2) as the reward function, with state space of lengths 10 or 60, achieve the best results in terms of spectral efficiency.
 %
-% The performances of the \gls{ql-amc}s in terms of \gls{bler} are similar for all configurations in Figure \ref{fig:train-bler}.
-% %
-% Before the $20s$ mark the curves are close, whereas the configuration with length 10 degrades slightly compared to other configurations after this time mark.
+This is coherent since reward 2 is the own spectral efficiency.
+%
+When the performance metric is the \gls{bler}, the non-linear reward function (reward 1, Eq. \eqref{eq.:rewardBler}) provides the best results with lengths of 15 and 30.
+%
+Figures \ref{fig:amc-train-spceff} and \ref{fig:amc-train-bler} shows respectively the average spectral efficiency and the average \gls{bler} of these four possible configurations.
+%
+Figure \ref{fig:amc-train-spceff} shows that the length of the state space indeed has an important influence on the learning speed.
+%
+The smaller the length is, the faster is the learning speed, as expected.
+%
+The \gls{ql-amc} with length 60 has the worst performance before $10s$, but after $20s$ the performance of all configurations is approximately the same.
+%
+
+\begin{figure}[!htbp]
+\centerline{\includegraphics[width=0.7\columnwidth]{figures/chp_amc/Spec-Eff-Train.pdf}}
+\caption{Mean spectral efficiency on training phase}
+\label{fig:amc-train-spceff}
+\end{figure}
+
+\begin{figure}[!htbp]
+\centerline{\includegraphics[width=0.7\columnwidth]{figures/chp_amc/BLER-Train.pdf}}
+\caption{Mean \gls{bler} on training phase}
+\label{fig:amc-train-bler}
+\end{figure}
+
+The performances of the \gls{ql-amc}s in terms of \gls{bler} are similar for all configurations in Figure \ref{fig:amc-train-bler}.
+%
+Before the $20s$ mark the curves are close, whereas the configuration with length 10 degrades slightly compared to other configurations after this time mark.
 
 
 \subsubsection{Deployment phase}
@@ -573,7 +572,7 @@ Analyzing Table \ref{tab:amc-deploy-results}, we see that the two \gls{ql-amc} c
 %
 
 \begin{figure}[tb]
-\centerline{\includegraphics[width=\columnwidth]{figures/chp_amc/SpecEff-Deploy.pdf}}
+\centerline{\includegraphics[width=0.7\columnwidth]{figures/chp_amc/SpecEff-Deploy.pdf}}
 \vspace{-2ex}
 \caption{CDF of average spectral efficiency (bps/Hertz)}
 \label{fig:amc-dep-spceff}

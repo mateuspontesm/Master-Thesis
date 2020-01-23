@@ -1,6 +1,90 @@
 \chapter{Introduction} \label{chp:introduction}
 
-BLA BLA
+\Gls{la} is a key technology to keep the \gls{bler} below a predefined threshold while maximizing the throughput.
+%
+The \gls{amc} is a key solution used in 4G systems and envisaged to \gls{5g} \gls{nr} system.
+%
+This approach consists in selecting the appropriate \gls{mcs} based on the channel quality.
+%
+% Basically, the systems use an \gls{amc} scheme that selects the appropriate \gls{mcs}.
+% One key technique for \gls{la} is the \gls{amc} that selects the appropriate \gls{mcs}.
+A very well known approach to perform such a selection is the use of \gls{amc}-like solutions.
+%
+They use the channel state information to keep the \gls{bler} below a predefined threshold.
+% That is made based on the channel quality in order to keep the \gls{bler} below a predefined threshold.
+%
+In \gls{lte}, the target is fixed to 10\%, but the \gls{5g} \gls{nr} will cover a wider spectrum of services, and they impose new set of \gls{bler} targets \cite{Amin_2016,fantacci2009adaptive}.
+%
+Another aspect in \gls{la} is the rank adaptation, which defines the appropriate number of transmitted spatial streams is selected before transmission.
+%
+Rank adaptation is used in order to increase the throughput in low interference scenarios and reliability in high interference scenarios.
+
+%
+% \Gls{5g} wireless communication systems are being designed to provide high data and transmission rates \cite{Amin_2016}.
+% %
+% Because of this, a reliable link adaptation process for \gls{5g} \gls{nr} is needed for coping with the need of increasing the data rate that can be accurately transmitted \cite{chu01}.
+% %
+%
+% In this context, the link adaptation technique of \gls{amc} is of great interest.
+% %
+% \Gls{amc} is a resource allocation technique used in link adaptation that allows the system to select the most appropriate \gls{mcs} to better cope with the changing channel conditions \cite{fantacci2009adaptive}.
+% %
+
+\Gls{amc} is a solution to match the modulation scheme and coding rate to the time-varying nature of the wireless channel.
+%
+Periodically, the \gls{ue} measures the channel quality and processes this information to map into a \gls{cqi}.
+%
+Typically, each \gls{cqi} represents a \gls{snr} interval \cite{Blanquez-Casado2016}.
+%
+The \gls{bs} uses the \gls{cqi} reported by the \gls{ue} to define the appropriate \gls{mcs}.
+%
+Thanks to the \gls{pdcch}, the new \gls{mcs} is informed to the \gls{ue} through the \gls{dci} \cite{ErikDahlman5G}.
+%
+By its turn, rank adaptation improves the systems performance, especially when used with \gls{irc} by selecting the number of transmission layers, or spatial multiplexing factor.
+%
+In high interference scenarios lower ranks are preferred as it improves the interference suppression at the receiver side and at low interference scenarios higher ranks can be used to increase the throughtput \cite{catania2015distributed}.
+%
+% In the downlink \gls{amc} procedure, the \gls{ue} suggests to the \gls{bs} an appropriate \gls{mcs} in the \gls{amc} set to be used \cite{Sang2014}.
+% %
+% This proposed \gls{mcs} is informed to the \gls{bs} by means of a \gls{cqi}, typically each \gls{cqi} represents a \gls{snr} interval \cite{Blanquez-Casado2016}.
+% %
+% In possession of this information, the \gls{bs} selects an \gls{mcs} to transmit and reports  its selection to the \gls{ue}.
+
+\Gls{rl} framework has become an attractive tool to devise novel \gls{5g} \gls{la} due to the capacity of \gls{rl} tools in solving problems whose model varies over time.
+%
+% The goal of the \gls{la} is an automatic choice of the best parameters depending on the user, channel conditions and applications requirements.
+% While in \gls{lte}, the look-up table provides fixed \gls{amc} rules for all the users, the novel system needs a more flexible one that can be adjusted according to user channel state.
+%
+\Gls{rl} falls into a category of \gls{ml} problems, and it has been applied in problems \cite{survey-son} such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
+%
+The use of \gls{rl} in the context of \gls{la} has been recently addressed in \cite{continuousState}, \cite{bruno2014robust} and \cite{DRL_AMC}.
+
+% The goal of the \gls{la} is an automatic choice of the best parameters, in this case the \gls{mcs}, depending on the user and applications requirements.
+% %
+% As such, \gls{ml} algorithms are well suited to this application, because of their capabilities of learning patterns, forecasting behaviors and generating models \cite{survey-son}.
+%
+% A \gls{ml} category of particular interest to cellular systems is the \gls{rl}, because of its applicability in optimization problems \cite{survey-son}, such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
+
+
+% There are few works that use \gls{rl} in \gls{la} problem.
+%
+% In \cite{continuousState}, the selection of the \gls{mcs} is based on the received \gls{sinr}, as such the state space is continuous, and the learning algorithm must handle this large state space.
+% %
+% In \cite{bruno2014robust} a Q-learning approach is used to solve the \gls{amc} problem in the context of a \gls{lte} network.
+%
+% A deep reinforcement learning approach is used in \cite{DRL_AMC} as a solution to the \gls{amc} problem, in a cognitive heterogeneous network.
+%
+
+The main contributions of our work are:
+\begin{enumerate}
+    \item Proposition and analysis of a \gls{la} solution that selects the \gls{mcs} and the \gls{pmi} by using a \gls{rl} framework.
+    \item Our solution complies with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212}
+    \item It also complies with the \gls{5g} \gls{nr} procedures for data as it considers the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
+\end{enumerate}
+%
+Furthermore, our solution complies with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212} while also using the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
+% As such, the main difference between our work and the previous approaches is the implementation of the channel coding as proposed by the \gls{5g} standard while also using the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{State-of-the-Art}

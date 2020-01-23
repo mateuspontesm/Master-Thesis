@@ -35,9 +35,13 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Package algorithm -- pacote para manipulação de pseudo-código.
-\RequirePackage[chapter]{algorithm}
-\RequirePackage{algorithmicx}
-\RequirePackage{algpseudocode}
+\usepackage[ruled,longend,linesnumbered]{algorithm2e}
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}
+\let\oldnl\nl% Store \nl in \oldnl
+\sloppy
+% \RequirePackage[chapter]{algorithm}
+% \RequirePackage{algorithmicx}
+% \RequirePackage{algpseudocode}
 
 % ---
 % Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
