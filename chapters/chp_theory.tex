@@ -195,7 +195,7 @@ At the transmitter side, \gls{bs}, a \gls{tb} of size \gls{tbs} is delivered fro
 
 
 \subsection{The \gls{5g} \gls{nr} \gls{ldpc}}
-
+\label{subsec:ldpc}
 
 Before explaining the procedures in Figure \ref{fig:transmission}, we will present some introduction to the \gls{ldpc} coding solution applied to the \gls{embb} use case in the \gls{5g} \gls{nr}.
 %
@@ -335,7 +335,7 @@ Figure \ref{fig:rate-vs-k} illustrates the regions in which each \gls{bg} is use
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%--subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{\gls{crc} attachment}
+\subsection{\gls{crc} attachment and \gls{cb} segmentation}
 
 The \gls{crc} bits are calculated from a cyclic generator polynomial.
 %
@@ -364,11 +364,18 @@ In case the \gls{tbs} is greater than 3824, the \gls{crc} has a length of 24 bit
 %
 Generator polynomial $g_{\mathrm{CRC16}}$, Equation \eqref{eq.:crc16}, is used otherwise, producing a 16-bit \gls{crc}.
 
+
+\Gls{cb} segmentation occurs whenever the output of the \gls{crc} attachment is larger than the maximum code block size (8448 for \gls{bg} 1 and 3840 for \gls{bg} 2).
+%
+The objective of the segmentation is to produce \glspl{cb}, of equal size, that can be feed to the \gls{ldpc} encoder.
+%
 When \gls{cb} segmentation occurs each \gls{cb} receives a \gls{crc} of 24 bits, which is calculated from the generator polynomial $g_{\mathrm{CRC24B}}$, Equation \eqref{eq.:crc24b}.
 %
 This process is ilustrated in Figure \ref{fig:cbcrc}.
 %
-If only one \gls{cb} is produced, no additional \gls{crc} is attached to it \cite{ErikDahlman5G}.
+If only one \gls{cb} is produced, no additional \gls{crc} is attached to it \cite{ErikDahlman5G, 3gpp.38.212}.
+%
+In the technical specification \cite{3gpp.38.212}, the \gls{cb} segmentation procedure is when the \gls{not:lift-factor}, which is a important information to the \gls{ldpc} encoder, is calculated.
 
 \begin{figure}[htb]
     \includegraphics[width=\columnwidth]{figures/chp_theory/crc.pdf}
@@ -376,8 +383,13 @@ If only one \gls{cb} is produced, no additional \gls{crc} is attached to it \cit
     \label{fig:cbcrc}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%--End Of subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%
+\subsection{\gls{ldpc} encoder}
+
+The \glspl{cb} delivered after the \gls{cb} segmentation are then encoded, the procedures are
+
+%%%%%%%%%%%%%%%%%%%%%%%%--End Of subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
