@@ -437,9 +437,74 @@ The value of \gls{not:shift-coef} is given by:
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Layer mapping}
 
+The modulated symbols are distributed across the different transmission layers.
+%
+One \gls{tb} can be mapped to a maximum of 4 layers, as stated in  \cite[Table 7.3.1.3]{3gpp.38.211}.
+%
+In case of 5 to 8 layers (only on downlink) another \gls{tb} is mapped to layers from 5 to 8.
+%
+The mapping is done as: every n-th symbol is mapped to the n-th layer \cite{ErikDahlman5G}.
+
+To exemplify we show the cases of 3, 5 and 6 layers.
+%
+For a sequence of symbols $d^{(q)}$ modulated from the q-th \gls{tb} and with
+$\gls{not:nLayers}_q$ being the number of layers allocated to the transmission of the q-th \gls{tb} and $x$ being the output of the layer mapping, where $x^{(j)}$ is the vector of complex symbols mapped to layer $j$, we have:
+%
+\begin{itemize}
+    \item $\gls{not:nLayers} = 3 $, then $q=0$ and $\gls{not:nLayers}_q = 3$:
+    $$
+    \begin{gathered}
+        x^{(0)}_{i} = d^{(0)}_{3 i} \\
+        x^{(1)}_{i} = d^{(0)}_{3 i + 1} \\
+        x^{(2)}_{i} = d^{(0)}_{3 i + 2}
+    \end{gathered}
+    $$
+    \item $\gls{not:nLayers} = 5 $, then $q \in \{0,1\}$, $\gls{not:nLayers}_0 = 2$ and $\gls{not:nLayers}_1 = 3$:
+    $$
+    \begin{gathered}
+        x^{(0)}_{i} = d^{(0)}_{2 i} \\
+        x^{(1)}_{i} = d^{(0)}_{2 i + 1} \\
+        x^{(2)}_{i} = d^{(1)}_{3 i} \\
+        x^{(3)}_{i} = d^{(1)}_{3 i + 1} \\
+        x^{(4)}_{i} = d^{(1)}_{3 i + 2}
+    \end{gathered}
+    $$
+    \item $\gls{not:nLayers} = 6 $, then $q \in \{0,1\}$, $\gls{not:nLayers}_0 = 3$ and $\gls{not:nLayers}_1 = 3$:
+    $$
+    \begin{gathered}
+        x^{(0)}_{i} = d^{(0)}_{3 i} \\
+        x^{(1)}_{i} = d^{(0)}_{3 i + 1} \\
+        x^{(2)}_{i} = d^{(0)}_{3 i + 2} \\
+        x^{(3)}_{i} = d^{(1)}_{3 i} \\
+        x^{(4)}_{i} = d^{(1)}_{3 i + 1} \\
+        x^{(5)}_{i} = d^{(1)}_{3 i + 2}
+    \end{gathered}
+    $$
+\end{itemize}
+
+We can generalize this behavior to:
+%
+\begin{equation}
+    x^{(j)}_{i} =
+    \begin{cases}
+          d^{(0)}_{\gls{not:nLayers}_0 i + j} \text{ , for } j=0,\ldots, \gls{not:nLayers}_0 - 1 \\
+         d^{(1)}_{\gls{not:nLayers}_1 i + j} \text{ , for } j=\gls{not:nLayers}_0, \ldots, \gls{not:nLayers} - 1
+    \end{cases}
+\end{equation}
+
+
+%
+With more than 4 layers the number of layers assigned to the transmission of each \gls{tb} is:
+\begin{equation}
+    \begin{gathered}
+        \gls{not:nLayers}_0 = \floor{\gls{not:nLayers}/2} \\
+        \gls{not:nLayers}_1 = \ceil{\gls{not:nLayers}/2}
+    \end{gathered}
+\end{equation}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Layer mapping}
+\subsection{Multi-antenna Precoding}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

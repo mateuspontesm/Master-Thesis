@@ -75,9 +75,32 @@ The use of \gls{rl} in the context of \gls{la} has been recently addressed in \c
 % A deep reinforcement learning approach is used in \cite{DRL_AMC} as a solution to the \gls{amc} problem, in a cognitive heterogeneous network.
 %
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{State-of-the-Art}
+% The use of \gls{rl} in the context of \gls{la} has been recently addressed in \cite{continuousState}, \cite{bruno2014robust} and \cite{DRL_AMC}.
+
+% The goal of the \gls{la} is an automatic choice of the best parameters, in this case the \gls{mcs}, depending on the user and applications requirements.
+% %
+% As such, \gls{ml} algorithms are well suited to this application, because of their capabilities of learning patterns, forecasting behaviors and generating models \cite{survey-son}.
+%
+% A \gls{ml} category of particular interest to cellular systems is the \gls{rl}, because of its applicability in optimization problems \cite{survey-son}, such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
+
+
+
+There are few works that use \gls{rl} in \gls{la} problem.
+%
+In \cite{continuousState}, the selection of the \gls{mcs} is based on the received \gls{sinr}, as such the state space is continuous, and the learning algorithm must handle this large state space.
+%
+In \cite{bruno2014robust} a Q-learning approach is used to solve the \gls{amc} problem in the context of a \gls{lte} network.
+%
+A deep reinforcement learning approach is used in \cite{DRL_AMC} as a solution to the \gls{amc} problem, in a cognitive heterogeneous network.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Contributions and Thesis Structure}
 The main contributions of our work are:
 \begin{enumerate}
-    \item Proposition and analysis of a \gls{la} solution that selects the \gls{mcs} and the \gls{pmi} by using a \gls{rl} framework.
+    \item Proposition and analysis of an \gls{amc} and a \gls{la} solution that selects the \gls{mcs} and the \gls{pmi} by using a \gls{rl} framework.
     \item Our solution complies with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212}
     \item It also complies with the \gls{5g} \gls{nr} procedures for data as it considers the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
 \end{enumerate}
@@ -85,53 +108,22 @@ The main contributions of our work are:
 Furthermore, our solution complies with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212} while also using the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
 % As such, the main difference between our work and the previous approaches is the implementation of the channel coding as proposed by the \gls{5g} standard while also using the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{State-of-the-Art}
-BLA BLA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Dual-Connectivity}\label{sec:chp_intr_multi_connect}
-BLA BLA
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-HOHO
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Channel Hardening}\label{sec:chp_intr_channel_hardening}
-HIHI
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Objectives and Thesis Structure}
-HAHA
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Scientific Contributions}
 \begin{refsection}
 
 Currently, the content of this thesis has been partially published with the following bibliographic information: %
 
-\noindent\textit{\textbf{Journal Papers}}
+\noindent\textit{\textbf{Conference Papers}}
 \begin{itemize}
-	\item salame
+	\item \printpublication{mota2019adaptive}
 \end{itemize}
 
-It is worth mentioning that this thesis was developed under the context of Ericsson/UFC technical cooperation projects:
+It is worth mentioning that this master thesis was developed under the context of Ericsson/UFC technical cooperation projects:
 \begin{itemize}
-	\item UFC.40 - \textit{Quality of Service Provision and Control for 5th Generation Wireless Systems}, October/2014 - September/2016;
-	\item UFC.43 - \textit{5G Radio Access Network (5GRAN)}, November/2016 - October/2018,
-\end{itemize}
-in which a number of eight technical reports, four in each project, have been delivered. %
-Besides, due to this partnership, two Ph.D. internships took place during this Ph.D.:
-\begin{itemize}
-	\item Feb/2016-Jun/2016: Ph.D. internship at Ericsson Research in Lule\aa -Sweden;
-	\item Sep/2017-Aug/2018: Ph.D. internship at Ericsson Research in Stockholm/Kista - Sweden.
+	\item UFC.47 - \textit{5G-MAGIC (Machine leArninG lInk Control)}, November/2018 - October/2020;
 \end{itemize}
 
-Also in the context of these projects, the author collaborated in the following scientific publication:
-
-\subsection*{Journal Papers}
-\begin{itemize}
-    \item science
-	% \item \printpublication{Sousa2016}
-\end{itemize}
+in which a number of 2 technical reports have been delivered. %
 
 \end{refsection}
