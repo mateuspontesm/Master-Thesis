@@ -32,6 +32,8 @@
 \else
 %	\usepackage{mathptmx}
 	\usepackage{utopia}
+    % \usepackage{newtxmath}
+    % \usepackage{newtxtext}
 \fi
 
 %%%%%% Modificações de acordo com o guia de normalização da UFC

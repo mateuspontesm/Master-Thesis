@@ -1,5 +1,5 @@
 % !TEX root = manuscript.tex
-
+\glsresetall
 \chapter{Conceptual Framework}%\chapter{Key Features of \acs{3GPP} \acs{5G} Standards}%\chapter{\acs{5G} Scenario}%{System Modeling}
 \label{chp:theory}
 
@@ -505,6 +505,43 @@ With more than 4 layers the number of layers assigned to the transmission of eac
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Multi-antenna Precoding}
+
+In the multi-antenna precoding step, the different transmission layers are mapped to a set of antenna ports by a precoder matrix.
+%
+The definition of antenna port given in the technical specification \cite{3gpp.38.211} is ``an antenna port is defined such that the channel over which a symbol on the antenna port is conveyed can be inferred from the channel over which another symbol on the same antenna port is conveyed''\cite[Section 4.4.1]{3gpp.38.211}.
+%
+This means that, every downlink transmission is executed by a specific antenna port, with its identity known to the \gls{ue} and that the \gls{ue} can assume that two transmitted signals shared the same radio channel if and only if they used the same antenna port \cite{ErikDahlman5G, AliZaidi632018}.
+%
+
+It is important to note that antenna port is an abstract concept, as it is a logical entity that does not correspond necessarily to a specific physical antenna.
+%
+In practice what defines an antenna port is the transmitted reference signal, since the \gls{ue} can use a reference signal, such as the \gls{dmrs}, conveyed by an antenna port to estimate the channel of this antenna port and use this estimate to decode the data transmitted by the same antenna port afterwards.
+%
+To illustrate what this means, we highlight two examples based on \cite{ErikDahlman5G, AliZaidi632018}:
+\begin{itemize}
+    \item In the case that multiple physical antennas transmit two different signals in the same way, the \gls{ue} will perceive these two signals as being propagated by the same single channel, which corresponds to the combination of the channels of the different physical antennas. The \ue will see these two signals as if they were transmitted from the same antenna port.
+
+    \item In the case that two signals are transmitted from the same set of physical antennas and beam-formed with different weights, the resulting transmission will be considered as being from two different antenna ports, because the \ue will perceive two different effective channels, since the precoder is unknown to the \ue.
+\end{itemize}
+
+Table \ref{tab:antenna-ports} shows the defined sets of antenna ports for \gls{5g} \gls{nr} and their respective usages in the downlink and uplink \cite[Subsections 6.2 and 7.2]{3gpp.38.211}, which include a number of reference signals, such as the \gls{csi}-\gls{rs}, \gls{ss} and \gls{srs}.
+
+\begin{table}[htb]
+\centering
+\caption{Antenna ports}
+\label{tab:antenna-ports}
+\begin{tabular}{l c c}
+  \toprule
+  Antenna port series & Uplink & Downlink \\
+  \midrule
+  Starting with 0  &  \gls{dmrs} for \gls{pusch} & \textemdash \\
+  Starting with 1000  & \gls{srs}, \gls{pusch} & \gls{pdsch}   \\
+  Starting with 2000  & \gls{pucch} & \gls{pdcch} \\
+  Starting with 3000  & \textemdash & \gls{csi}-\gls{rs} \\
+  Starting with 4000  & \gls{prach} & \gls{ss}/\gls{pbch} block transmission \\
+  \bottomrule
+\end{tabular}
+\end{table}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
