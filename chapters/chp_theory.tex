@@ -432,6 +432,45 @@ The value of \gls{not:shift-coef} is given by:
 
 \subsection{Rate matching}
 
+The rate matching is directly linked to the \gls{phy} \gls{harq} functionality, and they serve two purposes \cite{ErikDahlman5G}:
+%
+\begin{itemize}
+    \item Select a suitable number of bits for transmission, matching the resources assigned for transmission.
+    \item Support \gls{harq} by using different \glspl{rv}.
+\end{itemize}
+%
+Rate matching consists of a bit selection from a circular buffer depending on of the \gls{rv} and each \gls{cb} is rate matched separately.
+
+\Gls{5g} \gls{nr} \gls{ldpc} codes supports a circular buffer rate matching for \gls{irharq} similar to \gls{lte} \cite{Hamidi8417496}.
+%
+Particularly,  circular buffer is filled with an ordered sequence of systematic bits and parity bits. Each RV is assigned a starting bit location in  the  circular  buffer.  The  RV  enables  the  receiver  to  know  where the received packet started in circular buffer and allows it to perform appropriate soft-combining operations.
+%
+The coded bits, which correspond to the output of the encoding step, are written in a circular buffer, the ordering in the circular buffer follows the \gls{ldpc} matrix structure, with systematic bits first and then parity bits.
+%
+The circular buffer is filled with the coded bits from the encoding step, starting with the systematic bits and then following with the parity bits.
+
+
+
+Although the procedure applied in this work only concerns the \gls{ldpc} rate matching, we highlight the more general procedure of the polar coding rate matching.
+%
+In \cite{Hui2018} three different cases are defined: puncturing, shortening and repetition.
+%
+We denote the input to the polar coding rate matching as \gls{not:coded-bits} and the desired length of the output as \gls{not:rm-bits}.
+%
+Puncturing and shortening refer to the case of $\gls{not:coded-bits} > \gls{not:rm-bits}$, while repetition refers to the case of $\gls{not:coded-bits} < \gls{not:rm-bits}$, then:
+%
+\begin{enumerate}
+    \item Puncturing: Extracting \gls{not:rm-bits} bits starting from the $(\gls{not:coded-bits} - \gls{not:rm-bits} + 1)$th bit on the circular buffer. This is equivalent to selecting the last \gls{not:rm-bits} bits of the circular buffer.
+    %
+    \item Shortening: Extracting \gls{not:rm-bits} bits starting from the initial position on the circular buffer. This is equivalent to selecting the first \gls{not:rm-bits} bits of the circular buffer.
+    %
+    \item Repetition: Extracting \gls{not:rm-bits} bits starting from the initial position on the circular buffer while wrapping around on the last $(\gls{not:coded-bits} - \gls{not:rm-bits})$ bits. This is equivalent to selecting all the \gls{not:coded-bits} bits of the circular buffer and adding the first $(\gls{not:coded-bits} - \gls{not:rm-bits})$ again.
+\end{enumerate}
+%
+All these cases are illustrated in Figure \_:
+
+\Gls{ldpc} rate matching includes only the shortening and repetition equivalents of the polar coding rate matching, although the shortening of the polar codes is equivalent to the so called puncturing of the \gls{ldpc} in \cite{Hui2018}.
+%
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -521,7 +560,7 @@ To illustrate what this means, we highlight two examples based on \cite{ErikDahl
 \begin{itemize}
     \item In the case that multiple physical antennas transmit two different signals in the same way, the \gls{ue} will perceive these two signals as being propagated by the same single channel, which corresponds to the combination of the channels of the different physical antennas. The \ue will see these two signals as if they were transmitted from the same antenna port.
 
-    \item In the case that two signals are transmitted from the same set of physical antennas and beam-formed with different weights, the resulting transmission will be considered as being from two different antenna ports, because the \ue will perceive two different effective channels, since the precoder is unknown to the \ue.
+    \item In the case that two signals are transmitted from the same set of physical antennas and beam-formed with different weights, the resulting transmission will be considered as being from two different antenna ports, because the \gls{ue} will perceive two different effective channels, since the precoder is unknown to the \gls{ue}.
 \end{itemize}
 
 Table \ref{tab:antenna-ports} shows the defined sets of antenna ports for \gls{5g} \gls{nr} and their respective usages in the downlink and uplink \cite[Subsections 6.2 and 7.2]{3gpp.38.211}, which include a number of reference signals, such as the \gls{csi}-\gls{rs}, \gls{ss} and \gls{srs}.
@@ -542,6 +581,8 @@ Table \ref{tab:antenna-ports} shows the defined sets of antenna ports for \gls{5
   \bottomrule
 \end{tabular}
 \end{table}
+
+The mapping between the \gls{not:nLayers} layers and the $\gls{not:txAnt}_{AP}$ antenna ports is defined by a $\gls{not:txAnt}_{AP} \times \gls{not:nLayers}$ precoder matrix \gls{not:Wtx}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
