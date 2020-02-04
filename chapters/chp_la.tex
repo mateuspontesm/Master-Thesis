@@ -33,12 +33,12 @@ The filter \gls{not:Wrx} is calculated from the channel perceived by the receive
 \begin{equation}
 \label{eq.:Wrx}
 \gls{not:Wrx} =
-(
+\left(
 \channel_{\textrm{rx}}^H
 \channel_{\textrm{rx}}
 +
 \frac{ \gls{not:var} }{ p_{\gls{not:sscl}} }
-\mathbf{I}_{\gls{not:nLayers}} )^\dagger
+\mathbf{I}_{\gls{not:nLayers}} \right)^\dagger
 \channel_{\textrm{rx}}^H \;,
 \end{equation}
 
@@ -127,12 +127,12 @@ The \gls{cqi} is a measure of the \gls{snr}, and the number of possible \gls{cqi
 % \end{equation}
 \begin{equation}\label{eq:cqi}
 \textrm{CQI} = \min{
-	(\max {(0, \textrm{CQI}^{\prime} ) }, n_{cqis} - 1)},
+	(\max {(0, \textrm{CQI}^{\prime} ) }, n_{\text{cqis}} - 1)},
 \end{equation}
 
 \noindent where $\textrm{CQI}^{\prime}$ is calculated from the \gls{snr}s in dB as:
 \begin{equation}\label{eq:cqi_prime}
-\textrm{CQI}^{\prime} = \floor[\Big]{(n_{cqis}-1)\frac{\textrm{SNR} - \textrm{SNR}_{min}}{\textrm{SNR}_{max}-\textrm{SNR}_{min}}}
+\textrm{CQI}^{\prime} = \floor[\Big]{(n_{\text{cqis}}-1)\frac{\textrm{SNR} - \textrm{SNR}_{\text{min}}}{\textrm{SNR}_{\text{max}}-\textrm{SNR}_{\text{min}}}}
 \end{equation}
 
 % \noindent note that each \gls{cqi}, except the minimum and the maximum, comprises \gls{snr} intervals having the same length in dB.
@@ -181,16 +181,16 @@ Figure \ref{fig:la-rl-frame} shows how the \gls{rl} framework fits the \gls{la} 
 \end{figure}
 %
 
-In the proposed \gls{la} solution, the state space is the set of all possible \gls{cqi}s, from $0$ to $(n_{cqi}-1)$, for both agents; the action space is the set of all possible \gls{mcs}s for the agent 1 and the set of all possible \gls{pmi}s for the agent 2. As for the reward for each agent, $R_{PMI}$ is defined as:
+In the proposed \gls{la} solution, the state space is the set of all possible \gls{cqi}s, from $0$ to $(n_{\text{cqi}}-1)$, for both agents; the action space is the set of all possible \gls{mcs}s for the agent 1 and the set of all possible \gls{pmi}s for the agent 2. As for the reward for each agent, $R_{PMI}$ is defined as:
 %
 \begin{equation}\label{eq.:rewardPMI}
-R_{PMI} = \begin{cases}
+R_{\text{PMI}} = \begin{cases}
 \gls{not:nLayers}, \text{ if ACK} \\
 0, \text{ else,}
 \end{cases}
 \end{equation}
 %
-\noindent where \gls{not:nLayers} is the number of transmission layers. The $R_{MCS}$ is defined as:
+\noindent where \gls{not:nLayers} is the number of transmission layers. The $R_{\text{MCS}}$ is defined as:
 \begin{equation}\label{eq.:rewardMCS}
 R_{MCS} = \begin{cases}
 \dfrac{\textrm{\gls{tbs}}}{\gls{not:nLayers}}, \text{ if ACK} \\
@@ -294,7 +294,7 @@ Several combinations of the Q-Learning parameters $\alpha$ and $\gamma$ were tes
 		Learning rate ($\alpha$) & 0.70\\
 		Maximum exploration rate ($\epsilon_{\max}$) & 0.50\\
 		Minimum exploration rate ($\epsilon_{\min}$) & 0.05\\
-		$n_{cqis}$ & 16 \\
+		$n_{\text{cqis}}$ & 16 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}

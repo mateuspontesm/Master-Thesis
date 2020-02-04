@@ -186,11 +186,11 @@ In this work we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up
 The \gls{tbs} determination process is defined in \cite[Section 5.1.3.2]{3gpp.38.214}, and it depends on the following parameters:
 
 \begin{enumerate}
-    \item $N_{sc}^{RB}$: The number of subcarriers in a \gls{rb}, 12.
-    \item $N_{symb}^{sh}$: Number of symbols of the \gls{pdsch} allocation within the slot.
-    \item $N_{DMRS}^{PRB}$: Number of \glspl{re} for \gls{dmrs} per \gls{prb} in the scheduled duration including the overhead of the \gls{dmrs} \gls{cdm} groups without data.
-    \item $N_{oh}^{PRB}$: Overhead configured by a higher layer parameter. Set to 0 if not configured.
-    \item $n_{PRB}$: Total number of allocated \glspl{prb} for the \gls{ue}.
+    \item $N_{\text{sc}}^{\text{RB}}$: The number of subcarriers in a \gls{rb}, 12.
+    \item $N_{\text{symb}}^{\text{sh}}$: Number of symbols of the \gls{pdsch} allocation within the slot.
+    \item $N_{\text{DMRS}}^{\text{PRB}}$: Number of \glspl{re} for \gls{dmrs} per \gls{prb} in the scheduled duration including the overhead of the \gls{dmrs} \gls{cdm} groups without data.
+    \item $N_{\text{oh}}^{\text{PRB}}$: Overhead configured by a higher layer parameter. Set to 0 if not configured.
+    \item $n_{\text{PRB}}$: Total number of allocated \glspl{prb} for the \gls{ue}.
 \end{enumerate}
 
 With the above information, the total number of \glspl{re} in the \gls{pdsch} allocation can be determined, which will be used to calculate the \gls{tbs} using also the number of transmission layers, \gls{not:nLayers}, the target code rate, \gls{not:rate}, and the modulation order, \gls{not:mod}.
@@ -441,14 +441,43 @@ The rate matching is directly linked to the \gls{phy} \gls{harq} functionality, 
 %
 Rate matching consists of a bit selection from a circular buffer depending on of the \gls{rv} and each \gls{cb} is rate matched separately.
 
-\Gls{5g} \gls{nr} \gls{ldpc} codes supports a circular buffer rate matching for \gls{irharq} similar to \gls{lte} \cite{Hamidi8417496}.
+\Gls{5g} \gls{nr} \gls{ldpc} codes supports a circular buffer rate matching for \gls{irharq} similar to \gls{lte}.
 %
-Particularly,  circular buffer is filled with an ordered sequence of systematic bits and parity bits. Each RV is assigned a starting bit location in  the  circular  buffer.  The  RV  enables  the  receiver  to  know  where the received packet started in circular buffer and allows it to perform appropriate soft-combining operations.
+The coded bits, which correspond to the output of the encoding step, are written in a circular buffer, the ordering of which follows the \gls{ldpc} matrix structure, with systematic bits first and then parity bits \cite{Hamidi8417496}.
 %
-The coded bits, which correspond to the output of the encoding step, are written in a circular buffer, the ordering in the circular buffer follows the \gls{ldpc} matrix structure, with systematic bits first and then parity bits.
+The starting position of the bit selection in the circular buffer depends on the \gls{rv}, as shown in Figure \ref{fig:rate-match-rv}.
 %
-The circular buffer is filled with the coded bits from the encoding step, starting with the systematic bits and then following with the parity bits.
+The \glspl{rv} fixed locations are defined in terms of the lifting value \gls{not:lift-factor} and are different for each \gls{bg}, the different positions are shown in Table \ref{tab:rv-positions} \cite{3gpp.38.212}.
+%
 
+\begin{table}[htb]
+\centering
+\caption{Starting positions for each \gls{rv} and \gls{bg}}
+\label{tab:rv-positions}
+\begin{tabularx}{0.55\columnwidth}{l c c c r}
+  \toprule
+  \Gls{bg}  & \gls{rv} 0  & \gls{rv} 1 & \gls{rv} 2 & \gls{rv} 3   \\
+  \midrule
+  \Glsentrylong{bg} 1 & $0$ & $17 \gls{not:lift-factor}$ & $33 \gls{not:lift-factor}$ & $56 \gls{not:lift-factor}$\\
+  \Glsentrylong{bg} 2 & $0$ & $13 \gls{not:lift-factor}$  & $25 \gls{not:lift-factor}$ & $43 \gls{not:lift-factor}$\\
+  \bottomrule
+\end{tabularx}
+\end{table}
+
+
+Selecting different \glspl{rv} enables the receiver to apply soft-combining by keeping the soft values of the received coded bits, i.e \glspl{llr} and combining it with the retransmitted bits, in case of a retransmission.
+%
+Since each retransmission corresponds to a different \gls{rv}, different \glspl{cb} are generated, but representing the same set of information, enabling different parity bits to be transmitted at each retransmission, illustrated in figure Figure \ref{fig:rate-match-rv}.
+%
+This allows a gain in reliability, not only because of the better estimation of the soft values, but also because of the lower rate of the resulted soft combined values \cite{ErikDahlman5G,bae_abotabl_lin_song_lee_2019}.
+
+
+\begin{figure}[htb]
+    \includegraphics[width=0.8\columnwidth]{figures/chp_theory/rate-matching-rv.pdf}
+    \caption{Example of different \gls{rv} positions and retransmissions}
+    \label{fig:rate-match-rv}
+    \source{Created by the author based on \cite[Figure 9.5]{ErikDahlman5G}}
+\end{figure}
 
 
 Although the procedure applied in this work only concerns the \gls{ldpc} rate matching, we highlight the more general procedure of the polar coding rate matching.
@@ -467,11 +496,25 @@ Puncturing and shortening refer to the case of $\gls{not:coded-bits} > \gls{not:
     \item Repetition: Extracting \gls{not:rm-bits} bits starting from the initial position on the circular buffer while wrapping around on the last $(\gls{not:coded-bits} - \gls{not:rm-bits})$ bits. This is equivalent to selecting all the \gls{not:coded-bits} bits of the circular buffer and adding the first $(\gls{not:coded-bits} - \gls{not:rm-bits})$ again.
 \end{enumerate}
 %
-All these cases are illustrated in Figure \_:
+All these cases are illustrated in Figure \ref{fig:rate-matching}:
+
+\begin{figure}[htb]
+    \includegraphics[width=\columnwidth]{figures/chp_theory/rate-matching.pdf}
+    \caption{Rating matching methods for polar coding}
+    \label{fig:rate-matching}
+\end{figure}
 
 \Gls{ldpc} rate matching includes only the shortening and repetition equivalents of the polar coding rate matching, although the shortening of the polar codes is equivalent to the so called puncturing of the \gls{ldpc} in \cite{Hui2018}.
 %
+Hence, is possible to call simply bit selection, since both procedures select the bits starting from the initial position given by the \gls{rv}, the difference is that repetition is defined for $\gls{not:coded-bits} < \gls{not:rm-bits}$ and the \gls{ldpc} equivalent of shortening is defined for $\gls{not:coded-bits} > \gls{not:rm-bits}$.
 
+The rate matching also includes the interleaving step, and it is applied to each \gls{cb} separately.
+%
+A row-column block interleaver is used in \gls{nr} \gls{ldpc}, the number of rows is equal to the modulation order.
+%
+The writing of the bits in the interleaver is made row-by-row, while the reading of the bits is made column-by-column.
+%
+It is important to notice that the bits in one column correspond to one modulation symbol \cite{Hamidi8417496,ErikDahlman5G}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Layer mapping}
@@ -582,8 +625,13 @@ Table \ref{tab:antenna-ports} shows the defined sets of antenna ports for \gls{5
 \end{tabular}
 \end{table}
 
-The mapping between the \gls{not:nLayers} layers and the $\gls{not:txAnt}_{AP}$ antenna ports is defined by a $\gls{not:txAnt}_{AP} \times \gls{not:nLayers}$ precoder matrix \gls{not:Wtx}.
+The mapping between the \gls{not:nLayers} layers and the $\gls{not:txAnt}_{\text{AP}}$ antenna ports is defined by a $\gls{not:txAnt}_{\text{AP}} \times \gls{not:nLayers}$ precoder matrix \gls{not:Wtx}.
 
+\begin{figure}[htb]
+    \includegraphics[width=0.5\columnwidth]{figures/chp_theory/figchannel.png}
+    \caption{Downlink precoding and reference signals. }
+    \label{fig:precoder-dmrs}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Reinforcement Learning }

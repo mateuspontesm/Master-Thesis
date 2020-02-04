@@ -202,13 +202,13 @@ At the \gls{mcs} decision points, shown in Figure \ref{fig:amc-system-timing}, t
 The selected \gls{mcs} is informed to the \gls{ue} through the \gls{pdcch} as a part of the \gls{dci}. This process is shown in Figure \ref{fig:amc-system-model}.
 %
 
-We considered a subset of the \gls{mcs}s in Table 5.1.3.1-1 in \cite{3gpp.38.214}, from the \gls{mcs} indexes 3 to 27. For our \gls{rl} based solution, the \gls{cqi} is a quantized measure of the \gls{snr}, and the number of possible \gls{cqi}s is defined by $N_{cqis}$. The \gls{cqi} metric for the \gls{rl}-\gls{amc} is defined as:
+We considered a subset of the \gls{mcs}s in Table 5.1.3.1-1 in \cite{3gpp.38.214}, from the \gls{mcs} indexes 3 to 27. For our \gls{rl} based solution, the \gls{cqi} is a quantized measure of the \gls{snr}, and the number of possible \gls{cqi}s is defined by $N_{\text{cqis}}$. The \gls{cqi} metric for the \gls{rl}-\gls{amc} is defined as:
 \begin{equation}\label{eq:amc-cqi}
-    CQI =
+    \textrm{CQI} =
     \begin{cases}
-    0, \text{if } SNR \leq SNR_{min}\\
-    (N_{cqi}-1), \text{if } SNR \geq SNR_{max}\\
-    \floor[\Big]{\frac{(SNR - SNR_{min})(N_{cqi}-1)}{SNR_{max}-SNR_{min}}}
+    0, \text{if } \textrm{SNR} \leq \textrm{SNR}_{\text{min}}\\
+    (N_{\text{cqi}}-1), \text{if } \textrm{SNR} \geq \textrm{SNR}_{\text{max}}\\
+    \floor[\Big]{\frac{(\textrm{SNR} - \textrm{SNR}_{\text{min}})(N_{\text{cqi}}-1)}{\textrm{SNR}_{\text{max}}-\textrm{SNR}_{\text{min}}}}
     \end{cases}
 \end{equation}
 \noindent Note that each \gls{cqi}, except the minimum and the maximum ones, comprises \gls{snr} intervals having the same length.
@@ -224,7 +224,7 @@ The \gls{bler} is the ratio of incorrectly received blocks over the total number
 The spectral efficiency $\eta$, in $bit/s/Hz$, is calculated as:
 \begin{equation}
  \label{eq.:spec-eff}
- \eta = (1-\gls{bler})\gls{not:mod}\gls{not:rate} \, ,
+ \eta = (1-\textrm{\gls{bler}})\gls{not:mod}\gls{not:rate} \, ,
 \end{equation}
 \noindent where \gls{not:mod} is the number of bits per modulation symbol and \gls{not:rate} is the code rate.
 
@@ -259,20 +259,20 @@ A diagram adapting the model from Figure \ref{fig:rlbasic} to the \gls{amc} prob
 \end{figure}
 %
 
-In the proposed \gls{amc} problem, the state space is the set of all possible \gls{cqi}s, from $0$ to $(N_{cqi}-1)$; the action space is the set of all possible \gls{mcs}s. As for the reward, we consider two different metrics.
+In the proposed \gls{amc} problem, the state space is the set of all possible \gls{cqi}s, from $0$ to $(N_{\text{cqi}}-1)$; the action space is the set of all possible \gls{mcs}s. As for the reward, we consider two different metrics.
 %
 The first reward function is a non-linear one defined as:
 \begin{equation}\label{eq.:rewardBler}
   R_1 = \begin{cases}
-  \gls{not:mod} \gls{not:rate}, \text{ if } BLER \leq BLER_T \\
+  \gls{not:mod} \gls{not:rate}, \text{ if } \textrm{BLER} \leq \textrm{BLER}_{\text{T}} \\
   -1, \text{ else.}
 \end{cases}
 \end{equation}
-\noindent where \gls{not:mod} is the number of bits per modulation symbol, \gls{not:rate} is the code rate and $BLER_T$ is the target \gls{bler} of the system, $10\%$ in case of \gls{embb} \cite{3gpp.38.214}.
+\noindent where \gls{not:mod} is the number of bits per modulation symbol, \gls{not:rate} is the code rate and $\textrm{BLER}_{\text{T}}$ is the target \gls{bler} of the system, $10\%$ in case of \gls{embb} \cite{3gpp.38.214}.
 %
 The goal of this reward function is to allow the agent to choose the best \gls{mcs} that satisfies the \gls{bler} target. The second reward is defined in terms of the spectral efficiency (in bits/second/hertz):
 \begin{equation}\label{eq.:rewardSE}
-    R_2 = (1-BLER) \gls{not:mod} \gls{not:rate} \text{.}
+    R_2 = (1-\textrm{BLER}) \gls{not:mod} \gls{not:rate} \text{.}
 \end{equation}
 \noindent With this function, the agent will try to maximize the spectral efficiency.
 A summary of the proposed \gls{ql-amc} algorithm is shown in Algorithm \ref{amc-alg}.
@@ -282,8 +282,8 @@ A summary of the proposed \gls{ql-amc} algorithm is shown in Algorithm \ref{amc-
     \label{amc-alg}
  \nonl Initialize $Q(s, a) = 0$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
  \nonl \ForEach{MCS Decision Point (see Fig. \ref{fig:amc-system-timing})}{
-  The UE \emph{observes the state} $s: \gls{cqi}$\ and feeds it back to the BS;\\
-  The BS \emph{takes an action} $a: MCS$ using the policy driven by $Q$ (e.g., $\epsilon$-greedy);\\
+  The UE \emph{observes the state} $s: $\gls{cqi} and feeds it back to the BS;\\
+  The BS \emph{takes an action} $a: \textrm{MCS}$ using the policy driven by $Q$ (e.g., $\epsilon$-greedy);\\
   The BS \emph{perceives a reward} $r$ (c.f. Eqs. (\ref{eq.:rewardBler}) or (\ref{eq.:rewardSE})) and observes the next state $s^{\prime}$\;
   The BS update the Q-table: $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_a Q(s',a)]$\;
   $s \leftarrow s^{\prime}$\;
@@ -377,8 +377,8 @@ Shadowing standard deviation & 6 dB\\
 		\toprule
 		\textbf{Parameter} 	   & \textbf{Value} \\
     \midrule
-    $SNR_{min}$ for Eq. \eqref{eq:amc-cqi} & $-5$ \\
-    $SNR_{max}$ for Eq. \eqref{eq:amc-cqi} & $40$ \\
+    $\textrm{SNR}_{\text{min}}$ for Eq. \eqref{eq:amc-cqi} & $-5$ \\
+    $\textrm{SNR}_{\text{max}}$ for Eq. \eqref{eq:amc-cqi} & $40$ \\
 		Discount factor ($\gamma$) & 0.10\\
 		Learning rate ($\alpha$) & 0.90\\
 		Maximum exploration rate ($\epsilon_{\max}$) & 0.50\\
@@ -420,25 +420,25 @@ We assumed a direct mapping of \gls{cqi} to \gls{mcs}, i.e., each \gls{cqi} is m
 % \bottomrule
 % \end{tabularx}
 % \end{table}
-The \gls{olla} technique consists of improveing the conventional MCS look-up table by adjusting the \gls{snr} thresholds according to the \gls{acknack} from previous transmissions.
+The \gls{olla} technique consists of improving the conventional MCS look-up table by adjusting the \gls{snr} thresholds according to the \gls{acknack} from previous transmissions.
 %
 This adjustment is made by adding an offset to the estimated \gls{snr} to correct the \gls{mcs}s.
 %
 The \gls{snr} that is transformed to \gls{cqi} is:
 \begin{equation}
-\textrm{SNR}_{olla} = \textrm{SNR} + \Delta_{olla}
+\textrm{SNR}_{\text{olla}} = \textrm{SNR} + \Delta_{\text{olla}}
 \end{equation}
 \noindent where the $\Delta_{olla}$ is updated at each time step according to the Eq. \eqref{eq.:olla} \cite{Blanquez-Casado2016}:
 \begin{equation}\label{eq.:olla}
-  \Delta_{olla} \leftarrow \Delta_{olla} + \Delta_{up} * e_{blk} - \Delta_{down} *(1 - e_{blk}),
+  \Delta_{\text{olla}} \leftarrow \Delta_{\text{olla}} + \Delta_{\text{up}} \cdot e_{\text{blk}} - \Delta_{\text{down}} \cdot (1 - e_{\text{blk}}),
 \end{equation}
-\noindent where $e_{blk} = 1$ in case of NACK, or $e_{blk} = 0$ if the transmission is successful.
+\noindent where $e_{\text{blk}} = 1$ in case of NACK, or $e_{\text{blk}} = 0$ if the transmission is successful.
 %
-The parameters $\Delta_{up}$, $\Delta_{down}$ and the target \gls{bler}, $BLER_{T}$, are inter-related. In fact, by fixing the $\Delta_{up}$ and the $BLER_{T}$, the $\Delta_{down}$ can be calculated as \cite{Pedersen2007}:
+The parameters $\Delta_{\text{up}}$, $\Delta_{\text{down}}$ and the target \gls{bler}, $\textrm{BLER}_{\text{T}}$, are inter-related. In fact, by fixing the $\Delta_{\text{up}}$ and the $\textrm{BLER}_{\text{T}}$, the $\Delta_{\text{down}}$ can be calculated as \cite{Pedersen2007}:
 $$
-\Delta_{down} = \frac{\Delta_{up}}{\frac{1}{BLER_{T}} -1}.
+\Delta_{\text{down}} = \frac{\Delta_{\text{up}}}{\frac{1}{\textrm{BLER}_{\text{T}}} -1}.
 $$
-The target \gls{bler} for the \gls{olla} algorithm is fixed at $0.1$, while we assume three values for $\Delta_{up}$: 0.01dB, 0.1dB and  1dB.
+The target \gls{bler} for the \gls{olla} algorithm is fixed at $0.1$, while we assume three values for $\Delta_{\text{up}}$: 0.01dB, 0.1dB and  1dB.
 
 \subsection{Experiment Description and Results}
 
@@ -535,7 +535,7 @@ The first column represents the type of solution adopted.
 %
 % The two fixed \gls{mcs} schemes (denoted as "Fixed 1" and "Fixed 2") consider QPSK with code rate of 1/3 and 16QAM with code rate of 2/3, respectively.
 %
-We consider three \gls{olla} schemes, denoted as \gls{olla} 1, 2 and 3, which consider $\Delta_{up}$ 0.01dB, 0.1dB and 1dB, respectively.
+We consider three \gls{olla} schemes, denoted as \gls{olla} 1, 2 and 3, which consider $\Delta_{\text{up}}$ 0.01dB, 0.1dB and 1dB, respectively.
 %
 The conventional \gls{amc} with a fixed look-up table is denoted as "Table".
 %
