@@ -1,10 +1,14 @@
 \chapter{Introduction} \label{chp:introduction}
 
+\Gls{5g} wireless communication systems are being designed to provide high data and transmission rates \cite{Amin_2016}.
+%
+Because of this, a reliable \gls{la} process for \gls{5g} \gls{nr} is needed for coping with the need of increasing the data rate that can be accurately transmitted \cite{chu01}.
+%
 \Gls{la} is a key technology to keep the \gls{bler} below a predefined threshold while maximizing the throughput.
 %
-The \gls{amc} is a key solution used in 4G systems and envisaged to \gls{5g} \gls{nr} system.
+% The \gls{amc} is a key solution used in 4G systems and envisaged to \gls{5g} \gls{nr} system.
 %
-This approach consists in selecting the appropriate \gls{mcs} based on the channel quality.
+% This approach consists in selecting the appropriate \gls{mcs} based on the channel quality.
 %
 % Basically, the systems use an \gls{amc} scheme that selects the appropriate \gls{mcs}.
 % One key technique for \gls{la} is the \gls{amc} that selects the appropriate \gls{mcs}.
@@ -20,9 +24,7 @@ Another aspect in \gls{la} is the rank adaptation, which defines the appropriate
 Rank adaptation is used in order to increase the throughput in low interference scenarios and reliability in high interference scenarios.
 
 %
-% \Gls{5g} wireless communication systems are being designed to provide high data and transmission rates \cite{Amin_2016}.
 % %
-% Because of this, a reliable link adaptation process for \gls{5g} \gls{nr} is needed for coping with the need of increasing the data rate that can be accurately transmitted \cite{chu01}.
 % %
 %
 % In this context, the link adaptation technique of \gls{amc} is of great interest.
@@ -50,14 +52,20 @@ In high interference scenarios lower ranks are preferred as it improves the inte
 % %
 % In possession of this information, the \gls{bs} selects an \gls{mcs} to transmit and reports  its selection to the \gls{ue}.
 
-\Gls{rl} framework has become an attractive tool to devise novel \gls{5g} \gls{la} due to the capacity of \gls{rl} tools in solving problems whose model varies over time.
+The goal of the \gls{la} is an automatic choice of the best parameters depending on the user and applications requirements.
+%
+As such, \gls{ml} algorithms are well suited to this application, because of their capabilities of learning patterns, forecasting behaviors and generating models \cite{survey-son}.
+%
+A \gls{ml} category of particular interest to cellular systems is the \gls{rl}, because of its applicability in optimization problems \cite{survey-son}, such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
+%
+As such, the \gls{rl} framework has become an attractive tool to devise novel \gls{5g} \gls{la} due to the capacity of \gls{rl} tools in solving problems whose model varies over time.
 %
 % The goal of the \gls{la} is an automatic choice of the best parameters depending on the user, channel conditions and applications requirements.
 % While in \gls{lte}, the look-up table provides fixed \gls{amc} rules for all the users, the novel system needs a more flexible one that can be adjusted according to user channel state.
 %
-\Gls{rl} falls into a category of \gls{ml} problems, and it has been applied in problems \cite{survey-son} such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
+% \Gls{rl} falls into a category of \gls{ml} problems, and it has been applied in problems \cite{survey-son} such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
 %
-The use of \gls{rl} in the context of \gls{la} has been recently addressed in \cite{continuousState}, \cite{bruno2014robust} and \cite{DRL_AMC}.
+% The use of \gls{rl} in the context of \gls{la} has been recently addressed in \cite{continuousState}, \cite{bruno2014robust} and \cite{DRL_AMC}.
 
 % The goal of the \gls{la} is an automatic choice of the best parameters, in this case the \gls{mcs}, depending on the user and applications requirements.
 % %
@@ -86,6 +94,12 @@ The use of \gls{rl} in the context of \gls{la} has been recently addressed in \c
 %
 % A \gls{ml} category of particular interest to cellular systems is the \gls{rl}, because of its applicability in optimization problems \cite{survey-son}, such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
 
+One of the main techniques applied to \gls{la} is the \gls{olla} \cite{Sampath1997}.
+%
+The goal of the \Gls{olla} is to improve the \gls{amc}, since static \gls{amc} thresholds does not perform well due to the variations of the channel.
+%
+Therefore, the \gls{olla} is an additional technique, applied on top of the \gls{illa}, that adjusts the threshold according to the reliability of the transmitted packets \cite{Blanquez-Casado2016}.
+
 
 
 There are few works that use \gls{rl} in \gls{la} problem.
@@ -95,6 +109,7 @@ In \cite{continuousState}, the selection of the \gls{mcs} is based on the receiv
 In \cite{bruno2014robust} a Q-learning approach is used to solve the \gls{amc} problem in the context of a \gls{lte} network.
 %
 A deep reinforcement learning approach is used in \cite{DRL_AMC} as a solution to the \gls{amc} problem, in a cognitive heterogeneous network.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Contributions and Thesis Structure}
