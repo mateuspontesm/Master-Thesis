@@ -626,12 +626,28 @@ Table \ref{tab:antenna-ports} shows the defined sets of antenna ports for \gls{5
 \end{table}
 
 The mapping between the \gls{not:nLayers} layers and the $\gls{not:txAnt}_{\text{AP}}$ antenna ports is defined by a $\gls{not:txAnt}_{\text{AP}} \times \gls{not:nLayers}$ precoder matrix \gls{not:Wtx}.
+%
+This mapping is specification-transparent, since the \gls{ue} can assume that the \glspl{dmrs} is precoded hand in hand with the data as shown in Figure \ref{fig:precoder-dmrs}.
+%
+Therefore, the choice of the precoder is up to the network implementation and is transparent to the \gls{ue} \cite{8928165, ErikDahlman5G}.
 
 \begin{figure}[htb]
     \includegraphics[width=0.5\columnwidth]{figures/chp_theory/figchannel.png}
     \caption{Downlink precoding and reference signals. }
     \label{fig:precoder-dmrs}
 \end{figure}
+
+The selection of the precoder by the network is supported by the reporting of some information by the \gls{ue}, which are part of the \gls{csi} report.
+%
+The most important reference signal to compute the \gls{csi} is the \gls{csi}-\gls{rs}, which is shown in Figure \ref{fig:precoder-dmrs}.
+%
+The quantities more relevant to this work in the \gls{csi} report are \cite{AliZaidi632018}:
+%
+\begin{enumerate}
+    \item \Gls{ri}: The preferred transmission rank, number of layers, to use in a codebook-based precoded downlink transmission.
+    \item \Gls{pmi}: Indicates the preferred precoder matrix, given the selected rank.
+    \item \Gls{cqi}: Index to the preferred \gls{mcs}, which is the highest \gls{mcs} that gives a \gls{bler} of 10\%, given the selected precoder and rank.
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Reinforcement Learning }

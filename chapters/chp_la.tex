@@ -7,7 +7,7 @@
 
 \section{System Model}
 \label{sec:la-system-model}
-%\subsection{Signal Model}
+% \subsection{Signal Model}
 
 Consider a single cell system whose \gls{bs} is equipped with \gls{not:txAnt} antennas serving one user equipped with \gls{not:rxAnt} antennas.
 %
@@ -63,7 +63,8 @@ where $\channel_{\textrm{eq}} = \gls{not:Wrx} \channel \gls{not:Wtx}$ and the $\
 {\gls{not:rxAnt}}
 \gls{not:var} \;.
 \end{equation}
-% \subsection{Channel Description}
+
+\subsection{Channel Description}
 
 
 The model in \eqref{eq.:rx_signal} assumes a narrowband block-fading channel, so the channel is almost constant within a time-frequency resource block \cite{alkhateeb2014}.
@@ -99,7 +100,7 @@ The \gls{mimo} channel in \eqref{eq.:channelModel} can be expressed compactly as
 \end{equation}
 where $\gls{not:betaVec} = \left[ \gls{not:beta}_0, \ldots, \gls{not:beta}_{\gls{not:scatterers}-1} \right]$, and the matrices \strRxMtx~and \strTxMtx~are formed by the concatenation \gls{ue} and \gls{bs} array response vectors, respectively.
 
-%\subsection{Transmission Model}
+\subsection{Transmission Model}
 
 % The transmission process takes into account the channel coding, modulation, layer mapping and multi-antenna precoding blocks of Figure \ref{fig:transmission}.
 %
@@ -461,7 +462,7 @@ We can note that the single stream \gls{ql-la} has a similar performance to the 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Conclusions and Perspectives}
+\section{Chapter Summary}
 \label{sec:la-conclusion}
 The \gls{rl} provides a self-exploratory framework that enables the \base~ to choose a suitable \gls{mcs} and multi-antenna precoding matrix that maximizes the throughput.
 %
@@ -475,9 +476,9 @@ A fine-tuning of our multi-agent \gls{ql-la} is being studied and may improve th
 %
 This is a topic that is under investigation.
 
-As a perspective of this work, we highlight the extension of the proposed \gls{rl}-based framework to include all the precoders of the standard \cite{3gpp.38.214} and the evaluation of a single \gls{rl} agent choosing both the \gls{mcs} and the \gls{pmi}.
-%
-Moreover, a comparison with other \gls{rl}-based algorithms such as multi-armed bandits (MABs) \cite{zhou2015survey} or deep RL solutions \cite{DeepRLSurvey} is envisioned.
+% As a perspective of this work, we highlight the extension of the proposed \gls{rl}-based framework to include all the precoders of the standard \cite{3gpp.38.214} and the evaluation of a single \gls{rl} agent choosing both the \gls{mcs} and the \gls{pmi}.
+% %
+% Moreover, a comparison with other \gls{rl}-based algorithms such as multi-armed bandits (MABs) \cite{zhou2015survey} or deep RL solutions \cite{DeepRLSurvey} is envisioned.
 %
 % In addition, since \gls{nr} is a beam-based system, including the beam domain is another perspective.
 % %

@@ -1,5 +1,7 @@
-\chapter{Introduction} \label{chp:introduction}
+%\addbibresource{../resource/ref.bib}
+% !TEX root = manuscript.tex
 
+\chapter{Introduction} \label{chp:introduction}
 \Gls{5g} wireless communication systems are being designed to provide high data and transmission rates \cite{Amin_2016}.
 %
 Because of this, a reliable \gls{la} process for \gls{5g} \gls{nr} is needed for coping with the need of increasing the data rate that can be accurately transmitted \cite{chu01}.
@@ -96,13 +98,19 @@ As such, the \gls{rl} framework has become an attractive tool to devise novel \g
 
 One of the main techniques applied to \gls{la} is the \gls{olla} \cite{Sampath1997}.
 %
-The goal of the \Gls{olla} is to improve the \gls{amc}, since static \gls{amc} thresholds does not perform well due to the variations of the channel.
+The goal of the \gls{olla} is to improve the \gls{amc}, since static \gls{amc} thresholds does not perform well due to the variations of the channel.
 %
 Therefore, the \gls{olla} is an additional technique, applied on top of the \gls{illa}, that adjusts the threshold according to the reliability of the transmitted packets \cite{Blanquez-Casado2016}.
 
+But \gls{olla} can experience a slow convergence and degrade the average throughput \cite{10.1145/3341216.3342212}.
+%
+Several works tried to improve the \gls{olla}, in \cite{Blanquez-Casado2016} it is proposed a version of \gls{olla} with dynamic step size, instead of the fixed offset in the traditional \gls{olla}.
+%
+In \cite{Sarret2015}, a dynamic step is also used, but the positive offset, in case of a correct transmission, is fixed and only the negative offset is adapted, based on a modified target \gls{bler}.
+%
+In \cite{Sarret2015}, the proposed solution is also evaluated when used in conjuction with a rank adaptation solution proposed in \cite{catania2015distributed}.
 
-
-There are few works that use \gls{rl} in \gls{la} problem.
+Regarding \gls{rl} solutions, there are few works that use \gls{rl} in \gls{la} problem.
 %
 In \cite{continuousState}, the selection of the \gls{mcs} is based on the received \gls{sinr}, as such the state space is continuous, and the learning algorithm must handle this large state space.
 %
@@ -112,24 +120,42 @@ A deep reinforcement learning approach is used in \cite{DRL_AMC} as a solution t
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Contributions and Thesis Structure}
-The main contributions of our work are:
+\section{Objectives, Contributions and Thesis Structure}
+
+Considering the what has been presented in the previous subsection, the main objectives of this master thesis are:
+\begin{enumerate}
+    \item Develop and study the effectiveness of a \gls{rl} solution to \gls{amc} and also a more complete \gls{la} with rank adaptation.
+    \item Present the \gls{phy} concepts necessary to understand the transmission procedures while also giving an understanding of the implementation work made to prepare the simulator for this work.
+\end{enumerate}
+
+Chapter \ref{chp:theory} presents an overview of the main \gls{5g} \gls{nr} features and \gls{rl} techniques used in this work.
+%
+More specifically, it gives a short description of the transmission procedures involved in downlink transmissions and it presents the associated \gls{phy} procedures, while also presenting an overview of some fundamental concepts of \gls{rl} and of the algorithm used in this work, Q-Learning.
+
+On one hand, Chapter \ref{chp:amc} introduces the \gls{amc} problem, our proposed solution and compares it against standard \gls{amc} solutions, the \gls{illa} and \gls{olla}.
+%
+On the other hand, Chapter \ref{chp:la} presents a more general \gls{la} problem, that includes both the \gls{mcs} selection and the transmission rank, with a detailed explanation of the proposed solution and the comparison against a \gls{illa} with a brute force solution that seeks to maximize the \gls{sinr}.
+
+Chapter \ref{chp:conclusion} summarizes the main conclusions of this work.
+
+Therewith, the main contributions of our work are:
 \begin{enumerate}
     \item Proposition and analysis of an \gls{amc} and a \gls{la} solution that selects the \gls{mcs} and the \gls{pmi} by using a \gls{rl} framework.
-    \item Our solution complies with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212}
-    \item It also complies with the \gls{5g} \gls{nr} procedures for data as it considers the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
+    \item Solutions in compliance with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212}
+    \item The more general \gls{la} solution of Chapter \ref{chp:la} also complies with the \gls{5g} \gls{nr} procedures for data as it considers the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
 \end{enumerate}
 %
-Furthermore, our solution complies with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212} while also using the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
+% Furthermore, our solution complies with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212} while also using the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
 % As such, the main difference between our work and the previous approaches is the implementation of the channel coding as proposed by the \gls{5g} standard while also using the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Scientific Contributions}
 \begin{refsection}
 
-Currently, the content of this thesis has been partially published with the following bibliographic information: %
-
-\noindent\textit{\textbf{Conference Papers}}
+Currently, the content of this thesis, more specifically Chapter \ref{chp:amc}, has been partially published and presented at 2019 IEEE Globecom Workshops.
+%
+A preprint can be found with the following bibliographic information:
+%
 \begin{itemize}
 	\item \printpublication{mota2019adaptive}
 \end{itemize}
