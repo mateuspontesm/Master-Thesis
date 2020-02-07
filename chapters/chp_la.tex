@@ -1,3 +1,7 @@
+% !TEX root = manuscript.tex
+\glsresetall
+%\addbibresource{../resource/ref.bib}
+
 \chapter{\Acl{la}} \label{chp:la}
 
 
@@ -113,10 +117,13 @@ The \gls{tbs} calculation, the \gls{mcs} tables and the multi-antenna precoding 
 
 
 % The \gls{ue} reports the measured \gls{cqi} to the \gls{bs}, which decides the \gls{mcs} and \gls{pmi} accordingly.
-The \gls{cqi} plays an important role to properly select the \gls{mcs} and \gls{pmi}.
+The \gls{cqi} plays an important role to properly select the \gls{mcs}, while the \gls{pmi} helps the \gls{bs} in the selection of the multi-antenna precoder matrix.
 %
-The \gls{mcs} and \gls{ri} are informed to the \gls{ue} through the \gls{pdcch} as a part of the \gls{dci}. This process is shown in Figure \ref{fig:la-system-model}.
+The \gls{mcs} and \gls{ri} are informed to the \gls{ue} through the \gls{pdcch} as a part of the \gls{dci}.
 %
+This process is shown in Figure \ref{fig:la-system-model}.
+
+
 The \gls{cqi} is a measure of the \gls{snr}, and the number of possible \gls{cqi}s is defined by $n_{cqis}$. We define the \gls{cqi} as:
 % \begin{equation}\label{eq:cqi}
 %     CQI =
@@ -130,26 +137,72 @@ The \gls{cqi} is a measure of the \gls{snr}, and the number of possible \gls{cqi
 \textrm{CQI} = \min{
 	(\max {(0, \textrm{CQI}^{\prime} ) }, n_{\text{cqis}} - 1)},
 \end{equation}
-
+%
 \noindent where $\textrm{CQI}^{\prime}$ is calculated from the \gls{snr}s in dB as:
 \begin{equation}\label{eq:cqi_prime}
 \textrm{CQI}^{\prime} = \floor[\Big]{(n_{\text{cqis}}-1)\frac{\textrm{SNR} - \textrm{SNR}_{\text{min}}}{\textrm{SNR}_{\text{max}}-\textrm{SNR}_{\text{min}}}}
 \end{equation}
 
+
+The \gls{ri} indicates the transmission rank, number of layers, that the \gls{ue} deems the most suitable.
+%
+We calculate the \gls{ri} from the channel matrix \channel~, assuming full knowledge of it, as:
+%
+\begin{equation}\label{eq:la-rank}
+    \textrm{\gls{ri}} = \textrm{rank} (\channel)
+\end{equation}
+
 % \noindent note that each \gls{cqi}, except the minimum and the maximum, comprises \gls{snr} intervals having the same length in dB.
 % , since the \gls{snr} inside the range $[snr_{min},snr_{max}]$ is divided equally into \gls{cqi}s in this calculation.
 
-At each \gls{tti}, the \gls{bs} calculates the \gls{tbs}, taking into account the selected \gls{mcs} and the number of spatial layers, and transmits a \gls{tb} with \gls{tbs} bits at the chosen \gls{mcs} and using the selected multi-antenna precoding matrix from the \gls{pmi}.
+At each \gls{tti}, the \gls{bs} calculates the \gls{tbs}, taking into account the selected \gls{mcs} and the number of spatial layers, and transmits a \gls{tb} with \gls{tbs} bits at the chosen \gls{mcs} and using the selected multi-antenna precoding matrix.
 %
 The \gls{ue} receives a \gls{tb} from the \gls{bs} and, in possession of the chosen \gls{mcs}, decodes the \gls{tb} and calculates its \gls{crc}, giving the \gls{bs} a \gls{acknack} that is further used to calculate the \gls{tbler} and the throughput.
 %
 The \gls{tbler} is the ratio of incorrectly received \gls{tb}s over the total number of transmitted \gls{tb}s.
+%
+% \begin{figure}[!htb]
+% 	\centerline{\includegraphics[width=60mm]{figures/chp_la/system-model-mateus.pdf}}
+% 	\caption{Exchange of signals referent to the link adaptation}
+% 	\label{fig:la-system-model}
+% \end{figure}
+%
 
-\begin{figure}[!htb]
-	\centerline{\includegraphics[width=60mm]{figures/chp_la/system-model-mateus.pdf}}
-	\caption{Exchange of signals referent to the link adaptation}
-	\label{fig:la-system-model}
+As explained in Chapter \ref{chp:theory}, usually the \gls{ue} indicates the preferred precoder by means of the \gls{pmi}, as indicated in Figure \ref{fig:la-system-model-1}.
+%
+Due to the nature of our proposed solution, the \gls{pmi} information can be eliminated from the \gls{csi} report, as showed in Figures \ref{fig:la-system-model-2} and \ref{fig:la-system-model-3}.
+%
+We also analyze the effect of the \gls{ri} report by the \gls{ue} to our solution.
+%
+Therewith, Figure \ref{fig:la-system-model} shows the exchange of signals involved in these three architectures, the standard exchange and the \gls{rl} with and without the report of the \gls{ri} by the \gls{ue}.
+
+\begin{figure}
+     \centering
+     \begin{subfigure}[htb]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/chp_la/system_model_1.png}
+         \caption{Standard}
+         \label{fig:la-system-model-1}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[htb]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/chp_la/system_model_2.png}
+         \caption{\gls{rl} with rank information}
+         \label{fig:la-system-model-2}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[htb]{0.3\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{figures/chp_la/system_model_3.png}
+         \caption{\gls{rl} without rank information}
+         \label{fig:la-system-model-3}
+     \end{subfigure}
+        \caption{Model of the signaling exchange}
+        \label{fig:la-system-model}
 \end{figure}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -158,7 +211,11 @@ The \gls{tbler} is the ratio of incorrectly received \gls{tb}s over the total nu
 
 The proposed solution is a Q-learning based \gls{la} scheme, herein referred to as \gls{ql-la}.
 %
-The \gls{bs} uses two \gls{rl} agents, one to select the \gls{mcs} and another to select the \gls{pmi}.
+In this work, we analyzed two different architectures, a multi-agent and centralized single agent, and also analyzed the influence of the \gls{ri} in the learning:
+
+\subsection{Multi-Agent}
+
+In this architecture, the \gls{bs} uses two \gls{rl} agents, one to select the \gls{mcs} and another to select the precoder.
 %
 Both selections are based on the state-action mapping obtained from the two Q-learning algorithms.
 %

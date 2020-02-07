@@ -1,9 +1,9 @@
 % !TEX root = manuscript.tex
 \glsresetall
+%\addbibresource{../resource/ref.bib}
 \chapter{Conceptual Framework}%\chapter{Key Features of \acs{3GPP} \acs{5G} Standards}%\chapter{\acs{5G} Scenario}%{System Modeling}
 \label{chp:theory}
 
-%\addbibresource{../resource/ref.bib}
 
 This chapter is divided into two parts, in each one we give an overview of a subject, mainly:
 \begin{enumerate}
@@ -627,7 +627,7 @@ Table \ref{tab:antenna-ports} shows the defined sets of antenna ports for \gls{5
 
 The mapping between the \gls{not:nLayers} layers and the $\gls{not:txAnt}_{\text{AP}}$ antenna ports is defined by a $\gls{not:txAnt}_{\text{AP}} \times \gls{not:nLayers}$ precoder matrix \gls{not:Wtx}.
 %
-This mapping is specification-transparent, since the \gls{ue} can assume that the \glspl{dmrs} is precoded hand in hand with the data as shown in Figure \ref{fig:precoder-dmrs}.
+This mapping is specification-transparent, since the \gls{ue} can assume that the \glspl{dmrs} are precoded hand in hand with the data as shown in Figure \ref{fig:precoder-dmrs}.
 %
 Therefore, the choice of the precoder is up to the network implementation and is transparent to the \gls{ue} \cite{8928165, ErikDahlman5G}.
 
@@ -641,13 +641,15 @@ The selection of the precoder by the network is supported by the reporting of so
 %
 The most important reference signal to compute the \gls{csi} is the \gls{csi}-\gls{rs}, which is shown in Figure \ref{fig:precoder-dmrs}.
 %
-The quantities more relevant to this work in the \gls{csi} report are \cite{AliZaidi632018}:
+The quantities in the \gls{csi} report more relevant to this work are \cite{AliZaidi632018}:
 %
 \begin{enumerate}
     \item \Gls{ri}: The preferred transmission rank, number of layers, to use in a codebook-based precoded downlink transmission.
     \item \Gls{pmi}: Indicates the preferred precoder matrix, given the selected rank.
-    \item \Gls{cqi}: Index to the preferred \gls{mcs}, which is the highest \gls{mcs} that gives a \gls{bler} of 10\%, given the selected precoder and rank.
+    \item \Gls{cqi}: Index to the preferred \gls{mcs}, which is the highest \gls{mcs} that gives a \gls{bler} of 0.1 in case \gls{cqi} Tables 1 and 2 \cite[Tables 5.2.2.1-2 \& 5.2.2.1-3]{3gpp.38.214} or a \gls{bler} of 0.00001 in the case of \gls{cqi} Table 3 \cite[5.2.2.1-4]{3gpp.38.214}, given the selected precoder and rank.
 \end{enumerate}
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Reinforcement Learning }
