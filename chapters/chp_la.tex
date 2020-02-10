@@ -1,10 +1,12 @@
 % !TEX root = manuscript.tex
-\glsresetall
 %\addbibresource{../resource/ref.bib}
 
+\glsresetall[\acronymtype]
 \chapter{\Acl{la}} \label{chp:la}
 
-
+In this chapter we analyze the performance of different \gls{rl} architectures for the selection of the \gls{mcs} and the precoder, which in turn decides the transmission rank.
+%
+These solutions are compared to a baseline solution that seeks the precoder that maximizes the mean \gls{snr}.
 % \section{Introduction} \label{sec:la-intro}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -211,21 +213,62 @@ Therewith, Figure \ref{fig:la-system-model} shows the exchange of signals involv
 
 The proposed solution is a Q-learning based \gls{la} scheme, herein referred to as \gls{ql-la}.
 %
+The \gls{rl} based solution enables the system to learn the particularities of the environment and adapt to it.
+%
 In this work, we analyzed two different architectures, a multi-agent and centralized single agent, and also analyzed the influence of the \gls{ri} in the learning:
+
+\subsection{Single Agent}
+\label{subsec:single-agent}
+
+In this architecture, the \gls{bs} uses one agent to select the pair of precoder and \gls{mcs} to be used at each time step.
+%
+The selection is based on the Q-learning algorithm and its state-action pair.
+%
+Since only the precoders defined in \cite{3gpp.38.214} are being considered, each precoder can be designated from its \gls{pmi}, hence the choice of the precoder is the same as the choice of the \gls{pmi}.
+%
+Figure \ref{fig:la-rl-frame-sa} shows the proposed single agent solution.
+
+
+\begin{figure}[!hb]
+	\centerline{\includegraphics[width=0.7\columnwidth]{figures/chp_la/rl-framework-mateus_sa.png}}
+	\caption{Basic diagram of the proposed single agent LA scheme}
+	\label{fig:la-rl-frame-sa}
+\end{figure}
+
+In the proposed centralized \gls{la} solution, it is evaluated two state spaces:
+\begin{enumerate}
+    \item The set of all possible \gls{cqi}s, from $0$ to $(n_{\text{cqi}}-1)$, for both agents;
+    \item The set of all the combinations of \glspl{cqi} and \glspl{ri}.
+\end{enumerate}
+%
+The action space is the set of all possible combinations of \glspl{mcs} and precoders, \glspl{pmi}.
+%
+As for the reward, $R$ is defined as:
+
+\begin{equation}\label{eq.:la-reward-sa}
+    R = \begin{cases}
+    \textrm{\gls{tbs}}, \text{ if ACK} \\
+    0, \text{ else,}
+    \end{cases}
+\end{equation}
+
+Since this centralized Q-table can have a large size when the number of layers increase, another architecture is proposed to mitigate this problem, a multi-agent architecture.
 
 \subsection{Multi-Agent}
 
 In this architecture, the \gls{bs} uses two \gls{rl} agents, one to select the \gls{mcs} and another to select the precoder.
 %
-Both selections are based on the state-action mapping obtained from the two Q-learning algorithms.
+The agents are asynchronous, since they work do not work simultaneously.
 %
-The \gls{rl} based solution enables the system to learn the particularities of the environment and adapt to it.
+Both selections are based on the state-action mapping obtained from the two Q-learning algorithms.
 
 
 % The choice of using two agents in the \gls{bs} is due to the large action space if a single agent chooses both the \gls{mcs} and \gls{pmi}, hence a multi-agent approach leads to a faster learning since less samples are required to fill up the Q-tables.
 The use of two agents is motivated by the reduced computational complexity to compute the action-state space.
 %
-While using a single agent requires a large Q-table to construct all the possible \gls{mcs} and \gls{pmi} combinations, multiple agents solve the problem separately by computing two smaller Q-tables.
+While using a single agent requires a large Q-table to construct all the possible \gls{mcs} and precoder combinations, multiple agents solve the problem separately by computing two smaller Q-tables.
+%
+As explained in Subsection \ref{subsec:single-agent}, each precoder can be designated from its \gls{pmi}, then the precoder agent is called \gls{pmi} agent.
 % More specifically, the \gls{bs} chooses the \gls{mcs} and the \gls{pmi} using the Q-tables obtained from the \gls{rl} algorithms.
 %
 Figure \ref{fig:la-rl-frame} shows how the \gls{rl} framework fits the \gls{la} problem.
@@ -233,22 +276,34 @@ Figure \ref{fig:la-rl-frame} shows how the \gls{rl} framework fits the \gls{la} 
 % A diagram adapting the model from Figure \ref{fig:rlbasic} to the \gls{la} problem is shown in Figure \ref{fig:rl-frame}.
 %
 \begin{figure}[!hb]
-	\centerline{\includegraphics[width=\columnwidth]{figures/chp_la/rl-framework-mateus.pdf}}
-	\caption{Basic diagram of the proposed AMC scheme}
+	\centerline{\includegraphics[width=\columnwidth]{figures/chp_la/rl-framework-mateus.png}}
+	\caption{Basic diagram of the proposed multi-agent LA scheme}
 	\label{fig:la-rl-frame}
 \end{figure}
 %
 
-In the proposed \gls{la} solution, the state space is the set of all possible \gls{cqi}s, from $0$ to $(n_{\text{cqi}}-1)$, for both agents; the action space is the set of all possible \gls{mcs}s for the agent 1 and the set of all possible \gls{pmi}s for the agent 2. As for the reward for each agent, $R_{PMI}$ is defined as:
+
+In the proposed \gls{la} solution, it is evaluated two state spaces:
+\begin{enumerate}
+    \item The set of all possible \gls{cqi}s, from $0$ to $(n_{\text{cqi}}-1)$, for both agents;
+    \item The set of possible \glspl{cqi} for the \gls{mcs} agent and the set of all the combinations of \glspl{cqi} and \glspl{ri}.
+\end{enumerate}
+%
+The action space is the set of all possible \gls{mcs}s for the agent 1 and the set of all possible \gls{pmi}s for the agent 2.
+%
+The \gls{mcs} agent works at each time interval, i.e at each transmission, while the \gls{pmi} agent works after 10 iterations of the \gls{mcs} agent.
+%
+They work at different time windows to avoid a misunderstanding of the reward, since both depend on the \gls{acknack}.
+%
+As for the reward for each agent, $R_{PMI}$ is defined as:
 %
 \begin{equation}\label{eq.:rewardPMI}
-R_{\text{PMI}} = \begin{cases}
-\gls{not:nLayers}, \text{ if ACK} \\
-0, \text{ else,}
-\end{cases}
+R_{\text{PMI}} = \sum_{\textrm{i}=\textrm{t}-9}^\textrm{t} \left( 1- e_{\text{nack}}^\textrm{i} \right) \gls{not:nLayers}
 \end{equation}
 %
-\noindent where \gls{not:nLayers} is the number of transmission layers. The $R_{\text{MCS}}$ is defined as:
+\noindent where $e_{\text{nack}}^\textrm{i}$ is the error indicator of the transmission $\textrm{i}$ and \gls{not:nLayers} is the number of transmission layers, the time index $\textrm{i}$ in $gls{not:nLayers}_\textrm{i}$ can be suppressed, because for each $\textrm{i}$ in that time window the number of layers and the precoder remains constant.
+%
+The $R_{\text{MCS}}$ is defined as:
 \begin{equation}\label{eq.:rewardMCS}
 R_{MCS} = \begin{cases}
 \dfrac{\textrm{\gls{tbs}}}{\gls{not:nLayers}}, \text{ if ACK} \\
@@ -330,6 +385,8 @@ Several combinations of the Q-Learning parameters $\alpha$ and $\gamma$ were tes
 		Number of symbols & 14\\
 		Azimuth angle range & $[-60^{\circ}, 60^{\circ}]$\\
 		Elevation angle range & $[60^{\circ}, 120^{\circ}]$\\
+        N° of \glspl{prb} allocated to the \gls{ue} & 1 \\
+        N° of \glspl{re} for \gls{dmrs} per \gls{prb} & 1 \\
 		% Number of paths & 10\\
 		Path loss & UMa NLOS\\
 		Shadowing standard deviation & 6 dB\\
@@ -352,7 +409,7 @@ Several combinations of the Q-Learning parameters $\alpha$ and $\gamma$ were tes
 		Learning rate ($\alpha$) & 0.70\\
 		Maximum exploration rate ($\epsilon_{\max}$) & 0.50\\
 		Minimum exploration rate ($\epsilon_{\min}$) & 0.05\\
-		$n_{\text{cqis}}$ & 16 \\
+		$n_{\text{cqis}}$ & 32 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -405,18 +462,19 @@ Our simulation has two phases: the training phase and the deployment phase. We u
 
 Our simulation initializes with the \gls{ue} at a position with a radial distance of $35m$ of the \gls{bs} and goes away from the \gls{bs} in the opposite direction.
 %
-Then the \gls{ue} comes back to the center after reaching $180m$ from the \gls{bs}, and then it moves away again from the \gls{bs} to $180m$.
+Then the \gls{ue} comes back to the center after reaching $160m$ from the \gls{bs}, and then it moves away again from the \gls{bs} to $160m$.
 %
 The simulation runs for a equivalent of $80s$ with the \gls{ue} speed equal to $20m/s$, this is equivalent to 8000 frames.
 %
 At the beginning of the transmission time, the channel has 10 paths and it changes after every $5m$ traveled, being either 1 (e.g. to emulate an environment change to LOS) or 10.
 
 %
-We use \gls{ql-la} with three configurations, as follows:
+We use \gls{ql-la} with four configurations, as follows:
 \begin{enumerate}
-    \item the precoding/beamforming vector is selected by fixing the transmission rank to one;
-    \item the precoding/beamforming matrix is selected by fixing the transmission rank to two;
-    \item both the precoding/beamforming structure and the transmission rank are adapted.
+    \item Single agent solution with only the \gls{cqi} as state information.
+    \item Single agent solution with the \gls{cqi} and \gls{ri} as state information.
+    \item Multi-agent solution with only the \gls{cqi} as state information.
+    \item Multi-agent solution with the \gls{cqi} as state information for the \gls{mcs} agent and the \gls{cqi} and \gls{ri} as state information for the \gls{pmi} agent.
 \end{enumerate}
 % We analyzed three \gls{ql-la} configurations, with a fixed transmission rank of one and two, therefore only selecting the \gls{pmi}s for these ranks, and a adaptive rank solution.
 %
@@ -426,23 +484,26 @@ Table \ref{tab:la-train-results} summarizes the results, providing  an average v
 	\centering
 	\caption{Training Phase Results}
 	\label{tab:la-train-results}
-	\begin{tabularx}{0.6\columnwidth}{X X r}
+	\begin{tabularx}{0.7\columnwidth}{l c r}
 		\toprule
-		Solution        &   TBLER   & Throughput    \\
+		Solution                      &   TBLER   & Throughput    \\
 		\midrule
-		Adaptive        &   0.1814  & 3.8644        \\
-		Single Stream   &   0.0932  & 4.1581        \\
-		Dual Stream     &   0.5128  & 1.5963        \\
+		Single agent                  &   0.2054  & 3.1059        \\
+		Multi-agent                   &   0.2498  & 2.5698        \\
+        Single agent with \gls{ri}    &   0.1745  & 3.2481        \\
+        Multi-agent with \gls{ri}     &   0.2235  & 5.5999        \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
 
-Table \ref{tab:la-train-results} reveals that the \gls{ql-la} with only a single stream (i,.e. rank-one transmission) shows a better performance in terms of throughput and \gls{tbler}, while the dual stream solution has a poor \gls{tbler} and throughput.
+Table \ref{tab:la-train-results} reveals that the single-agent \gls{ql-la} shows a better performance in terms of throughput and \gls{tbler}, when compared to the multi-agent solution.
+%
+It also reveals the improvement of the \gls{ri} information to both architectures, providing an increase in both \gls{tbler} and throughput.
 %
 Figure \ref{fig:la-train-thr} shows the throughput averaged over a sliding window of 400 transmissions, during a total transmission time of 80 sec.
 
 \begin{figure}[!htbp]
-	\centerline{\includegraphics[width=0.6\columnwidth]{figures/chp_la/Thr_Train.pdf}}
+	\centerline{\includegraphics[width=0.8\columnwidth]{figures/chp_la/training-sa-ma.png}}
 	\caption{Moving average of throughput on training phase}
 	\label{fig:la-train-thr}
 \end{figure}
@@ -460,13 +521,9 @@ Figure \ref{fig:la-train-thr} shows the throughput averaged over a sliding windo
 % \end{figure}
 
 
-Figure \ref{fig:la-train-thr} shows that the dual stream solution provides a high peak rate, but also presents the worse overall performance during most of the time, compared to the other solutions.
+Figure \ref{fig:la-train-thr} shows that the single agent solution with \gls{ri} provides the highest peak rate, while maintaining an overall better performance.
 %
-The rank-adaptive solution offers the higher rates during a time window (between 40 and 55 s).
-%
-Note that the rank-adaptive \gls{ql-la} scheme outperforms the dual stream scheme, and is worse than the single stream scheme for some transmission intervals.
-%
-This result is probably due to the fact that, during the exploration phase, the rank-adaptive scheme sometimes attempts a dual stream transmission whereas the right choice would be a single stream one.
+Note that the single agent \gls{ql-la} scheme outperforms the multi-agent for almost the entirely of the simulation, although it has a worse beggining.
 
 \subsubsection{Deployment phase}
 The second phase uses the knowledge from the first phase, but with a $\epsilon$-greedy approach with a fixed value of $\epsilon = 0.05$, according to the minimum value of the $\epsilon$-decreasing in the training phase.
@@ -474,47 +531,50 @@ The second phase uses the knowledge from the first phase, but with a $\epsilon$-
 The goal is to have an assessment of how the \gls{rl} solution performs in the long run, in contrast to the first phase (Figure \ref{fig:la-train-thr}) that focus on the learning of the agents.
 %
 
-In this phase, we compare the \gls{ql-la} with the baseline solution.
+In this phase, we compare the \glspl{ql-la} with the baseline solution.
 %
-We perform $200$ Monte Carlo runs. At each run, the \gls{ue} starts at a random position between $35m$ and $140m$ of the \gls{bs}.
+We perform $200$ Monte Carlo runs. At each run, the \gls{ue} starts at a random position between $35m$ and $60m$ of the \gls{bs}.
 %
 The \gls{ue} moves in a random rectilinear direction with a random speed between $10km/h$ and $20km/h$. Each simulation for a transmission time equivalent to $100ms$ which corresponds to 10 frames.
 %
 Similar for the previous experiment, at the beginning of the transmission time, the channel has 10 paths.
 %
-In the middle of the transmission time, the channel rank drops to 1 to emulate an environment change to LOS.
+In the middle of the simulation time, the channel rank drops to 1 to emulate an environment change to LOS.
 %
 
-Table \ref{tab:la-deploy-results} shows the throughput and the \gls{tbler} of each \gls{ql-la} solution as well as the performance of the baseline solution..
+Table \ref{tab:la-deploy-results} shows the throughput and the \gls{tbler} of each \gls{ql-la} solution as well as the performance of the baseline solution.
 %
 \begin{table}[!htb]
 	\centering
 	\caption{Deployment Phase Results}
 	\label{tab:la-deploy-results}
-	\begin{tabularx}{0.6\columnwidth}{X X r}
+	\begin{tabularx}{0.6\columnwidth}{l c r}
 		\toprule
-		Solution        &   TBLER   & Throughput    \\
+		Solution                      &   TBLER   & Throughput    \\
 		\midrule
-		Adaptive        &   0.0348  & 5.3012       \\
-		Single Stream   &   0.0129  & 5.6952        \\
-		Dual Stream     &   0.1075  & 4.4761        \\
-        Baseline        &   0.0539 &  5.9712        \\
+        Single agent                  &   0.0196  & 4.8217        \\
+		Multi-agent                   &   0.0170  & 3.9623        \\
+        Single agent with \gls{ri}    &   0.0177  & 4.8790        \\
+        Multi-agent with \gls{ri}     &   0.2417  & 2.7750        \\
+        Baseline                      &   0.0010  & 4.8503        \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
 %
-The results reveal that the proposed single-stream and rank-adaptive \gls{ql-la} schemes yield a better performance in terms of \gls{tbler}, while baseline solution shows a higher throughput.
+The results reveal that the proposed single agent \gls{ql-la} scheme with \gls{ri} information yield a better performance in terms of throughput, while baseline solution shows a better performance in terms of \gls{tbler}.
+%
+It also reveals that the performance of the single agent solution without the \gls{ri} is close to the baseline and to the better solution, even though it has less information and needs less signaling.
 %
 Figure \ref{fig:la-deploy-thr} summarizes the results in the deployment phase.
 %in terms of average values for each configuration of the \gls{ql-la} and baseline solution.
 %
 \begin{figure}[!htbp]
-	\centerline{\includegraphics[width=0.6\columnwidth]{figures/chp_la/Thr_LA.pdf}}
+	\centerline{\includegraphics[width=0.8\columnwidth]{figures/chp_la/testing-sa-ma.png}}
 	\caption{CDF of the average throughput (Mbps)}
 	\label{fig:la-deploy-thr}
 \end{figure}
 
-We can note that the single stream \gls{ql-la} has a similar performance to the baseline solution, while the rank-adaptive \gls{ql-la} presents a slightly worse performance..
+We can note that baseline solution has a stable performance, with its values not varying much, while the single agent \gls{ql-la} provides the higher performances in terms of throughput, with its low values not too far from the baseline.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -525,13 +585,16 @@ The \gls{rl} provides a self-exploratory framework that enables the \base~ to ch
 %
 % Basically, the \gls{bs} decides a specific \gls{mcs} and \gls{pmi} at a certain time instant. And the \gls{bs}, in possession of the \gls{acknack} of the \gls{ue} calculates the performance of each agent.
 %
-In comparison to the baseline solution, consisting of a genie-aided precoder selection and a \gls{mcs} lookup table, our single stream \gls{ql-la} scheme has a similar performance, while the rank-adaptive \gls{ql-la} presents a slightly worse performance.
+In comparison to the baseline solution, consisting of a genie-aided precoder selection and a \gls{mcs} lookup table, our single agent \gls{ql-la} scheme with the \gls{ri} has a slightly better performance, while the single agent \gls{ql-la} without the \gls{ri} information presents a slightly worse performance.
 %
-We believe this result was due to a simulation setting that favors single stream transmission.
+The \gls{ql-la} with the \gls{ri} information already provides a reduce in signaling compared to the standard solution, due to the suppression of the \gls{pmi} information from the \gls{ue}, but this signaling can be reduced even more with the elimination of the \gls{ri} information, at the cost of small loss of performance.
+
+The multi-agent \gls{ql-la} does not seem to provide a good mapping to this problem, as it performs worse than the baseline and the single agent solution.
 %
-A fine-tuning of our multi-agent \gls{ql-la} is being studied and may improve the result of the rank-adaptive approach.
+While the \gls{ri} information improves the multi-agent solution, it is still not enough to make it usable.
 %
-This is a topic that is under investigation.
+A fine-tuning of our multi-agent \gls{ql-la} can be studied and may improve the result of this architecture.
+
 
 % As a perspective of this work, we highlight the extension of the proposed \gls{rl}-based framework to include all the precoders of the standard \cite{3gpp.38.214} and the evaluation of a single \gls{rl} agent choosing both the \gls{mcs} and the \gls{pmi}.
 % %

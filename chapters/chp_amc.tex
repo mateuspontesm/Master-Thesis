@@ -1,8 +1,10 @@
 % !TEX root = manuscript.tex
-\glsresetall
+\glsresetall[\acronymtype]
 %\addbibresource{../resource/ref.bib}
 \chapter{\Acl{amc}}
 \label{chp:amc}
+
+In this chapter we analyze a \gls{rl} solution applied to the \gls{amc} problem and compare it to two baseline solutions, \gls{illa} and \gls{olla}.
 % \section{Introduction}
 % \label{sec:amc-intro}
 %
@@ -256,7 +258,7 @@ The \gls{rl} based solution enables the system to learn the particularities of t
 A diagram adapting the model from Figure \ref{fig:rlbasic} to the \gls{amc} problem is shown in Figure \ref{fig:amc-rl-frame}.
 %
 \begin{figure}[htb]
-\centerline{\includegraphics[width=0.5\columnwidth]{figures/chp_amc/rl-framework-mateus.pdf}}
+\centerline{\includegraphics[width=0.6\columnwidth]{figures/chp_amc/rl-framework-mateus.pdf}}
 \caption{Basic diagram of the proposed AMC scheme}
 \label{fig:amc-rl-frame}
 \end{figure}

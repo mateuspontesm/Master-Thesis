@@ -1,7 +1,26 @@
 \begin{resumo}
 
 \setlength\parindent{24pt}
-TO DO
+We design two self-exploratory \gls{rl} frameworks, based on the Q-learning algorithm, for link adaptation.
+%
+In the first part, the designed solution enables the \gls{bs} to choose a suitable \gls{mcs} that maximizes the spectral efficiency while maintaining a low \gls{bler}.
+%
+In this framework, the BS chooses the \gls{mcs} based on the \gls{cqi} reported by the \gls{ue}.
+%
+A transmission is made with the chosen \gls{mcs} and the results of this transmission are converted by the \gls{bs} into rewards that the \gls{bs} uses to learn the suitable mapping from \gls{cqi} to \gls{mcs}.
+%
+Comparing with a conventional fixed look-up table and the outer loop link adaptation, the proposed framework achieves superior performance in terms of spectral efficiency and \gls{bler}.
+
+In the second part, we study different architectures that enables the BS to choose a suitable MCS and transmission rank (or spatial multiplexing factor) with the goal of maximizing the throughput while maintaining a low BLER.
+%
+In this framework, the BS decides the MCS and the PMI based on the CQI reported by the UE.
+%
+A transmission is made with the selected MCS and PMI and the results of this transmission are converted by the BS into rewards that the BS uses to learn the suitable mapping from CQI to both MCS and PMI.
+%
+The effect of the extra information provided by the RI is also analyzed.
+%
+This solution enables a similar performance when compared to a genie-aided baseline, even with the reduced signaling compared to the standard architecture in NR.
+
 % \indent\indent 5G systems are expected to deploy massive MIMO antennas and operate with millimeter waves. %
 % With more antennas and wider bandwidth, \ac{CQI} estimation and reporting will be computationally demanding and \ac{RRA} might become hugely complex. %
 % Furthermore, due to higher propagation losses in millimeter waves, system's reliability might become an issue. %

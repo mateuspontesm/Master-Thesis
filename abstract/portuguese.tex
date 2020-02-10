@@ -2,7 +2,26 @@
 \begin{otherlanguage*}{brazil}
 
 \setlength\parindent{24pt}
-TO DO
+Nós projetamos dois \textit{frameworks} auto-exploratórios, baseados no algoritmo Q-learning, para adaptação de enlace.
+%
+Na primeira parte, a solution projetada permite a \gls{bs} escolher uma \gls{mcs} adequada que maximiza a eficiência espectral enquanto mantém uma baixa \gls{bler}.
+%
+Neste \textit{framework}, a \gls{bs} escolhe a \gls{mcs} baseado em um reporte do \gls{cqi} pelo \gls{ue}.
+%
+Então, uma transmissão é feita com a \gls{mcs} escolhida e os resultados dessa transmissão são convertidos em recompensas pela \gls{bs}, que utiliza essas recompensas para aprender um mapeamento adequado entra \gls{cqi} e \gls{mcs}.
+%
+Comparando com uma tabela \textit{look-up table} e a solução de \textit{\gls{olla}}, a solução proposta alcança performance superior em termos de eficiência espectral e \gls{bler}.
+
+Na segunda parte, nós estudamos diferentes arquiteturas que permitem a \gls{bs} escolher adequadamente a \gls{mcs} e o ranque de transmissão (ou fator de multiplexação espacial) com o objetivo de maximizar o throughput enquanto mantém uma baixa \gls{bler}.
+%
+Neste \textit{framework}, a \gls{bs} decide a \gls{mcs} e o \gls{pmi} baseado no \gls{cqi} reportado pelo usuário.
+%
+Uma transmissão é feita com a \gls{mcs} e o \gls{pmi} selecionados e os resultados dessa transmissão são convertidos em recompensa pela \gls{bs}, que são utilizadas para melhorar o mapeamento entre \gls{cqi} para tanto \gls{mcs} quanto \gls{pmi}.
+%
+O efeito da informação extra provida pelo \gls{ri} também é analisada neste trabalho.
+%
+Essa solução produz uma performance similar quando comparada com uma solução linha de base \textit{genie-aided}, mesmo com a sinalização reduzida em comparação à sinalização padrão para adaptação de enlace prevista para o 5G NR.
+
 % \indent\indent Sistemas 5G serão baseados na implantação de largos conjuntos de antenas operando no espectro de ondas milimétricas. %
 % Com mais antenas e maior largura de banda, a estimação da qualidade do canal e o envio dessas medidas do usuário para a estação rádio base serão processos computacionalmente mais complexos que os atuais. %
 % Além disso, devido a uma maior degradação do sinal no espectro de ondas milimétricas, a confiabilidade desses sistemas pode ser um desafio. %
