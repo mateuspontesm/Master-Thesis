@@ -17,9 +17,9 @@ These solutions are compared to a baseline solution that seeks the precoder that
 
 Consider a single cell system whose \gls{bs} is equipped with \gls{not:txAnt} antennas serving one user equipped with \gls{not:rxAnt} antennas.
 %
-Let us assume a transmission mode with a multilayer scheme, where the \gls{bs} uses a precoder \gls{not:Wtx} \inSetComplex{\gls{not:txAnt}}{\gls{not:nLayers}} to transmit data over  \gls{not:nLayers} layers, while the \ue~applies a \gls{mmse} filter \gls{not:Wrx} \inSetComplex{\gls{not:nLayers}}{\gls{not:rxAnt}}.
+In contrast to the previous chapter, here we assume a transmission mode with a multilayer scheme, where the \gls{bs} uses a precoder \gls{not:Wtx} \inSetComplex{\gls{not:txAnt}}{\gls{not:nLayers}} to transmit data over  \gls{not:nLayers} layers, while the \ue~applies a \gls{mmse} filter \gls{not:Wrx} \inSetComplex{\gls{not:nLayers}}{\gls{not:rxAnt}}.
 %
-The discrete received signal model at the receiver is represented as
+The discrete received signal model at the receiver is represented as:
 \begin{equation}
 \label{eq.:rx_signal}
 \gls{not:Y} =
@@ -110,11 +110,11 @@ where $\gls{not:betaVec} = \left[ \gls{not:beta}_0, \ldots, \gls{not:beta}_{\gls
 
 % The transmission process takes into account the channel coding, modulation, layer mapping and multi-antenna precoding blocks of Figure \ref{fig:transmission}.
 %
-In this work, we implement \gls{phy}/\gls{mac} layer as specified in \cite{3gpp.38.212} and depicted in Figure \ref{fig:transmission}.
+In this work, we implement \gls{phy}/\gls{mac} layer as specified in \cite{3gpp.38.212} as explained in Chapter \ref{chp:theory} and depicted in Figure \ref{fig:transmission}.
 %
 %In this study we implemented all the steps specified in the channel coding block.
 %
-The \gls{tbs} calculation, the \gls{mcs} tables and the multi-antenna precoding matrices, \gls{not:Wtx}, follow the specifications in \cite{3gpp.38.214}.
+The \gls{tbs} calculation, the \glspl{mcs} tables and the multi-antenna precoding matrices, \gls{not:Wtx}, follow the specifications in \cite{3gpp.38.214}.
 %
 
 
@@ -208,7 +208,7 @@ Therewith, Figure \ref{fig:la-system-model} shows the exchange of signals involv
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Proposed Solution}
+\section{Proposed Ql-LA Solution}
 \label{sec:la-proposed}
 
 The proposed solution is a Q-learning based \gls{la} scheme, herein referred to as \gls{ql-la}.
@@ -268,7 +268,7 @@ The use of two agents is motivated by the reduced computational complexity to co
 %
 While using a single agent requires a large Q-table to construct all the possible \gls{mcs} and precoder combinations, multiple agents solve the problem separately by computing two smaller Q-tables.
 %
-As explained in Subsection \ref{subsec:single-agent}, each precoder can be designated from its \gls{pmi}, then the precoder agent is called \gls{pmi} agent.
+As explained in Section \ref{subsec:single-agent}, each precoder can be designated from its \gls{pmi}, then the precoder agent is called \gls{pmi} agent.
 % More specifically, the \gls{bs} chooses the \gls{mcs} and the \gls{pmi} using the Q-tables obtained from the \gls{rl} algorithms.
 %
 Figure \ref{fig:la-rl-frame} shows how the \gls{rl} framework fits the \gls{la} problem.

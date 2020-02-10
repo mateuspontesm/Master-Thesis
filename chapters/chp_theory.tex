@@ -4,12 +4,19 @@
 \chapter{Conceptual Framework}%\chapter{Key Features of \acs{3GPP} \acs{5G} Standards}%\chapter{\acs{5G} Scenario}%{System Modeling}
 \label{chp:theory}
 
-
-This chapter is divided into two parts, in each one we give an overview of a subject, mainly:
-\begin{enumerate}
-    \item The first part will give an overview of the transmission of downlink data, as well as some of the \gls{phy} procedures associated with it.
-    \item The second part will give an overview of some fundamental concepts of \gls{rl}.
-\end{enumerate}
+This chapter provides some basic concepts that serve as a background to the subsequent chapters.
+%
+The chapter is divided into two parts.
+%
+First, we provide a brief overview on physical layer procedures for downlink data transmission in \gls{5g} \gls{nr}.
+%
+Then, some fundamental concepts of \gls{rl} are briefly surveyed.
+%
+% This chapter is divided into two parts, in each one we give an overview of a subject, mainly:
+% \begin{enumerate}
+%     \item The first part will give an overview of the transmission of downlink data, as well as some of the \gls{phy} procedures associated with it.
+%     \item The second part will give an overview of some fundamental concepts of \gls{rl}.
+% \end{enumerate}
 
 \section{Transmission Procedures}
 \label{sec:5gnr-trans}
@@ -18,7 +25,9 @@ This chapter is divided into two parts, in each one we give an overview of a sub
 %
 A transport channel defines how the information is transmitted over the radio interface \cite{3gpp.38.212} \cite{ErikDahlman5G}.
 %
-The transport channels defined for 5G-NR in the downlink are \gls{dlsch}, \gls{pch}, and \gls{bch}. In the uplink there are two transport channels, \gls{ulsch} and \gls{rach}.
+The transport channels defined for 5G-NR in the downlink are the \gls{dlsch}, the \gls{pch}, and the \gls{bch}.
+%
+In the uplink, there are two transport channels, the \gls{ulsch} and the \gls{rach}.
 % Downlink transmissions make use of  \gls{dlsch}, \gls{pch} and \gls{bch}. In the uplink, the transport channel is called \gls{ulsch}.
 %
 % The data transmissions in the downlink use the \gls{dlsch} and in the uplink the \gls{ulsch} \cite{AliZaidi632018}.
@@ -34,15 +43,15 @@ The physical channels without the corresponding transport channel are used for c
 The physical channels defined for \gls{5g} \gls{nr} are \cite{3gpp.38.211}:
 
 \begin{enumerate}
-    \item \Gls{pdsch}: used not only for downlink data transmission, but also for random-acess response messages, parts of the system information and paging information.
+    \item \Gls{pdsch}: used not only for downlink data transmission, but also for random-access response messages, parts of the system information and paging information.
     %
     \item \Gls{pdcch}: used for \gls{dci}, that includes scheduling decisions needed for the reception of downlink data and scheduling grants for uplink data transmission.
     %
-    \item \Gls{pbch}: used for broadcasting system information needed by the device to access the network.
+    \item \Gls{pbch}: used to broadcast system information needed by the device to access the network.
     %
     \item \Gls{pusch}: used for uplink data transmission.
     %
-    \item \Gls{pucch}: used for \gls{uci}, that includes \gls{harq} acknowledgments, scheduling request and downlink \gls{csi}.
+    \item \Gls{pucch}: used for \gls{uci}, which includes \gls{harq} acknowledgments, scheduling request and downlink \gls{csi}.
     %
     \item \Gls{prach}: used for random access.
 \end{enumerate}
@@ -80,12 +89,14 @@ The \gls{fec} code for the \gls{embb} use case in data transmission is the \gls{
 \label{fig:channel-coding}
 \end{figure}
 
-In our work, we are mainly concerned with the \gls{pdsch} transmissions, in this case the overall \gls{5g} \gls{nr} channel coding process comprises six steps, as shown in Figure \ref{fig:channel-coding} \cite{ErikDahlman5G}, namely:
+In our work, we are mainly concerned with the \gls{pdsch} transmissions.
+%
+In this case the overall \gls{5g} \gls{nr} channel coding process comprises six steps, as shown in Figure \ref{fig:channel-coding} \cite{ErikDahlman5G}, namely:
 \begin{itemize}
 	\item \Gls{crc} Attachment: Calculates a \gls{crc} and attaches it to each transport block. It facilitates error detection and its size can be of 16 bits or 24 bits.
-	\item Code-block segmentation: Segments the transport block in the case of it being larger in size than the supported by the \gls{ldpc} coder. Produces \gls{cb} are of equal size.
+	\item Code-block segmentation: Segments the transport block if it is larger than the supported by the \gls{ldpc} encoder. Produces \gls{cb} of equal size.
 	\item Per-\gls{cb} \gls{crc} Attachment: A \gls{crc} is calculated and appended to each \gls{cb}.
-	\item \gls{ldpc} Encoding: The solution used in \gls{nr} is a Quasi-cyclic \gls{ldpc} with two base graphs, the two base matrices that are used to built the different parity-check matrices with different payloads and rates.
+	\item \gls{ldpc} Encoding: The solution used in \gls{nr} is a Quasi-cyclic \gls{ldpc} with two base graphs, that are used to built the different parity-check matrices with different payloads and rates.
 	\item Rate Matching: It adjusts the coding to the allocated resources. It consists of bit selection and bit interleaving.
 	\item Code-Block Concatenation: Concatenates the multiple rate-matching outputs into one block.
 \end{itemize}
@@ -119,16 +130,16 @@ In the following subsections we give an overview of the \gls{5g} \gls{nr} \gls{l
 
 \subsection{\Acl{mcs} and \acl{tbs} determination}
 
-To start the decoding process the \gls{ue} must first determine the modulation order, the target code rate and the \glspl{tbs} in the \gls{pdsch}.
+To start the decoding process, the \gls{ue} must first determine the modulation order, the target code rate and the \glspl{tbs} in the \gls{pdsch}.
 %
-To determine this the \gls{ue} needs some information:
+To this end, the \gls{ue} needs some information:
 
 \begin{enumerate}
     \item The \gls{mcs} index, $I_{mcs}$, which is a 5-bit field in the \gls{dci}.
     %
     \item The redundancy version, which is used for the \gls{harq} functionality on the rate-matching step of the channel coding and is a 2-bit field included in the \gls{dci}.
     %
-    \item The number of layers.
+    \item The number of transmission (spatial multiplexing) layers.
     \item The number of allocated \glspl{prb} before the rate matching.
 \end{enumerate}
 
@@ -136,7 +147,7 @@ The \gls{mcs} index is used alongside a table to determine the modulation order 
 %
 Until the writing of this work only three \gls{mcs} tables were defined in the the technical specification \cite{3gpp.38.214}, two of modulation order up to 64\gls{qam}, with one of those used for a low spectral efficiency case, and one with modulation order going up to 256\gls{qam}.
 %
-In this work we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up to 256\gls{qam}, reproduced in Table \ref{tab:mcs-table}, where \gls{not:rate} is the target code rate:
+In this work, we used the table \cite[Table 5.1.3.1-2]{3gpp.38.214}, that goes up to 256\gls{qam}, reproduced in Table \ref{tab:mcs-table}, where \gls{not:rate} is the target code rate:
 
 \begin{table}[htb]
 \centering
@@ -203,14 +214,16 @@ At the transmitter side, \gls{bs}, a \gls{tb} of size \gls{tbs} is delivered fro
 \subsection{The \gls{5g} \gls{nr} \gls{ldpc}}
 \label{subsec:ldpc}
 
-Before explaining the procedures in Figure \ref{fig:transmission}, we will present some introduction to the \gls{ldpc} coding solution applied to the \gls{embb} use case in the \gls{5g} \gls{nr}.
+Before explaining the procedures in Figure \ref{fig:transmission}, we give an introduction to the \gls{ldpc} solution applied to the \gls{embb} use case in the \gls{5g} \gls{nr}.
 %
 
 \Gls{ldpc} codes are a class of linear block codes based on a sparse \gls{pcm}  originally proposed by Gallager \cite{gallager1962}.
 %
 Several standards have incorporated \gls{ldpc} codes, such as IEEE 802.11n, IEEE 802.16e (WiMAX) and \gls{dvb-s2} \cite{AliZaidi632018}.
 %
-In the third and forth generations (3G and 4G) turbo codes were the primary coding scheme \cite{Richardson2018} and were one of the candidates for the \gls{5g} \gls{nr} along with polar codes and \gls{ldpc} codes \cite{Hamidi8417496}.
+In the third and forth generations (3G and 4G), turbo codes were the primary coding scheme \cite{Richardson2018}.
+%
+It has also been considered as a candidate for the \gls{5g} \gls{nr} along with polar codes and \gls{ldpc} codes \cite{Hamidi8417496}.
 %
 The \gls{5g} \gls{nr} will make a transition on the error correcting codes with the \gls{ldpc} codes being used for the data channel and polar codes being used for the control information, on both the \gls{embb} and in the release-15 \gls{urllc} use cases \cite{bae_abotabl_lin_song_lee_2019}.
 
@@ -221,7 +234,7 @@ Although turbo codes and \gls{ldpc} codes have similar error-correcting capabili
     \item Lower error floors
     \item Higher achievable peak throughput
     \item Lower decoding complexity and improved decoding latency, particularly on high code rates
-    \item Can achieve greater parallelism when decoding
+    \item Can achieve greater parallelism in the decoding process
 \end{enumerate}
 
 In a $(\gls{not:coded-bits}, \gls{not:info-bits})$ \gls{ldpc} code, the \gls{pcm} is a $ (\gls{not:coded-bits}-\gls{not:info-bits}) \times n$ sparse matrix, with $\gls{not:info-bits}$ being the number of information bits and $\gls{not:coded-bits}$ being the number of code-word bits, i.e information bits plus parity bits.
@@ -233,7 +246,7 @@ The \gls{pcm} can also be represented by a graph connecting $\gls{not:coded-bits
 %
 In this graph, there is an edge between a variable node and a check node if the corresponding entry on the \gls{pcm} is not-null \cite{Richardson2018}.
 %
-This bipartite graph representation is known as Tanner graph \cite{TannerGraph} and is the reason that the term \glsfirst{bg} is used in the \gls{nr} specifications.
+This bipartite graph representation is known as the Tanner graph \cite{TannerGraph} and is the reason that the term \glsfirst{bg} is used in the \gls{nr} specifications.
 %
 
 
@@ -241,12 +254,14 @@ The \gls{nr} \gls{ldpc} codes are \gls{qc} \gls{ldpc} codes, a class of photogra
 %
 In \gls{qc}-\gls{ldpc} the \gls{pcm} is constructed based on a smaller photograph, also called base matrix or \gls{bg}, that describes the macroscopic structure of the code \cite{Richardson2018}.
 %
-The \gls{pcm} can then be constructed by replacing each entry of the base matrix by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ cyclic permutation matrix, this process is called lifting and $\gls{not:lift-factor}$ is the lifting size \cite{AliZaidi632018}.
-
-
-In a Tanner graph representation, the lifting procedure is equivalent to having the larger graph being formed by $\gls{not:lift-factor}$ copies of the \gls{bg} and permuting the edges, as shown in \ref{fig:graph-lifting}.
+The \gls{pcm} can then be constructed by replacing each entry of the base matrix by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ cyclic permutation matrix.
 %
-One important consequence of this structure is that, with the higher possible parallelism, the decode complexity is a function of the \gls{bg} size, not of the actual \gls{pcm} size, since it can be achieved a degree of parallelism of $\gls{not:lift-factor}$ \cite{bae_abotabl_lin_song_lee_2019}.
+This process is called lifting and $\gls{not:lift-factor}$ is the lifting size \cite{AliZaidi632018}.
+
+
+In a Tanner graph representation, the lifting procedure is equivalent to having the larger graph being formed by $\gls{not:lift-factor}$ copies of the \gls{bg} and permuting the edges, as shown in Figure \ref{fig:graph-lifting}.
+%
+One important consequence of this structure is that, with the higher possible parallelism, the decode complexity is a function of the \gls{bg} size, not of the actual \gls{pcm} size, since a degree of parallelism of $\gls{not:lift-factor}$ can be achieved \cite{bae_abotabl_lin_song_lee_2019}.
 % The \gls{nr} specifies the maximum $\gls{not:lift-factor}$ to $384$.
 
 \begin{figure}[htbp]
@@ -258,7 +273,9 @@ One important consequence of this structure is that, with the higher possible pa
 
 In the \gls{5g} \gls{nr} \gls{ldpc} code, each ``0'' in the \gls{bg} is replaced by a $\gls{not:lift-factor} \times \gls{not:lift-factor} $ all-zero matrix and each ``1'' is replaced by a circularly shifted identity matrix, shifted by the corresponding shifting coefficient, \gls{not:shift-coef}, \cite{ErikDahlman5G}.
 %
-In the technical specification \cite{3gpp.38.212}, 51 lifting sizes are specified and they are divided in 8 groups, called set index $\gls{not:set-index}$, each set index corresponds to a different permutation design, i.e different shifting coefficients, this structure is resumed in the Table \ref{tab:lift-table}.
+In the technical specification \cite{3gpp.38.212}, 51 lifting sizes are specified and they are divided in 8 groups, called set index $\gls{not:set-index}$.
+%
+Each set index corresponds to a different permutation design, i.e different shifting coefficients, as summarized in Table \ref{tab:lift-table}.
 %
 This design means that there are 51 \glspl{pcm} for each of the two \glspl{bg}.
 
@@ -288,7 +305,7 @@ Two \glspl{bg} are specified in \gls{5g} \gls{nr}, in order to guarantee efficie
 %
 The \gls{bg}1 has dimensions of $46 \times 68$, meaning 22 systematic columns, while \gls{bg}2 has dimensions of $42 \times 52$, which converts to 10 systematic columns.
 %
-The first 2 columns of the \gls{bg}, which correspond to the first $2 \gls{not:lift-factor}$ columns in the \gls{pcm} are punctured, meaning the the corresponding bits are not actually transmitted, but need to be recovered at the receiver.
+The first 2 columns of the \gls{bg}, which correspond to the first $2 \gls{not:lift-factor}$ columns in the \gls{pcm} are punctured, meaning that the corresponding bits are not actually transmitted, but need to be recovered at the receiver.
 %
 \Gls{bg}2 is designed to low code rates, between $1/5$ and $5/6$ and shorter information block sizes, up to 3840, whereas \gls{bg}1 is used for larger information block sizes, up to 8448, and higher code rates, between $1/3$ and $22/24$.
 %
@@ -306,7 +323,7 @@ The information about the two \glspl{bg} is summarized in Table \ref{tab:base-gr
   \toprule
   Parameter         &     \Glsentrylong{bg} 1     & \Glsentrylong{bg} 2         \\
   \midrule
-  Matrix Dimensions &   $46 \times 68$  & $42 \times 52$    \\
+  Matrix dimensions &   $46 \times 68$  & $42 \times 52$    \\
   Number of systematic columns & 22     & 10                \\
   Maximum information payload & $22 \times 384 = 8448$ & $10 \times 384 = 3840$ \\
   Minimum designed code rate & $\frac{1}{3} ( \frac{22}{66} )$ & $\frac{1}{5} ( \frac{10}{50} )$ \\
@@ -415,7 +432,7 @@ Which means that the rate of the encoding process is the minimum designed code r
     \item \gls{bg} 2: rate of $\frac{1}{5}$
 \end{itemize}
 
-As explained in Subsection \ref{subsec:ldpc}, each non-zero element of the \gls{bg} is replaced by a circularly shifted identity matrix.
+As explained in Section \ref{subsec:ldpc}, each non-zero element of the \gls{bg} is replaced by a circularly shifted identity matrix.
 %
 For the $(i,j)$th element of the \gls{bg}, the identity matrix is shifted to the right \gls{not:shift-coef} times.
 %
@@ -425,7 +442,7 @@ The value of \gls{not:shift-coef} is given by:
     \gls{not:shift-coef} = \bmod (\gls{not:shift-value}, \gls{not:lift-factor}) ,
 \end{equation}
 %
-\noindent where \gls{not:shift-value} is the $(i,j)$th element of the shift matrix specified in \cite[Tables 5.3.2-2 and 5.3.2-3]{3gpp.38.212} and it depends of the set index \gls{not:set-index}, which is dependent of the \gls{not:lift-factor} selected, as explained in Table \ref{tab:lift-table}.
+\noindent where \gls{not:shift-value} is the $(i,j)$th element of the shift matrix specified in \cite[Tables 5.3.2-2 and 5.3.2-3]{3gpp.38.212} and it depends of the set index \gls{not:set-index}, which is dependent of the selected \gls{not:lift-factor}, as explained in Table \ref{tab:lift-table}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of subsection--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -439,15 +456,15 @@ The rate matching is directly linked to the \gls{phy} \gls{harq} functionality, 
     \item Support \gls{harq} by using different \glspl{rv}.
 \end{itemize}
 %
-Rate matching consists of a bit selection from a circular buffer depending on of the \gls{rv} and each \gls{cb} is rate matched separately.
+The rate matching consists of a bit selection from a circular buffer depending on of the \gls{rv} and each \gls{cb} is rate matched separately.
 
-\Gls{5g} \gls{nr} \gls{ldpc} codes supports a circular buffer rate matching for \gls{irharq} similar to \gls{lte}.
+The \gls{5g} \gls{nr} \gls{ldpc} codes supports a circular buffer rate matching for \gls{irharq} similar to \gls{lte}.
 %
 The coded bits, which correspond to the output of the encoding step, are written in a circular buffer, the ordering of which follows the \gls{ldpc} matrix structure, with systematic bits first and then parity bits \cite{Hamidi8417496}.
 %
 The starting position of the bit selection in the circular buffer depends on the \gls{rv}, as shown in Figure \ref{fig:rate-match-rv}.
 %
-The \glspl{rv} fixed locations are defined in terms of the lifting value \gls{not:lift-factor} and are different for each \gls{bg}, the different positions are shown in Table \ref{tab:rv-positions} \cite{3gpp.38.212}.
+The \glspl{rv} fixed locations are defined in terms of the lifting value \gls{not:lift-factor} and are different for each \gls{bg}, as shown in Table \ref{tab:rv-positions} \cite{3gpp.38.212}.
 %
 
 \begin{table}[htb]
@@ -465,11 +482,11 @@ The \glspl{rv} fixed locations are defined in terms of the lifting value \gls{no
 \end{table}
 
 
-Selecting different \glspl{rv} enables the receiver to apply soft-combining by keeping the soft values of the received coded bits, i.e \glspl{llr} and combining it with the retransmitted bits, in case of a retransmission.
+Selecting different \glspl{rv} enables the receiver to apply soft-combining by keeping the soft values of the received coded bits, i.e the \glspl{llr}, and combining it with the retransmitted bits, in case of a retransmission.
 %
-Since each retransmission corresponds to a different \gls{rv}, different \glspl{cb} are generated, but representing the same set of information, enabling different parity bits to be transmitted at each retransmission, illustrated in figure Figure \ref{fig:rate-match-rv}.
+Since each retransmission corresponds to a different \gls{rv}, multiple \glspl{cb} are generated, representing the same set of information, which enables different parity bits to be transmitted at each retransmission, as illustrated in figure Figure \ref{fig:rate-match-rv}.
 %
-This allows a gain in reliability, not only because of the better estimation of the soft values, but also because of the lower rate of the resulted soft combined values \cite{ErikDahlman5G,bae_abotabl_lin_song_lee_2019}.
+This allows a gain in reliability, not only because of the better estimation of the soft values, but also thanks to the lower rate of the resultant soft combined values \cite{ErikDahlman5G,bae_abotabl_lin_song_lee_2019}.
 
 
 \begin{figure}[htb]
@@ -506,11 +523,11 @@ All these cases are illustrated in Figure \ref{fig:rate-matching}:
 
 \Gls{ldpc} rate matching includes only the shortening and repetition equivalents of the polar coding rate matching, although the shortening of the polar codes is equivalent to the so called puncturing of the \gls{ldpc} in \cite{Hui2018}.
 %
-Hence, is possible to call simply bit selection, since both procedures select the bits starting from the initial position given by the \gls{rv}, the difference is that repetition is defined for $\gls{not:coded-bits} < \gls{not:rm-bits}$ and the \gls{ldpc} equivalent of shortening is defined for $\gls{not:coded-bits} > \gls{not:rm-bits}$.
+Hence, is possible to call simply bit selection, as in \cite{3gpp.38.212}, since both the puncturing and repetition procedures select the bits starting from the initial position given by the \gls{rv}, the difference is that repetition is defined for $\gls{not:coded-bits} < \gls{not:rm-bits}$ and the \gls{ldpc} equivalent of shortening is defined for $\gls{not:coded-bits} > \gls{not:rm-bits}$.
 
 The rate matching also includes the interleaving step, and it is applied to each \gls{cb} separately.
 %
-A row-column block interleaver is used in \gls{nr} \gls{ldpc}, the number of rows is equal to the modulation order.
+A row-column block interleaver is used in \gls{nr} \gls{ldpc}, the number of rows being equal to the modulation order.
 %
 The writing of the bits in the interleaver is made row-by-row, while the reading of the bits is made column-by-column.
 %
@@ -525,12 +542,12 @@ One \gls{tb} can be mapped to a maximum of 4 layers, as stated in  \cite[Table 7
 %
 In case of 5 to 8 layers (only on downlink) another \gls{tb} is mapped to layers from 5 to 8.
 %
-The mapping is done as: every n-th symbol is mapped to the n-th layer \cite{ErikDahlman5G}.
+The mapping respects a one-to-one correspondence, i.e., every n-th symbol is mapped to the n-th layer \cite{ErikDahlman5G}.
 
-To exemplify we show the cases of 3, 5 and 6 layers.
+As an example, we show the cases of 3, 5 and 6 layers.
 %
-For a sequence of symbols $d^{(q)}$ modulated from the q-th \gls{tb} and with
-$\gls{not:nLayers}_q$ being the number of layers allocated to the transmission of the q-th \gls{tb} and $x$ being the output of the layer mapping, where $x^{(j)}$ is the vector of complex symbols mapped to layer $j$, we have:
+For a sequence of symbols $d^{(q)}$ modulated from the $q$-th \gls{tb} and with
+$\gls{not:nLayers}_q$ being the number of layers allocated to the transmission of the $q$-th \gls{tb} and $x$ being the output of the layer mapping, where $x^{(j)}$ is the vector of complex symbols mapped to layer $j$, we have:
 %
 \begin{itemize}
     \item $\gls{not:nLayers} = 3 $, then $q=0$ and $\gls{not:nLayers}_q = 3$:
@@ -564,7 +581,7 @@ $\gls{not:nLayers}_q$ being the number of layers allocated to the transmission o
     $$
 \end{itemize}
 
-We can generalize this behavior to:
+We can generalize this mapping via the following expression:
 %
 \begin{equation}
     x^{(j)}_{i} =
@@ -825,7 +842,7 @@ This behavior policy still has an effect on the algorithm, because it determines
 
 The Algorithm \ref{alg1} details Q-learning algorithm \cite{sutton2018rl}.
 
-\begin{algorithm}[htb]
+\begin{algorithm}[!t]
 
 Algorithm parameters: step size $\alpha \in (0, 1]$, small $\epsilon > 0$\;
 Initialize $Q(s, a)$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
@@ -840,3 +857,9 @@ Initialize s\;
 \caption{Q-learning (off-policy TD control) for estimating $\pi \approx \pi^* $}
   \label{alg1}
 \end{algorithm}
+
+In the next chapters, the basic Q-learning framework described in this section is applied to two different problems.
+%
+In Chapter \ref{chp:amc}, we investigate a Q-learning based \gls{amc} algorithm.
+%
+In Chapter \ref{chp:la}, we address the link adaptation problem for \gls{5g} \gls{nr} from the perspective of Q-learning.

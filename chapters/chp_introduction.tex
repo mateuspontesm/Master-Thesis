@@ -21,9 +21,9 @@ They use the channel state information to keep the \gls{bler} below a predefined
 %
 In \gls{lte}, the target is fixed to 10\%, but the \gls{5g} \gls{nr} will cover a wider spectrum of services, and they impose new set of \gls{bler} targets \cite{Amin_2016,fantacci2009adaptive}.
 %
-Another aspect in \gls{la} is the rank adaptation, which defines the appropriate number of transmitted spatial streams is selected before transmission.
+Another aspect in \gls{la} is the rank adaptation, which defines the appropriate number of transmitted spatial streams to be selected before transmission.
 %
-Rank adaptation is used in order to increase the throughput in low interference scenarios and reliability in high interference scenarios.
+Rank adaptation is used in order to increase the throughput in low interference scenarios and link reliability in high interference scenarios.
 
 %
 % %
@@ -44,9 +44,9 @@ The \gls{bs} uses the \gls{cqi} reported by the \gls{ue} to define the appropria
 %
 Thanks to the \gls{pdcch}, the new \gls{mcs} is informed to the \gls{ue} through the \gls{dci} \cite{ErikDahlman5G}.
 %
-By its turn, rank adaptation improves the systems performance, especially when used with \gls{irc} by selecting the number of transmission layers, or spatial multiplexing factor.
+By its turn, rank adaptation improves the systems performance, especially when used with \gls{irc} by selecting the number of spatially multiplexed data streams.
 %
-In high interference scenarios lower ranks are preferred as it improves the interference suppression at the receiver side and at low interference scenarios higher ranks can be used to increase the throughtput \cite{catania2015distributed}.
+In high interference scenarios, lower ranks are preferred as it improves the interference suppression at the receiver side, while at low interference scenarios higher ranks can be used to increase the throughput \cite{catania2015distributed}.
 %
 % In the downlink \gls{amc} procedure, the \gls{ue} suggests to the \gls{bs} an appropriate \gls{mcs} in the \gls{amc} set to be used \cite{Sang2014}.
 % %
@@ -122,7 +122,7 @@ A deep reinforcement learning approach is used in \cite{DRL_AMC} as a solution t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Objectives, Contributions and Thesis Structure}
 
-Considering the what has been presented in the previous subsection, the main objectives of this master thesis are:
+Considering the what has been presented in the previous subsection, the main objectives of this work are:
 \begin{enumerate}
     \item Develop and study the effectiveness of a \gls{rl} solution to \gls{amc} and also a more complete \gls{la} with rank adaptation.
     \item Present the \gls{phy} concepts necessary to understand the transmission procedures while also giving an understanding of the implementation work made to prepare the simulator for this work.
@@ -138,10 +138,10 @@ On the other hand, Chapter \ref{chp:la} presents a more general \gls{la} problem
 
 Chapter \ref{chp:conclusion} summarizes the main conclusions of this work.
 
-Therewith, the main contributions of our work are:
+Therewith, the main contributions of this work are:
 \begin{enumerate}
     \item Proposition and analysis of an \gls{amc} and a \gls{la} solution that selects the \gls{mcs} and the \gls{pmi} by using a \gls{rl} framework.
-    \item Solutions in compliance with \gls{5g} \gls{nr} physical layer specification as we consider the whole chain of channel coding specified in the standard \cite{3gpp.38.212}
+    \item Solutions in compliance with \gls{5g} \gls{nr} specification as we consider the physical layer structure specified in the standard \cite{3gpp.38.212}
     \item The more general \gls{la} solution of Chapter \ref{chp:la} also complies with the \gls{5g} \gls{nr} procedures for data as it considers the multi-antenna precoder matrices from the standard \cite{3gpp.38.214}.
 \end{enumerate}
 %
@@ -152,7 +152,7 @@ Therewith, the main contributions of our work are:
 \section{Scientific Contributions}
 \begin{refsection}
 
-Currently, the content of this thesis, more specifically Chapter \ref{chp:amc}, has been partially published and presented at 2019 IEEE Globecom Workshops.
+The content of this thesis, more specifically Chapter \ref{chp:amc}, has been partially published and presented at 2019 IEEE Globecom Workshops.
 %
 A preprint can be found with the following bibliographic information:
 %
