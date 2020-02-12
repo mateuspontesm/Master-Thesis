@@ -2,45 +2,41 @@
 \begin{otherlanguage*}{brazil}
 
 \setlength\parindent{24pt}
-Nós projetamos dois \textit{frameworks} auto-exploratórios, baseados no algoritmo Q-learning, para adaptação de enlace.
+Neste trabalho são propostos dois frameworks auto-exploratórios, baseados em aprendizado por reforço para a adaptação de enlace em sistemas de comunicações sem fio 5G.
 %
-Na primeira parte, a solution projetada permite a \gls{bs} escolher uma \gls{mcs} adequada que maximiza a eficiência espectral enquanto mantém uma baixa \gls{bler}.
+Primeiramente, é apresentada uma solução baseada em Q-learning para modulação e codificação adaptativa que permite a estação base aprender o mapeamento entre o esquema de modulação e codificação e o indicador de qualidade do canal (do inglês CQI- channel quality indicator), visando maximizar a eficiência espectral do sistema.
 %
-Neste \textit{framework}, a \gls{bs} escolhe a \gls{mcs} baseado em um reporte do \gls{cqi} pelo \gls{ue}.
+Comparada à soluções clássicas de modulação e codificação adaptativa, a solução proposta alcança desempenhos superiores em termos de eficiência espectral e taxa de erro de blocos.
 %
-Então, uma transmissão é feita com a \gls{mcs} escolhida e os resultados dessa transmissão são convertidos em recompensas pela \gls{bs}, que utiliza essas recompensas para aprender um mapeamento adequado entra \gls{cqi} e \gls{mcs}.
+Na segunda parte deste trabalho, considera-se um problema mais amplo no contexto de sistemas MIMO (do inglês, MIMO - multiple-input multiple-output), em que a estação base e o usuário são equipados com arranjos de antenas.
 %
-Comparando com uma tabela \textit{look-up table} e a solução de \textit{\gls{olla}}, a solução proposta alcança performance superior em termos de eficiência espectral e \gls{bler}.
+Para este sistema, é apresentada uma solução baseada em Q-learning para a seleção conjunta do esquema de modulação e codificação e do número de camadas espaciais de transmissão (fator de multiplexação espacial), bem com oo esquema de precodificação.
+%
+Neste caso, o mapeamento é aprendido baseado nas informações de CQI e do indicador de posto da tramissão (do inglês, RI - rank indicator).
+%
+De acordo com resultados de simulação, a solução proposta atinge um desempenho similar ao da solução de referência (genie-aided) porém com menor quantiddade sinalização necessária quando comparada à sinalização especificada no padrão do 5G.
 
-Na segunda parte, nós estudamos diferentes arquiteturas que permitem a \gls{bs} escolher adequadamente a \gls{mcs} e o ranque de transmissão (ou fator de multiplexação espacial) com o objetivo de maximizar o throughput enquanto mantém uma baixa \gls{bler}.
 %
-Neste \textit{framework}, a \gls{bs} decide a \gls{mcs} e o \gls{pmi} baseado no \gls{cqi} reportado pelo usuário.
+% Nós projetamos dois \textit{frameworks} auto-exploratórios, baseados no algoritmo Q-learning, para adaptação de enlace.
+% %
+% Na primeira parte, a solution projetada permite a \gls{bs} escolher uma \gls{mcs} adequada que maximiza a eficiência espectral enquanto mantém uma baixa \gls{bler}.
+% %
+% Neste \textit{framework}, a \gls{bs} escolhe a \gls{mcs} baseado em um reporte do \gls{cqi} pelo \gls{ue}.
+% %
+% Então, uma transmissão é feita com a \gls{mcs} escolhida e os resultados dessa transmissão são convertidos em recompensas pela \gls{bs}, que utiliza essas recompensas para aprender um mapeamento adequado entra \gls{cqi} e \gls{mcs}.
+% %
+% Comparando com uma tabela \textit{look-up table} e a solução de \textit{\gls{olla}}, a solução proposta alcança performance superior em termos de eficiência espectral e \gls{bler}.
 %
-Uma transmissão é feita com a \gls{mcs} e o \gls{pmi} selecionados e os resultados dessa transmissão são convertidos em recompensa pela \gls{bs}, que são utilizadas para melhorar o mapeamento entre \gls{cqi} para tanto \gls{mcs} quanto \gls{pmi}.
-%
-O efeito da informação extra provida pelo \gls{ri} também é analisada neste trabalho.
-%
-Essa solução produz uma performance similar quando comparada com uma solução linha de base \textit{genie-aided}, mesmo com a sinalização reduzida em comparação à sinalização padrão para adaptação de enlace prevista para o 5G NR.
+% Na segunda parte, nós estudamos diferentes arquiteturas que permitem a \gls{bs} escolher adequadamente a \gls{mcs} e o ranque de transmissão (ou fator de multiplexação espacial) com o objetivo de maximizar o throughput enquanto mantém uma baixa \gls{bler}.
+% %
+% Neste \textit{framework}, a \gls{bs} decide a \gls{mcs} e o \gls{pmi} baseado no \gls{cqi} reportado pelo usuário.
+% %
+% Uma transmissão é feita com a \gls{mcs} e o \gls{pmi} selecionados e os resultados dessa transmissão são convertidos em recompensa pela \gls{bs}, que são utilizadas para melhorar o mapeamento entre \gls{cqi} para tanto \gls{mcs} quanto \gls{pmi}.
+% %
+% O efeito da informação extra provida pelo \gls{ri} também é analisada neste trabalho.
+% %
+% Essa solução produz uma performance similar quando comparada com uma solução linha de base \textit{genie-aided}, mesmo com a sinalização reduzida em comparação à sinalização padrão para adaptação de enlace prevista para o 5G NR.
 
-% \indent\indent Sistemas 5G serão baseados na implantação de largos conjuntos de antenas operando no espectro de ondas milimétricas. %
-% Com mais antenas e maior largura de banda, a estimação da qualidade do canal e o envio dessas medidas do usuário para a estação rádio base serão processos computacionalmente mais complexos que os atuais. %
-% Além disso, devido a uma maior degradação do sinal no espectro de ondas milimétricas, a confiabilidade desses sistemas pode ser um desafio. %
-% Neste contexto, a presente tese analisa duas estratégias para tratar ambos os problemas: complexidade e confiabilidade. %
-%
-% A primeira estratégia consiste em explorar a redução das flutuações do canal devido ao uso de feixes estreitos com largos conjuntos de antenas (o canal “endurece”). %
-% Quando este fenômeno ocorre, funções de camadas superiores baseadas em medições podem ser otimizadas. %
-%
-% A segunda estratégia é relacionada à integração entre sistemas 5G e LTE. %
-% Mais precisamente, os usuários têm a capacidade de se conectarem simultaneamente a sistemas de ambas as tecnologias. %
-% Isto é chamado conexão dual. %
-%
-% Antes de abordar essas duas estratégias, apresentamos uma visão geral das principais características do 5G usadas nessa tese e padronizadas pelas especificações do 3GPP versão 15. %
-% Depois disso, apresentamos análises gerais relacionadas à conexão dual e ao endurecimento do canal. %
-% Finalmente, investigamos esses dois conceitos da perspectiva da alocação de recursos de rádio. %
-%
-% Mais especificamente, propomos soluções baseadas no endurecimento do canal e relacionadas à medição da qualidade do canal e ao envio destes dados. %
-% Além disso, também apresentamos soluções para seleção de estação rádio base e alocação de recursos em sistemas com múltiplas tecnologias e múltiplas conexões. %
-% Análises numéricas considerando parâmetros 5G são apresentadas para validar os métodos propostos. %
 
 \vspace*{2ex}
 \textbf{Palavras-chave: } aprendizagem por reforço, aprendizagem de máquina, adaptação de enlace, adaptação de posto.

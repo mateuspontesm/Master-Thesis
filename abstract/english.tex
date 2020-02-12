@@ -1,90 +1,40 @@
 \begin{resumo}
 
 \setlength\parindent{24pt}
-We design two self-exploratory \gls{rl} frameworks, based on the Q-learning algorithm, for link adaptation.
-%
-In the first part, the designed solution enables the \gls{bs} to choose a suitable \gls{mcs} that maximizes the spectral efficiency while maintaining a low \gls{bler}.
-%
-In this framework, the BS chooses the \gls{mcs} based on the \gls{cqi} reported by the \gls{ue}.
-%
-A transmission is made with the chosen \gls{mcs} and the results of this transmission are converted by the \gls{bs} into rewards that the \gls{bs} uses to learn the suitable mapping from \gls{cqi} to \gls{mcs}.
-%
-Comparing with a conventional fixed look-up table and the outer loop link adaptation, the proposed framework achieves superior performance in terms of spectral efficiency and \gls{bler}.
 
-In the second part, we study different architectures that enables the BS to choose a suitable MCS and transmission rank (or spatial multiplexing factor) with the goal of maximizing the throughput while maintaining a low BLER.
+In this work we propose two frameworks self-exploratory frameworks, based on \gls{rl} for link adaptation in \gls{5g} wireless communication systems.
 %
-In this framework, the BS decides the MCS and the PMI based on the CQI reported by the UE.
+Firstly, a Q-learning solution for \gls{amc} is presented that allows the base station to learn the mapping between the \gls{mcs} and the \gls{cqi}, in order to maximize the spectral efficiency of the system.
 %
-A transmission is made with the selected MCS and PMI and the results of this transmission are converted by the BS into rewards that the BS uses to learn the suitable mapping from CQI to both MCS and PMI.
+Compared to classic \gls{amc} solutions, the proposed solution achieves superior performances in terms of spectral efficiency and \gls{bler}.
 %
-The effect of the extra information provided by the RI is also analyzed.
+In the second part of this work, a broader problem is considered in the context of \gls{mimo} systems, in which the base station and the user are equipped with antenna arrays.
 %
-This solution enables a similar performance when compared to a genie-aided baseline, even with the reduced signaling compared to the standard architecture in NR.
-
-% \indent\indent 5G systems are expected to deploy massive MIMO antennas and operate with millimeter waves. %
-% With more antennas and wider bandwidth, \ac{CQI} estimation and reporting will be computationally demanding and \ac{RRA} might become hugely complex. %
-% Furthermore, due to higher propagation losses in millimeter waves, system's reliability might become an issue. %
-% In this context, the present thesis analyzes two strategies to address both problems: complexity and reliability. %
+For this system, a solution based on Q-learning is presented for the joint selection of the \gls{mcs} and the number of spatial transmission layers (spatial multiplexing factor), as well as the precoding scheme.
 %
-% The first strategy is to exploit the reduction of channel fluctuations due to the use of narrow beams with large antenna arrays, i.e., the channel “hardens”. %
-% When this phenomenon happens, upper layer functions related to measurements can be optimized. %
+In this case, the mapping is learned based on the information from \gls{cqi} and the \gls{ri} of the process.
 %
-% %The first strategy is to optimize upper layer functions related to measurements based on the reduction of channel fluctuations due to the use of narrow beams with large antenna arrays in the transmitter. %
-% %this phenomenon is called the channel “hardens”. %
+According to simulation results, the proposed solution achieves a performance similar to that of the reference solution (genie-aided) but with less quantity of signaling required when compared to the signaling specified in the 5G standard.
 %
-% %The first strategy is to assume that the use of narrow beams with large antenna arrays in the transmitter reduces channel fluctuations, i.e., the channel “hardens”. %
-% %Based on this assumption, upper layer functions related to measurements can be optimized. %
-%
-% The second strategy concerns the adoption of a tight integration between 5G NR and LTE. %
-% More precisely, the \acp{UE} would be allowed to be simultaneously connected to both \acp{RAT}, the so-called \ac{DC}. %
-%
-% Before addressing these two strategies, we present an overview of the main 5G features used in this thesis and standardized in \ac{3GPP} specification release~$15$. %
-% After that, we present general analyses related to \ac{DC} and \ac{CH} occurrence. %
-% Finally, we investigate these concepts from the perspective of \ac{RRA}. %
-% %Regarding these strategies, we start presenting general analyses related to \ac{DC} and \ac{CH} occurrence, respectively. %
-% %Then, we investigate these concepts from the perspective of \ac{RRA}. %
-% %Before addressing these topics, we present an overview of the main \ac{5G} features used in this thesis and specified in \ac{3GPP} specification release~$15$. %
-%
-% More specifically, frameworks related to \ac{CQI} measurement and reporting based on \ac{CH} occurrence are proposed. %
-% Besides, we also propose procedures for base station selection and resource assignment in a multi-\ac{RAT} multi-connectivity system. %
-% Numerical analyses considering 5G system parameters are presented validating the proposed methods and showing that they improve system performance. %
-%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-% %A tight interworking between the next generation of wireless cellular networks, the \acs{5G}, and legacy standards, e.g., \ac{LTE}, is being envisioned in order to support a wide range of service requirements. %
-% %Aiming at addressing the challenge of coordinating resources across different technologies, centralized processing units are being considered. %
-% %However, they have practical issues, e.g., processing costs and increased signaling overhead. %
-% %In this context, the present work formulates an optimization problem in order to manage resources in a multi-\ac{RAT} scenario. %
-% %Its objective is to maximize the minimum user throughput in the system subject to the constraint that for each user, his throughput must be higher than a requirement. %
-% %One of the differences from previous works is that the users may connect to more than one \ac{RAT} at the same time, the so-called \ac{DC}. %
-% %The referred problem is non-linear and hard to solve. %
-% %However, we get to transform it into a simpler form, a \ac{MILP}, that can be optimally solved using standard optimization methods. %
-% %This solution is categorized as a centralized solution. %
-% %Thus, we propose a distributed framework to overcome the drawbacks of centralized processing. %
-% %This framework is divided into two parts: a \ac{BS} selection procedure (performed by the users) and a resource assignment algorithm (performed by the \acp{BS}). %
-% %Besides, a performance evaluation is conducted, considering 4G \ac{LTE} and \ac{5G} \ac{NR} parameters. %
-%
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% %Multi-beam operation is one of the key \ac{NR} features. %
-% %In order to support it, the use of \ac{CSI-RS} was broadened and new synchronization signals were introduced, as the so-called \acp{SSB}. %
+% We design two self-exploratory \gls{rl} frameworks, based on the Q-learning algorithm, for link adaptation.
 % %
-% %Since these signals might depend on the transmitted beam, the size and amount of \ac{UE} measurements and reports may increase with the number of beams. %
-% %Therefore, the complexity of \ac{RRA} and \ac{UE} mobility management may also increase, since they rely on accurate channel quality estimation. %
+% In the first part, the designed solution enables the \gls{bs} to choose a suitable \gls{mcs} that maximizes the spectral efficiency while maintaining a low \gls{bler}.
 % %
-% %An envisioned optimization is to consider that channel variations due to fast fading may decrease when the number of antennas increases and in the presence of beamforming. %
-% %This phenomenon is described in the literature as the \ac{CH} effect. %
+% In this framework, the BS chooses the \gls{mcs} based on the \gls{cqi} reported by the \gls{ue}.
 % %
-% %Based on what was presented, this work proposes a method to identify when \ac{CH} is occurring and also optimization procedures in time and frequency domains that take into account the occurrence of \ac{CH}. %
+% A transmission is made with the chosen \gls{mcs} and the results of this transmission are converted by the \gls{bs} into rewards that the \gls{bs} uses to learn the suitable mapping from \gls{cqi} to \gls{mcs}.
 % %
-% %More specifically, the studied time domain optimization is related to cell quality measurements. %
-% %We proposed a framework for \ac{CH} detection and L1 measurement optimization, where the \ac{CH} is detected based on the standard deviation of \ac{RSRP} measurements in a sliding window and the measurement periodicity is dynamically adjusted according to the level of \ac{CH}. %
+% Comparing with a conventional fixed look-up table and the outer loop link adaptation, the proposed framework achieves superior performance in terms of spectral efficiency and \gls{bler}.
+%
+% In the second part, we study different architectures that enables the BS to choose a suitable MCS and transmission rank (or spatial multiplexing factor) with the goal of maximizing the throughput while maintaining a low BLER.
 % %
-% %Concerning the frequency domain optimization, we proposed a framework focused on reducing the amount and size of \ac{CSI} reports. %
-% %Its main idea is to group sub-bands with similar \ac{CQI} due to \ac{CH} and to send just one \ac{CQI} report for this entire set. %
-% %It was also proposed that, if the \ac{UE} identifies that \ac{CH} is happening in a given period of time, then this \ac{UE} is allowed to measure some of these sub-bands with longer periodicity. %
+% In this framework, the BS decides the MCS and the PMI based on the CQI reported by the UE.
 % %
-% %Computational simulations validated the proposed methods. %
-% %The numerical results also showed that the \ac{UE} mobility negatively impacts the \ac{CH}, i.e., increasing the \ac{UE} speed increases channel fluctuations for some \acp{UE}. %
-% %Despite of this, the proposed methods still work. %
+% A transmission is made with the selected MCS and PMI and the results of this transmission are converted by the BS into rewards that the BS uses to learn the suitable mapping from CQI to both MCS and PMI.
+% %
+% The effect of the extra information provided by the RI is also analyzed.
+% %
+% This solution enables a similar performance when compared to a genie-aided baseline, even with the reduced signaling compared to the standard architecture in NR.
 
 \vspace*{2ex}
 \textbf{Keywords: } reinforcement learning, machine learning, link adaptation, rank adaptation.

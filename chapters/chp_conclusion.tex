@@ -5,15 +5,18 @@
 \chapter{Conclusions}% and Future Perspectives}
 \label{chp:conclusion}
 
-As presented in Chapter \ref{chp:introduction}, the main purposes of this work was to study \gls{rl} solutions applied to \gls{la}, while also giving an overview of the \gls{phy} and transmission procedures associated with it.
+The main purpose of this work was to study \gls{rl} solutions applied to \gls{la}, while also giving an overview of the \gls{phy} and transmission procedures associated with it in the context of \gls{5g} \gls{nr}.
 
-Therewith, Chapter \ref{chp:theory} presented some fundamentals of \gls{rl} and of the Q-Learning.
+% Therewith, Chapter \ref{chp:theory} presented some fundamentals of \gls{rl} and of the Q-Learning.
+We have studied the some fundamentals of \gls{rl} and of the Q-Learning.
 %
-It also presented the transmission process for downlink data and the procedure from \gls{phy} perspective, giving an overview of the main steps of the transmission chain.
+We have also presented the transmission process for downlink data and the procedure from a \gls{phy} perspective, giving an overview of the main steps of the transmission chain.
 
-Regarding the proposed solutions and their performance evaluations, on one hand, Chapter \ref{chp:amc} presented our solution based on a Q-Learning algorithm with a specially defined \gls{cqi} and showed the gain in spectral efficiency when compared to the baseline solutions, \gls{illa} and \gls{olla}.
+Regarding the proposed solutions and their performance evaluations, on one hand, Chapter \ref{chp:amc} presented our solution based on a Q-Learning algorithm with a specially defined \gls{cqi} and showed the gain in spectral efficiency when compared to the baseline solutions, namely the \gls{illa} and the \gls{olla}.
 %
-On the other hand, Chapter \ref{chp:la} presented our solution that chooses the \gls{mcs} and the \gls{pmi}, becoming an \gls{amc} solution and a rank adaptation solution. The performance evaluations showed that the proposed solution achieves a performance close to that of a brute force solution that searches for the precoder that maximizes the \gls{snr}.
+On the other hand, Chapter \ref{chp:la} presented an enhanced solution that chooses both the \gls{mcs} and the precoder matrix, which turns out to be a joint \gls{amc} and rank adaptation solution.
+%
+Our simulations showed that the proposed \gls{ql-la} achieves a performance close to that of a brute force solution that searches for the precoder that maximizes the \gls{snr}.
 
 As a perspective of this work, we highlight the extension of the proposed \gls{rl}-based framework to include all the precoders of the standard \cite{3gpp.38.214}.
 %

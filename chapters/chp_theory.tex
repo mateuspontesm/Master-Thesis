@@ -666,11 +666,11 @@ The quantities in the \gls{csi} report more relevant to this work are \cite{AliZ
     \item \Gls{cqi}: Index to the preferred \gls{mcs}, which is the highest \gls{mcs} that gives a \gls{bler} of 0.1 in case \gls{cqi} Tables 1 and 2 \cite[Tables 5.2.2.1-2 \& 5.2.2.1-3]{3gpp.38.214} or a \gls{bler} of 0.00001 in the case of \gls{cqi} Table 3 \cite[5.2.2.1-4]{3gpp.38.214}, given the selected precoder and rank.
 \end{enumerate}
 
-The \gls{pmi} indicates the precoder matrix that the \gls{ue} believes it is the best option from a set of precoders, the codebook.
+The \gls{pmi} indicates the precoder matrix that the \gls{ue} believes to be the best option from a set of precoders of the codebook.
 %
-Since the device selects the precoder based on a certain number of antenna-ports and a number of layers (selected transmission rank), each combination of $\gls{not:txAnt}_{\text{AP}}$ and $\gls{not:nLayers}$ represents at least one codebook.
+Since the device selects the precoder based on a certain number of antenna ports and a number of layers (selected transmission rank), each combination of $\gls{not:txAnt}_{\text{AP}}$ and $\gls{not:nLayers}$ represents at least one codebook.
 %
-The \gls{pmi} only indicates the precoder that the \gls{ue} prefers, it imposes no restriction whatsoever on the precoder selection from the network for downlink transmissions \cite{ErikDahlman5G, AliZaidi632018}.
+The \gls{pmi} only indicates the precoder that the \gls{ue} prefers, i.e it imposes no restriction on the precoder selection from the network for downlink transmissions \cite{ErikDahlman5G, AliZaidi632018}.
 %
 Nevertheless, at Chapter \ref{chp:la} only the codebooks and precoders defined in \cite{3gpp.38.214} are used.
 %
@@ -688,8 +688,7 @@ The precoders for 2 antenna-ports and for one and two layer transmission are sho
 
 \subsection{Downlink Transmission and Link Adaptation}
 
-In this subsection the subsections above are summarized and contextualized with the \gls{la} problem.
-
+% In this subsection the subsections above are summarized and contextualized with the \gls{la} problem.
 The downlink \gls{mimo} transmission uses two main reference signals, the \gls{csi}-\gls{rs} and the \gls{dmrs}.
 %
 \Gls{csi}-\gls{rs} is mainly used for \gls{csi} acquisition and it can be beamformed or transmitted per antenna element.
@@ -703,7 +702,7 @@ The link adaptation is the choice of some of these transmission parameters, in o
 %%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Reinforcement Learning }
 \label{sec:rl-theory}
-\Gls{rl} is a \gls{ml} technique that aims to find the best behavior in a given situation in order to maximize a notion of accumulated reward \cite{Bishop07}.
+\Gls{rl} is a \gls{ml} technique that aims to find the best behavior in a given situation in order to maximize a notion of accumulated reward \cite{Bishop07,survey-son}.
 %
 Figure \ref{fig:rlbasic} shows a simple block diagram of the \gls{rl} problem in which an agent, which is the learner and decision maker, interacts with an environment by taking actions.
 %

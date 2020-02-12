@@ -2,9 +2,9 @@
 \glsresetall[\acronymtype]
 %\addbibresource{../resource/ref.bib}
 \chapter{Introduction} \label{chp:introduction}
-\Gls{5g} wireless communication systems are being designed to provide high data and transmission rates \cite{Amin_2016}.
+\Gls{5g} wireless communication systems are being designed to provide high data and transmission rates, massive device connectivity and enhanced reliability at low latency. \cite{Amin_2016}.
 %
-Because of this, a reliable \gls{la} process for \gls{5g} \gls{nr} is needed for coping with the need of increasing the data rate that can be accurately transmitted \cite{chu01}.
+To this end, a reliable \gls{la} process for \gls{5g} \gls{nr} is needed for coping with the increased demands in terms of the physical layer performance \cite{chu01}.
 %
 \Gls{la} is a key technology to keep the \gls{bler} below a predefined threshold while maximizing the throughput.
 %
@@ -14,14 +14,14 @@ Because of this, a reliable \gls{la} process for \gls{5g} \gls{nr} is needed for
 %
 % Basically, the systems use an \gls{amc} scheme that selects the appropriate \gls{mcs}.
 % One key technique for \gls{la} is the \gls{amc} that selects the appropriate \gls{mcs}.
-A very well known approach to perform such a selection is the use of \gls{amc}-like solutions.
+A very well known approach is the use of \gls{amc} solutions, which aims at controlling the \gls{bler} by adaptively switching among modulation schemes and coding rates based on a \gls{cqi}.
 %
 They use the channel state information to keep the \gls{bler} below a predefined threshold.
 % That is made based on the channel quality in order to keep the \gls{bler} below a predefined threshold.
 %
-In \gls{lte}, the target is fixed to 10\%, but the \gls{5g} \gls{nr} will cover a wider spectrum of services, and they impose new set of \gls{bler} targets \cite{Amin_2016,fantacci2009adaptive}.
+In \gls{lte}, the target \gls{bler} is fixed to 10\%, but the \gls{5g} \gls{nr} will cover a wider spectrum of services, and they impose new set of \gls{bler} targets \cite{Amin_2016,fantacci2009adaptive}.
 %
-Another aspect in \gls{la} is the rank adaptation, which defines the appropriate number of transmitted spatial streams to be selected before transmission.
+Another aspect in \gls{la} is the so-called \textit{rank adaptation}, which defines the appropriate number of transmitted spatial streams to be selected before transmission.
 %
 Rank adaptation is used in order to increase the throughput in low interference scenarios and link reliability in high interference scenarios.
 
@@ -60,7 +60,7 @@ As such, \gls{ml} algorithms are well suited to this application, because of the
 %
 A \gls{ml} category of particular interest to cellular systems is the \gls{rl}, because of its applicability in optimization problems \cite{survey-son}, such as backhaul optimization~\cite{jaber2015}, coverage and capacity optimization~\cite{Fan2014} and resource optimization~\cite{Miozzo2017SwitchOnOffPF}.
 %
-As such, the \gls{rl} framework has become an attractive tool to devise novel \gls{5g} \gls{la} due to the capacity of \gls{rl} tools in solving problems whose model varies over time.
+As such, the \gls{rl} framework has become an attractive tool to devise novel \gls{5g} \gls{la} due to its capacity of solving problems whose model varies over time.
 %
 % The goal of the \gls{la} is an automatic choice of the best parameters depending on the user, channel conditions and applications requirements.
 % While in \gls{lte}, the look-up table provides fixed \gls{amc} rules for all the users, the novel system needs a more flexible one that can be adjusted according to user channel state.
@@ -98,17 +98,19 @@ As such, the \gls{rl} framework has become an attractive tool to devise novel \g
 
 One of the main techniques applied to \gls{la} is the \gls{olla} \cite{Sampath1997}.
 %
-The goal of the \gls{olla} is to improve the \gls{amc}, since static \gls{amc} thresholds does not perform well due to the variations of the channel.
+The goal of the \gls{olla} is to improve the \gls{amc}, since the static \gls{sinr} thresholds of the \gls{illa} do not perform well due to the variations of the channel.
 %
-Therefore, the \gls{olla} is an additional technique, applied on top of the \gls{illa}, that adjusts the threshold according to the reliability of the transmitted packets \cite{Blanquez-Casado2016}.
+Therefore, the \gls{olla} is an additional technique, applied on top of the \gls{illa}, which adjusts the threshold according to the reliability of the transmitted packets \cite{Blanquez-Casado2016}.
 
 But \gls{olla} can experience a slow convergence and degrade the average throughput \cite{10.1145/3341216.3342212}.
 %
-Several works tried to improve the \gls{olla}, in \cite{Blanquez-Casado2016} it is proposed a version of \gls{olla} with dynamic step size, instead of the fixed offset in the traditional \gls{olla}.
+Several works tried to improve the performance of \gls{olla}.
 %
-In \cite{Sarret2015}, a dynamic step is also used, but the positive offset, in case of a correct transmission, is fixed and only the negative offset is adapted, based on a modified target \gls{bler}.
+In \cite{Blanquez-Casado2016} the authors propose a variation of \gls{olla} with dynamic step size, instead of the fixed offset given to the \gls{sinr} thresholds adopted in the traditional \gls{olla}.
 %
-In \cite{Sarret2015}, the proposed solution is also evaluated when used in conjuction with a rank adaptation solution proposed in \cite{catania2015distributed}.
+In \cite{Sarret2015}, a dynamic step size approach is also proposed, by operating with a positive fixed offset and an adjustable negative offset.
+%
+In \cite{Sarret2015}, the proposed solution is also evaluated when used in conjunction with a rank adaptation scheme proposed in \cite{catania2015distributed}.
 
 Regarding \gls{rl} solutions, there are few works that use \gls{rl} in \gls{la} problem.
 %
@@ -122,20 +124,25 @@ A deep reinforcement learning approach is used in \cite{DRL_AMC} as a solution t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Objectives, Contributions and Thesis Structure}
 
-Considering the what has been presented in the previous subsection, the main objectives of this work are:
+The main objectives of this work are:
 \begin{enumerate}
-    \item Develop and study the effectiveness of a \gls{rl} solution to \gls{amc} and also a more complete \gls{la} with rank adaptation.
+    \item Develop and study the effectiveness of an \gls{rl} solution to \gls{amc} bases on a Q-Learning framework.
+    %
+    \item Extend the idea to a more complete \gls{la} with rank adaptation.
+    %
     \item Present the \gls{phy} concepts necessary to understand the transmission procedures while also giving an understanding of the implementation work made to prepare the simulator for this work.
 \end{enumerate}
 
 Chapter \ref{chp:theory} presents an overview of the main \gls{5g} \gls{nr} features and \gls{rl} techniques used in this work.
 %
-More specifically, it gives a short description of the transmission procedures involved in downlink transmissions and it presents the associated \gls{phy} procedures, while also presenting an overview of some fundamental concepts of \gls{rl} and of the algorithm used in this work, Q-Learning.
-
-On one hand, Chapter \ref{chp:amc} introduces the \gls{amc} problem, our proposed solution and compares it against standard \gls{amc} solutions, the \gls{illa} and \gls{olla}.
+More specifically, it gives a short description of the transmission procedures involved in downlink transmissions and it presents the associated \gls{phy} procedures, while also providing an overview of some fundamental concepts of \gls{rl} and of the Q-learning algorithm.
 %
-On the other hand, Chapter \ref{chp:la} presents a more general \gls{la} problem, that includes both the \gls{mcs} selection and the transmission rank, with a detailed explanation of the proposed solution and the comparison against a \gls{illa} with a brute force solution that seeks to maximize the \gls{sinr}.
-
+Chapter \ref{chp:amc} introduces the \gls{amc} problem, our proposed solution and compares it against standard \gls{amc} solutions, namely the \gls{illa} and \gls{olla}.
+%
+Chapter \ref{chp:la} presents a more general \gls{la} problem, which includes both the \gls{mcs} selection and the transmission rank selection, with a detailed explanation of the proposed solution.
+%
+Simulation results are provided to evaluated the performance of the proposed Q-learning based \gls{amc} and \gls{la} algorithms, considering the \gls{5g} \gls{nr} physical layer.
+%
 Chapter \ref{chp:conclusion} summarizes the main conclusions of this work.
 
 Therewith, the main contributions of this work are:
@@ -152,7 +159,7 @@ Therewith, the main contributions of this work are:
 \section{Scientific Contributions}
 \begin{refsection}
 
-The content of this thesis, more specifically Chapter \ref{chp:amc}, has been partially published and presented at 2019 IEEE Globecom Workshops.
+The content of this thesis, more specifically Chapter \ref{chp:amc}, has been partially published and presented at 2019 IEEE Globecom Workshop.
 %
 A preprint can be found with the following bibliographic information:
 %
@@ -160,11 +167,11 @@ A preprint can be found with the following bibliographic information:
 	\item \printpublication{mota2019adaptive}
 \end{itemize}
 
-It is worth mentioning that this master thesis was developed under the context of Ericsson/UFC technical cooperation projects:
-\begin{itemize}
-	\item UFC.47 - \textit{5G-MAGIC (Machine leArninG lInk Control)}, November/2018 - October/2020;
-\end{itemize}
-
-in which a number of 2 technical reports have been delivered. %
+It is worth mentioning that this master thesis was developed under the context of Ericsson/UFC technical cooperation project entitled UFC.47 - \textit{5G-MAGIC (Machine leArninG lInk Control)} in which a number of 2 technical reports have been delivered.
+% \begin{itemize}
+% 	\item UFC.47 - \textit{5G-MAGIC (Machine leArninG lInk Control)}, November/2018 - October/2020;
+% \end{itemize}
+%
+% in which a number of 2 technical reports have been delivered. %
 
 \end{refsection}
