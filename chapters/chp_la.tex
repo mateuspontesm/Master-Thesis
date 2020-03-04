@@ -50,7 +50,7 @@ The filter \gls{not:Wrx} is calculated from the channel perceived by the receive
 
 \noindent where the operator $\dagger$ represents the Moore-Penrose inverse, $\mathbf{ I}_{\gls{not:nLayers}} $ is the $\gls{not:nLayers} \times \gls{not:nLayers}$ identity matrix and $p_{\gls{not:sscl}}$ is the the power of the transmitted signal \gls{not:sscl}.
 %
-We define the \gls{snr} of the stream $i$ as:
+We define the \gls{snr} of the transmission layer $i$ as:
 %
 \begin{equation}
 \label{eq.:snr}
@@ -157,7 +157,7 @@ We calculate the \gls{ri} from the channel matrix \channel~, assuming full knowl
 % \noindent note that each \gls{cqi}, except the minimum and the maximum, comprises \gls{snr} intervals having the same length in dB.
 % , since the \gls{snr} inside the range $[snr_{min},snr_{max}]$ is divided equally into \gls{cqi}s in this calculation.
 
-At each \gls{tti}, the \gls{bs} calculates the \gls{tbs}, taking into account the selected \gls{mcs} and the number of spatial layers, and transmits a \gls{tb} with \gls{tbs} bits at the chosen \gls{mcs} and using the selected multi-antenna precoding matrix.
+At each \gls{tti}, the \gls{bs} calculates the \gls{tbs}, taking into account the selected \gls{mcs} and the number of transmission layers, and transmits a \gls{tb} with \gls{tbs} bits at the chosen \gls{mcs} and using the selected multi-antenna precoding matrix.
 %
 The \gls{ue} receives a \gls{tb} from the \gls{bs} and, in possession of the chosen \gls{mcs}, decodes the \gls{tb} and calculates its \gls{crc}, giving the \gls{bs} a \gls{acknack} that is further used to calculate the \gls{tbler} and the throughput.
 %
@@ -215,7 +215,7 @@ The proposed solution is a Q-learning based \gls{la} scheme, herein referred to 
 %
 The \gls{rl} based solution enables the system to learn the particularities of the environment and adapt to it.
 %
-In this work, we analyzed two different architectures, a multi-agent and centralized single agent, and also analyzed the influence of the \gls{ri} in the learning:
+In this work, we analyze two different architectures, a multi-agent and centralized single agent, and also the influence of the \gls{ri} in the learning.
 
 \subsection{Single Agent}
 \label{subsec:single-agent}
@@ -248,7 +248,7 @@ As for the reward, $R$ is defined as:
 \begin{equation}\label{eq.:la-reward-sa}
     R = \begin{cases}
     \textrm{\gls{tbs}}, \text{ if ACK} \\
-    0, \text{ else,}
+    0, \text{ otherwise,}
     \end{cases}
 \end{equation}
 
@@ -258,7 +258,7 @@ Since this centralized Q-table can have a large size when the number of layers i
 
 In this architecture, the \gls{bs} uses two \gls{rl} agents, one to select the \gls{mcs} and another to select the precoder.
 %
-The agents are asynchronous, since they work do not work simultaneously.
+The agents are asynchronous, since they do not work simultaneously.
 %
 Both selections are based on the state-action mapping obtained from the two Q-learning algorithms.
 
@@ -301,13 +301,13 @@ As for the reward for each agent, $R_{PMI}$ is defined as:
 R_{\text{PMI}} = \sum_{\textrm{i}=\textrm{t}-9}^\textrm{t} \left( 1- e_{\text{nack}}^\textrm{i} \right) \gls{not:nLayers}
 \end{equation}
 %
-\noindent where $e_{\text{nack}}^\textrm{i}$ is the error indicator of the transmission $\textrm{i}$ and \gls{not:nLayers} is the number of transmission layers, the time index $\textrm{i}$ in $gls{not:nLayers}_\textrm{i}$ can be suppressed, because for each $\textrm{i}$ in that time window the number of layers and the precoder remains constant.
+\noindent where $e_{\text{nack}}^\textrm{i}$ is the error indicator of the transmission $\textrm{i}$ and \gls{not:nLayers} is the number of transmission layers, the time index $\textrm{i}$ in $\gls{not:nLayers}_\textrm{i}$ can be suppressed, because for each $\textrm{i}$ in that time window the number of layers and the precoder remains constant.
 %
 The $R_{\text{MCS}}$ is defined as:
 \begin{equation}\label{eq.:rewardMCS}
 R_{MCS} = \begin{cases}
 \dfrac{\textrm{\gls{tbs}}}{\gls{not:nLayers}}, \text{ if ACK} \\
-0, \text{ else,}
+0, \text{ otherwise,}
 \end{cases}
 \end{equation}
 \noindent where \gls{tbs} is the number of transmitted information bits and is defined in terms of \gls{not:nLayers} as shown in \cite{3gpp.38.214}.
@@ -464,7 +464,7 @@ Our simulation initializes with the \gls{ue} at a position with a radial distanc
 %
 Then the \gls{ue} comes back to the center after reaching $160m$ from the \gls{bs}, and then it moves away again from the \gls{bs} to $160m$.
 %
-The simulation runs for a equivalent of $80s$ with the \gls{ue} speed equal to $20m/s$, this is equivalent to 8000 frames.
+The simulation runs for a equivalent of $80s$ with the \gls{ue} speed equals to $20m/s$, this is equivalent to 8000 frames.
 %
 At the beginning of the transmission time, the channel has 10 paths and it changes after every $5m$ traveled, being either 1 (e.g. to emulate an environment change to LOS) or 10.
 

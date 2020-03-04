@@ -90,8 +90,19 @@ In this chapter we analyze a \gls{rl} solution applied to the \gls{amc} problem 
 \label{sec:amc-system-model}
 %\subsection{Signal Model}
 
-Consider a single cell system whose \gls{bs} is equipped with \gls{not:txAnt} antennas serving one \gls{ue} with \gls{not:rxAnt} antennas. The signaling period, of duration $T_{SS}$ herein referred to as a \emph{frame}, is divided into two time windows, as shown in Figure \ref{fig:amc-system-timing}. The first one contains a set of synchronization signal (SS) blocks with duration $T_{BS}$, where \emph{beam sweeping} is performed. More specifically, during this time window, the search for the best beam pair happens. The second time window is dedicated to data transmission using the selected beam pair. During this period, of duration $T_{D}$, the UE reports periodically the measured CQI to the BS that responds with the selected MCS.
+Consider a single cell system whose \gls{bs} is equipped with \gls{not:txAnt} antennas serving one \gls{ue} with \gls{not:rxAnt} antennas.
 %
+The signaling period, of duration $T_{SS}$ herein referred to as a \emph{frame}, is divided into two time windows, as shown in Figure \ref{fig:amc-system-timing}.
+%
+The first one contains a set of synchronization signal (SS) blocks with duration $T_{BS}$, where \emph{beam sweeping} is performed.
+%
+More specifically, during this time window, the search for the best beam pair happens.
+%
+The second time window is dedicated to data transmission using the selected beam pair.
+%
+During this period, of duration $T_{D}$, the \gls{ue} periodically reports the measured \gls{cqi} to the \gls{bs} that responds with the selected \gls{mcs}.
+%
+The \gls{ue} measures the \gls{cqi} by means of a \gls{csi}-\gls{rs}.
 %Assume that the user is synchronized with the  \gls{bs}, and they periodically measure their associated \gls{not:nBeams}  beam pairs.
 %Assume that the \gls{bs} sends periodically synchronization signal (SS) blocks used by the \gls{ue} to measure a set of beam pairs and then selecting that one with highest \gls{snr}.
 %
@@ -105,11 +116,14 @@ The selected beam pair for the $k$-th frame is expressed as
   \{ \bar{\mathbf{w}}_k, \bar{\mathbf{f}}_k \}= \argmax_{\mathbf{w}, \mathbf{f}} \frac{\|\mathbf{w}^H \mathbf{H}_t \mathbf{f}\|}{\sigma ^2},
 \end{equation}
 %
-\noindent where $\mathbf{f}$ and $\mathbf{w}$ are columns of \gls{not:Wtx} and \gls{not:Wrx}, respectively,  $\channel _t $ \inSetComplex{\gls{not:rxAnt}}{\gls{not:txAnt}} is the channel between the \base~ and the \ue at time $t$. We assume that the channel remains constant during the beam sweeping period $T_{BS}$.
+\noindent where $\mathbf{f}$ and $\mathbf{w}$ are columns of \gls{not:Wtx} and \gls{not:Wrx}, respectively,
+$\channel _t $ \inSetComplex{\gls{not:rxAnt}}{\gls{not:txAnt}} is the channel between the \base~ and the \ue~ at time $t$ and \gls{not:var} is the noise variance.
+%
+We assume that the channel remains constant during the beam sweeping period $T_{BS}$.
 %
 The update of $\{ \bar{\mathbf{w}}_k, \bar{\mathbf{f}}_k \}$ depends on the periodicity $T_{SS}$ of the synchronization signal blocks, which can be  \{5, 10, 20 , 40, 80, 160\} (ms) \cite{giordani21}.
 %
-Therefore, the each beam pair solution remains constant within the time period $T_{SS}$, until the subsequent SS block arrives, when the BS can reevaluate Eq. \eqref{eq.:amc-beam-sweeping}.
+Therefore, each beam pair solution remains constant within the time period $T_{SS}$, until the subsequent SS block arrives, when the BS can reevaluate Eq. \eqref{eq.:amc-beam-sweeping}.
 %
 %This process is illustrated in Figure \ref{fig:system-timing} that shows the measurement window model, where the \gls{mcs} decision points are the points in which the \gls{bs} and the \gls{ue} exchange information to choose the best \gls{mcs}, as explained in Section \ref{subsec:trans}.
 
@@ -122,7 +136,7 @@ Therefore, the each beam pair solution remains constant within the time period $
 \end{figure}
 
 
-During the data transmission window, the discret-time received signal for the $t$-th symbol period associated with the $k$-th fixed beam pair, is given by
+During the data transmission window, the discrete-time received signal for the $t$-th symbol period associated with the $k$-th fixed beam pair, is given by
 \begin{equation}
 \label{eq.:amc-rx-signal}
 	\gls{not:Y}_{k,t} =
@@ -180,11 +194,11 @@ The parameters \azm~$\in$ \range{0}{2\pi} and \elev~$\in$ \range{0}{\pi} denote 
 %
 We assume a \gls{ura}, the response of which is written as:
 %
-\begin{equation*}
+\begin{equation}
   \begin{split}
     \strTx \anglePair{i,t}{bs} = & \frac{1}{\sqrt{\gls{not:txAnt}}} \bigg[ 1, \expUraPhase{}{i,t}{bs}, \\ & \ldots ,\expUraPhase{(\gls{not:txAnt} -1 )}{i,t}{bs} \bigg],
   \end{split}
-\end{equation*}
+\end{equation}
 where \dist ~is the antenna element spacing, and \wave~is the signal wavelength. The array response at \gls{ue} can be written similarly.
 
 The expression in \eqref{eq.:amc-channelModel} can be expressed compactly as
@@ -198,7 +212,7 @@ where $\gls{not:betaVec}_t = \left[ \gls{not:beta}_0 e^{ \mathrm{j} 2 \pi f_0 t 
 \label{subsec:la-trans}
 The transmission process takes into account the channel coding and modulation blocks.
 %
-In this work, we implement all the steps specified in the \gls{nr} channel coding block except the rate matching \cite{3gpp.38.212}.
+In this work, we implement all the steps specified in the \gls{nr} channel coding block, as illustrated in Figure \ref{fig:channel-coding} except the rate matching \cite{3gpp.38.212}.
 %
 The \gls{cb} segmentation divides the transport block of $n_{bits}$ bits to fit the input size accepted by the \gls{ldpc} encoder, padding whenever necessary.
 %
@@ -213,7 +227,7 @@ We considered a subset of the \gls{mcs}s in Table 5.1.3.1-1 in \cite{3gpp.38.214
     \begin{cases}
     0, \text{if } \textrm{SNR} \leq \textrm{SNR}_{\text{min}}\\
     (N_{\text{cqi}}-1), \text{if } \textrm{SNR} \geq \textrm{SNR}_{\text{max}}\\
-    \floor[\Big]{\frac{(\textrm{SNR} - \textrm{SNR}_{\text{min}})(N_{\text{cqi}}-1)}{\textrm{SNR}_{\text{max}}-\textrm{SNR}_{\text{min}}}}
+    \floor[\Big]{\frac{(\textrm{SNR} - \textrm{SNR}_{\text{min}})(N_{\text{cqi}}-1)}{\textrm{SNR}_{\text{max}}-\textrm{SNR}_{\text{min}}}}, \text{otherwise.}
     \end{cases}
 \end{equation}
 \noindent Note that each \gls{cqi}, except the minimum and the maximum ones, comprises \gls{snr} intervals having the same length.
@@ -297,9 +311,9 @@ A summary of the proposed \gls{ql-amc} algorithm is shown in Algorithm \ref{amc-
 \end{algorithm}
 
 
-As will be shown in the next section, we will evaluate the impact and importance of on the system's \gls{bler} and spectral efficiency, and the difference between linear and non-linear rewards.
+As will be shown in the next section, we will evaluate the impact and importance of the chosen reward on the system's \gls{bler} and spectral efficiency, and the difference between linear and non-linear rewards.
 
-The Table \ref{tab:ql-amc-def} summarizes the definitions of state, action and reward.
+Table \ref{tab:ql-amc-def} summarizes the definitions of state, action and reward.
 
 \begin{table}[htb]
 \centering
@@ -329,7 +343,7 @@ The system has a bandwidth $B$ with a frequency carrier of $28$ GHz. Each resour
 %The frame is composed by 10 subframes, and each subframe is composed of multiple slots, where each slot has 14 symbols.
 We consider the channel model defined in \eqref{eq.:amc-channelModel}.
 %
-The path loss follows a urban macro (UMa) model with non-line-of-sight (NLOS). Shadowing is modeled according to a log-normal distribution with standard deviation of $6$ dB \cite{AliZaidi632018}.
+The path loss follows an urban macro (UMa) model with non-line-of-sight (NLOS). Shadowing is modeled according to a log-normal distribution with standard deviation of $6$ dB \cite{AliZaidi632018}.
 %
 The noise power is fixed at $-123.185$ dBm.
 %
@@ -356,8 +370,8 @@ Frequency & 28 GHz\\
 Bandwidth & 1440 MHz\\
 Number of subcarriers  & 12\\
 Subcarrier spacing & 120 kHz\\
-Number of subframes & 10\\
-Number of symbols & 14\\
+% Number of subframes & 10\\
+Number of symbols & 14 per slot\\
 Number of information bits per TTI & 1024\\
 Azimuth angle spread & $[-60^{\circ}, 60^{\circ}]$\\
 Azimuth angle mean & $0^{\circ}$\\
@@ -431,7 +445,7 @@ This adjustment is made by adding an offset to the estimated \gls{snr} to correc
 %
 The \gls{snr} that is transformed to \gls{cqi} is:
 \begin{equation}
-\textrm{SNR}_{\text{olla}} = \textrm{SNR} + \Delta_{\text{olla}}
+\textrm{SNR}_{\text{olla}} = \textrm{SNR} + \Delta_{\text{olla}},
 \end{equation}
 \noindent where the $\Delta_{olla}$ is updated at each time step according to the Eq. \eqref{eq.:olla} \cite{Blanquez-Casado2016}:
 \begin{equation}\label{eq.:olla}
@@ -439,10 +453,13 @@ The \gls{snr} that is transformed to \gls{cqi} is:
 \end{equation}
 \noindent where $e_{\text{blk}} = 1$ in case of NACK, or $e_{\text{blk}} = 0$ if the transmission is successful.
 %
-The parameters $\Delta_{\text{up}}$, $\Delta_{\text{down}}$ and the target \gls{bler}, $\textrm{BLER}_{\text{T}}$, are inter-related. In fact, by fixing the $\Delta_{\text{up}}$ and the $\textrm{BLER}_{\text{T}}$, the $\Delta_{\text{down}}$ can be calculated as \cite{Pedersen2007}:
+The parameters $\Delta_{\text{up}}$, $\Delta_{\text{down}}$ and the target \gls{bler}, $\textrm{BLER}_{\text{T}}$, are inter-related.
+%
+In fact, by fixing the $\Delta_{\text{up}}$ and the $\textrm{BLER}_{\text{T}}$, the $\Delta_{\text{down}}$ can be calculated as \cite{Pedersen2007}:
 $$
 \Delta_{\text{down}} = \frac{\Delta_{\text{up}}}{\frac{1}{\textrm{BLER}_{\text{T}}} -1}.
 $$
+
 The target \gls{bler} for the \gls{olla} algorithm is fixed at $0.1$, while we assume three values for $\Delta_{\text{up}}$: 0.01dB, 0.1dB and  1dB.
 
 \subsection{Experiment Description and Results}
@@ -464,7 +481,7 @@ The \gls{ue} has a speed of $5km/h$ and the simulation runs for a time equivalen
 
 
 %
-The Table \ref{tab:amc-train-results} summarizes the results, providing average values, of the metrics for each configuration of the \gls{ql-amc}.
+Table \ref{tab:amc-train-results} summarizes the results, providing average values, of the metrics for each configuration of the \gls{ql-amc}.
 %
 SE is the spectral efficiency given by Equation \eqref{eq.:spec-eff}.
 %
@@ -474,16 +491,16 @@ SE is the spectral efficiency given by Equation \eqref{eq.:spec-eff}.
 \label{tab:amc-train-results}
 \begin{tabularx}{0.75\columnwidth}{l X X X r}
 \toprule
-Length & Reward &  BLER &  SE &   BER \\
+Cardinality & Reward &  BLER &  SE &   BER \\
 \midrule
-10 &           2 & 0.0270 &  5.0850 & 0.0065 \\
-10 &           3 & 0.0288 &  5.1696 & 0.0070 \\
-15 &           2 & 0.0263 &  5.0827 & 0.0065 \\
-15 &           3 & 0.0289 &  5.1054 & 0.0071 \\
-30 &           2 & 0.0264 &  5.1463 & 0.0065 \\
-30 &           3 & 0.0286 &  5.1227 & 0.0070 \\
-60 &           2 & 0.0283 &  5.0852 & 0.0068 \\
-60 &           3 & 0.0279 &  5.1701 & 0.0068 \\
+10 &           SE   & 0.0270 &  5.0850 & 0.0065 \\
+10 &           BLER & 0.0288 &  5.1696 & 0.0070 \\
+15 &           SE   & 0.0263 &  5.0827 & 0.0065 \\
+15 &           BLER & 0.0289 &  5.1054 & 0.0071 \\
+30 &           SE   & 0.0264 &  5.1463 & 0.0065 \\
+30 &           BLER & 0.0286 &  5.1227 & 0.0070 \\
+60 &           SE   & 0.0283 &  5.0852 & 0.0068 \\
+60 &           BLER & 0.0279 &  5.1701 & 0.0068 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -592,7 +609,7 @@ It can be seen that the proposed \gls{ql-amc} algorithm outperforms the baseline
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%--End Of Section--%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\section{Conclusions and Perspectives}
+\section{Chapter Summary}
 \label{sec:amc-conclusion}
 We demonstrate through simulations that the \gls{rl} provides a self-exploratory framework that enables the \base~ to choose a suitable \gls{mcs} that maximizes the spectral efficiency.
 %

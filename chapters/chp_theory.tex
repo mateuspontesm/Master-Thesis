@@ -74,7 +74,8 @@ This process is similar for the uplink and downlink, the only difference being t
 
 \begin{figure}[htbp]
 \includegraphics[width=\columnwidth]{figures/chp_theory/transmissionmodel.pdf}
-\caption{General transmission model on \gls{5g} \gls{nr}}
+% \caption{General transmission model on \gls{5g} \gls{nr}}
+\caption{General transport-channel processing on \gls{5g} \gls{nr}}
 \label{fig:transmission}
 \end{figure}
 %
@@ -84,19 +85,19 @@ The \gls{fec} code for the \gls{embb} use case in data transmission is the \gls{
 %
 
 \begin{figure}[htbp]
-\includegraphics[width=\columnwidth]{figures/chp_theory/channelcoding2.pdf}
+\includegraphics[width=\columnwidth]{figures/chp_theory/channelcoding.pdf}
 \caption{\gls{ldpc} channel coding procedure on \gls{5g} \gls{nr}}
 \label{fig:channel-coding}
 \end{figure}
 
-In our work, we are mainly concerned with the \gls{pdsch} transmissions.
+In our work, we are mainly concerned with the \gls{pdsch}, since the data is transmitted from the \gls{bs} to the \gls{ue}.
 %
 In this case the overall \gls{5g} \gls{nr} channel coding process comprises six steps, as shown in Figure \ref{fig:channel-coding} \cite{ErikDahlman5G}, namely:
 \begin{itemize}
 	\item \Gls{crc} Attachment: Calculates a \gls{crc} and attaches it to each transport block. It facilitates error detection and its size can be of 16 bits or 24 bits.
-	\item Code-block segmentation: Segments the transport block if it is larger than the supported by the \gls{ldpc} encoder. Produces \gls{cb} of equal size.
+	\item Code-block segmentation: Segments the transport block if it is larger than the size supported by the \gls{ldpc} encoder. Produces \gls{cb} of equal size.
 	\item Per-\gls{cb} \gls{crc} Attachment: A \gls{crc} is calculated and appended to each \gls{cb}.
-	\item \gls{ldpc} Encoding: The solution used in \gls{nr} is a Quasi-cyclic \gls{ldpc} with two base graphs, that are used to built the different parity-check matrices with different payloads and rates.
+	\item \gls{ldpc} Encoding: The solution used in \gls{nr} is a Quasi-cyclic \gls{ldpc} with two base graphs, that are used to build the different parity-check matrices with different payloads and rates.
 	\item Rate Matching: It adjusts the coding to the allocated resources. It consists of bit selection and bit interleaving.
 	\item Code-Block Concatenation: Concatenates the multiple rate-matching outputs into one block.
 \end{itemize}
@@ -105,7 +106,8 @@ The other blocks in Figure \ref{fig:transmission}, excluding the channel coding 
 \begin{enumerate}
 	\item \Gls{harq}: \gls{5g} \gls{nr} uses \gls{harq} with soft combining as the primary way to handle retransmissions. In this approach, a buffer is used to store the erroneous packet and this packet is combined with the retransmission to acquire a combined packet, which is more reliable than its components.
 	%
-	\item Scrambling: The process of scrambling is applied to the bits delivered by the \gls{harq}. Scrambling the bits makes them less prone to interference.
+    \textcolor{red}{
+	\item Scrambling: The process of scrambling is applied to the bits delivered by the \gls{harq}. Scrambling helps in the mitigation of the effects the interference by the \gls{fec}.}
 	%
 	\item Layer mapping: The process of layer mapping is applied to the modulated symbols. It distributes the symbols across different transmission layers.
 	%
@@ -366,16 +368,16 @@ In the \gls{pdsch} procedure there are three polynomials that can be used \cite{
 
 \begin{equation} \label{eq.:crc24a}
     \begin{split}
-        g_{\mathrm{CRC24A}}(D) = & [ D^{24} + D^{23} + D^{18} + D^{17} +  D^{14} + D^{10} \\ & + D^{7} + D^{7} + D^{5} + D^{4} + D^{3} + D + 1 ]
+        g_{\mathrm{CRC24A}}(D) = & [ D^{24} + D^{23} + D^{18} + D^{17} +  D^{14} + D^{10} \\ & + D^{7} + D^{7} + D^{5} + D^{4} + D^{3} + D + 1 ] \text{,}
     \end{split}
 \end{equation}
 
 \begin{equation}\label{eq.:crc24b}
-    g_{\mathrm{CRC24B}}(D) = \left[ D^{24} + D^{23} + D^{6} + D^{5} + D + 1 \right]
+    g_{\mathrm{CRC24B}}(D) = \left[ D^{24} + D^{23} + D^{6} + D^{5} + D + 1 \right] \text{and}
 \end{equation}
 
 \begin{equation} \label{eq.:crc16}
-    g_{\mathrm{CRC16}}(D) = \left[ D^{16} + D^{12} + D^{5} + 1 \right]
+    g_{\mathrm{CRC16}}(D) = \left[ D^{16} + D^{12} + D^{5} + 1 \right] \text{.}
 \end{equation}
 
 
@@ -618,7 +620,7 @@ In practice what defines an antenna port is the transmitted reference signal, si
 %
 To illustrate what this means, we highlight two examples based on \cite{ErikDahlman5G, AliZaidi632018}:
 \begin{itemize}
-    \item In the case that multiple physical antennas transmit two different signals in the same way, the \gls{ue} will perceive these two signals as being propagated by the same single channel, which corresponds to the combination of the channels of the different physical antennas. The \ue will see these two signals as if they were transmitted from the same antenna port.
+    \item In the case that multiple physical antennas transmit two different signals in the same way, the \gls{ue} will perceive these two signals as being propagated by the same single channel, which corresponds to the combination of the channels of the different physical antennas. The \gls{ue} will see these two signals as if they were transmitted from the same antenna port.
 
     \item In the case that two signals are transmitted from the same set of physical antennas and beam-formed with different weights, the resulting transmission will be considered as being from two different antenna ports, because the \gls{ue} will perceive two different effective channels, since the precoder is unknown to the \gls{ue}.
 \end{itemize}
@@ -737,26 +739,27 @@ In light of this, the basics components of a \gls{rl} problem are:
 
 \begin{itemize}
   \item State Space $\mathcal{S}$: Set of all possible states that can be observed by the agent. The random variable $S_t$ denotes the state at time step $t$ and a sample of $S_t$ is denoted $s_t$, with $s_t \in \mathcal{S}$.
-  \item Action Space $\mathcal{A}$: Set of all actions that can be taken by agent. The random variable $A_t$ denotes the action at time step $t$ and a sample of $A_t$ is denoted $a_t$, with $a_t \in \mathcal{A}$
+  \item Action Space $\mathcal{A}$: Set of all actions that can be taken by the agent. The random variable $A_t$ denotes the action at time step $t$ and a sample of $A_t$ is denoted $a_t$, with $a_t \in \mathcal{A}$
   \item Transition Probability Space $\mathcal{P}: \mathcal{S} \times \mathcal{A} \times \mathcal{S} \rightarrow [0;1]$ is the transition model of the system, $p(s_{t+1} | s_t,a_t) \in \mathcal{P}$ is the probability of transitioning to state $s_{t+1}$ after taking action $a_t$ in state $s_t$.
-  \item Reward  $r_t$: This value indicates the immediate payoff from taking an action $a_t$ in a state $s_t$. $R_t$ is a random variable with a probability distribution depending only of the preceding state and action. We define the expected reward obtained from taking an action $a_t$ in a state $s_t$ as $r(s_t,a_t) = \mathbb{E}\left[R_{t+1} \, | \, S_t = s_t, A_t = a_t \right] $.
+  \item Reward  $r_t$: This value indicates the immediate payoff from taking an action $a_{t-1}$ in a state $s_{t-1}$. $R_t$ is a random variable with a probability distribution depending only of the preceding state and action. We define the expected reward obtained from taking an action $a_t$ in a state $s_t$ as $r(s_t,a_t) = \mathbb{E}\left[R_{t+1} \, | \, S_t = s_t, A_t = a_t \right] $.
   \item Policy $\pi(s_t) \in \mathcal{A} $: The policy maps the states to actions. More specifically, it maps the perceived states of the environment to the actions to be taken by the agent in those states. The policy can also be defined as $\pi(a_t | s_t)$, the probability of selecting action $a_t$ given the agent is at a state $s_t$.
   % different policies can give different probabilities to each action.
   \item Q-function $Q^{\pi}(s_t,a_t)$:  The Q-Function, called action-value function, is the overall expected reward for taking an action $a_t$ in a state $s_t$ and then following a policy $\pi$. It can also be simply denoted as $Q(s_t,a_t)$.
 \end{itemize}
 
 
-The goal of the \gls{rl} agent is to find the optimal policy $\pi^{*}(s_t)$, whose state-action mapping leads to the maximum long term reward given by $G_t = \sum_{t=0}^{\infty} \gamma^{t} r_{t+1} = r_{t+1} + \gamma G_{t+1} $ \cite{kaelbling1996reinforcement}, where $r_t$ is the received reward at time step $t$.
+The goal of the \gls{rl} agent is to find the optimal policy $\pi^{*}(s_t)$, whose state-action mapping leads to the maximum long term discounted reward given by \textcolor{blue}{$G_t = \sum_{k=0}^{\infty} \gamma^{k} R_{t+k+1} = R_{t+1} + \gamma G_{t+1} $} \cite{kaelbling1996reinforcement}.
+% , where $r_t$ is the received reward at time step $t$.
 %
 The agent finds its best policy by taking into consideration the value of the Q-function to a state-action pair.
 %
 Mathematically, the Q-Function is defined as \cite{2010Szepesvari}:
 \begin{equation} \label{eq.:eqQvalue}
-  Q^{\pi}(s_t, a_t)=\mathbb{E}\left[\sum_{k=0}^{\infty} \gamma^{k} R_{t+k+1} \, | \, S_t = s_t, A_t = a_t \right], s_t \in \mathcal{S}, a_t = \pi (s_t) \in \mathcal{A}
+  Q^{\pi}(s_t, a_t) \doteq \mathbb{E}\left[\sum_{k=0}^{\infty} \gamma^{k} R_{t+k+1} \, | \, S_t = s_t, A_t = a_t \right], s_t \in \mathcal{S}, a_t = \pi (s_t) \in \mathcal{A}.
 \end{equation}
 
 
-The parameter $\gamma$ is called \textit{discount factor}, or discount rate, with $0 \leq \gamma \leq 1$.
+The parameter $\gamma$ is called \textit{discount factor}, or discount rate, with $0 \leq \gamma < 1$.
 %
 The discount factor is used to control the importance given to future rewards in comparison with immediate rewards, so a reward received $k$ time steps later is worth only $\gamma^{k-1}$ times its value.
 %
@@ -769,22 +772,22 @@ The Q-values in successive steps are related according to the Bellman equation:
 \begin{equation} \label{eq.:bellmanEq}
   %\begin{split}
     Q^{\pi}(s_t, a_t)= \sum_{s_{t+1} \in \mathcal{S}} p\left(s_{t+1} \, | \, s_t , a_t \right) \bigg[ r\left(s_t, a_t \right)  +
-    \gamma \sum_{a_{t+1} \in \mathcal{A}} \pi\left(a_{t+1} \, | \, s_{t+1}\right) Q^{\pi}\left(s_{t+1}, a_{t+1}\right)  \bigg]
+    \gamma \sum_{a_{t+1} \in \mathcal{A}} \pi\left(a_{t+1} \, | \, s_{t+1}\right) Q^{\pi}\left(s_{t+1}, a_{t+1}\right)  \bigg] \text{.}
   %\end{split}
 \end{equation}
 
-The Equations \eqref{eq.:eqQvalue} and \ref{eq.:bellmanEq} can be rewritten for the case of $\pi$ being the optimal policy.
+The Equations \eqref{eq.:eqQvalue} and \eqref{eq.:bellmanEq} can be rewritten for the case of $\pi$ being the optimal policy.
 %
 In this case, Equation \eqref{eq.:eqQvalue} leads to \cite{sutton2018rl}:
 
 \begin{equation} \label{E_Optimal}
-    Q^{\pi^*}\left(s_t, a_t\right)=\mathbb{E}\left[R_{t+1}+\gamma \max _{a_{t+1} \in \mathcal{A}} Q^{\pi^*}\left(S_{t+1}, a_{t+1}\right) \, | \, S_t=s_t, A_t=a_t\right]
+    Q^{\pi^*}\left(s_t, a_t\right)=\mathbb{E}\left[R_{t+1}+\gamma \max _{a^\prime \in \mathcal{A}} Q^{\pi^*}\left(S_{t+1}, a^\prime \right) \, | \, S_t=s_t, A_t=a_t\right] \text{.}
 \end{equation}
 
 Likewise, assuming the optimal policy, Equation \eqref{eq.:bellmanEq} leads to \cite{DRL_AMC}:
 
 \begin{equation} \label{eq.:bellmanOptimal}
-    Q^{\pi^*}\left(s_t, a_t\right)=r(s_t,a_t)+ \gamma \sum_{s_{t+1} \in \mathcal{S}} p\left(s_{t+1} \, | \, s_t,a_t\right) \max _{a_{t+1} \in A} Q^{\pi^*}\left(s_{t+1}, a_{t+1}\right)
+    Q^{\pi^*}\left(s_t, a_t\right)=r(s_t,a_t)+ \gamma \sum_{s_{t+1} \in \mathcal{S}} p\left(s_{t+1} \, | \, s_t,a_t\right) \max _{a^\prime \in A} Q^{\pi^*}\left(s_{t+1}, a^\prime \right) \text{.}
 \end{equation}
 
 
@@ -811,12 +814,13 @@ There are different strategies to control the exploring and exploiting trade off
 %
 In this work, we make use of two strategies:
 \begin{enumerate}
-  \item $\epsilon$-greedy: One of the most common exploration strategies. It selects the greedy action with probability $1-\epsilon$, and a random action with probability $\epsilon$. So, a higher $\epsilon$ means that the agent give more importance to exploration.
-  \item adaptive $\epsilon$-greedy: There are numerous different methods that adapt the $\epsilon$ over time or as a function of the error \cite{improvingBandits}.A commonly used approach is to start with a high $\epsilon$ and decrease it over time.
+  \item $\epsilon$-greedy: One of the most common exploration strategies. It selects the greedy action with probability $1-\epsilon$, and a random action with probability $\epsilon$. So, a higher $\epsilon$ means that the agent gives more importance to exploration.
+  \item adaptive $\epsilon$-greedy: There are numerous different methods that adapt the $\epsilon$ over time or as a function of the error \cite{improvingBandits}. A commonly used approach is to start with a high $\epsilon$ and decrease it over time.
   \item Boltzmann exploration: Also known as softmax exploration. It uses the action-values to choose an action according to the Boltzmann distribution:
-  $$
-\pi\left(s, a\right)=\frac{e^{Q\left(s, a\right) / T}}{\sum_{i=1}^{m} e^{Q\left(s^{\prime}, a_i\right) / T}}
-  $$
+  \begin{equation}
+      \pi\left(s, a\right)=\frac{e^{Q\left(s, a\right) / T}}{\sum_{i=1}^{m} e^{Q\left(s^{\prime}, a_i\right) / T}} \text{.}
+  \end{equation}
+
   The parameter $T \geq 0$, called temperature, sets the balance between exploration and exploitation. If $T \rightarrow 0$  the agent will only exploit, if $T \rightarrow \infty$ the agent will choose actions at random.
 \end{enumerate}
 
@@ -849,7 +853,7 @@ Initialize $Q(s, a)$, for all $s \in \mathcal{S}, a \in \mathcal{A}$\;
 Initialize s\;
   Choose $a$ from $s$ using policy derived from $Q$ (e.g., $\epsilon$-greedy)\;
   Take action $a$, observe $r$, $s^{\prime}$\;
-  $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_a Q(s',a)]$\;
+  $Q(s, a) \leftarrow (1-\alpha) Q(s, a) + \alpha [r + \gamma \max_{a^\prime} Q(s',a^\prime)]$\;
   $s \leftarrow s^{\prime}$\;
 
 }

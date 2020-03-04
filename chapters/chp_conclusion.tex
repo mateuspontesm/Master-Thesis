@@ -8,7 +8,7 @@
 The main purpose of this work was to study \gls{rl} solutions applied to \gls{la}, while also giving an overview of the \gls{phy} and transmission procedures associated with it in the context of \gls{5g} \gls{nr}.
 
 % Therewith, Chapter \ref{chp:theory} presented some fundamentals of \gls{rl} and of the Q-Learning.
-We have studied the some fundamentals of \gls{rl} and of the Q-Learning.
+We have studied some fundamentals of \gls{rl} and of the Q-Learning.
 %
 We have also presented the transmission process for downlink data and the procedure from a \gls{phy} perspective, giving an overview of the main steps of the transmission chain.
 
@@ -25,3 +25,11 @@ Moreover, a comparison with other \gls{rl}-based algorithms such as multi-armed 
 In addition, since \gls{nr} is a beam-based system, including the beam domain is another perspective.
 %
 In other words, our \gls{rl}-based solutions could also incorporate the selection of the best beam to transmit/receive data, among a set of choices (codebook).
+
+\textcolor{blue}{
+A more complete study of the performance of the proposed solutions can be done by considering and comparing the effects of:
+\begin{itemize}
+    \item Pre-training: The \gls{rl} agent can be pre-trained using the standard solution as basis (as the \gls{illa}) and transfer learning.
+    \item Estimation errors: Compare the effect of using a inaccurate channel estimation and evaluate the impact of this error in the baselines and proposed solutions.
+\end{itemize}
+}
