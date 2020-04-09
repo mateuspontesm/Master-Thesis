@@ -106,8 +106,7 @@ The other blocks in Figure \ref{fig:transmission}, excluding the channel coding 
 \begin{enumerate}
 	\item \Gls{harq}: \gls{5g} \gls{nr} uses \gls{harq} with soft combining as the primary way to handle retransmissions. In this approach, a buffer is used to store the erroneous packet and this packet is combined with the retransmission to acquire a combined packet, which is more reliable than its components.
 	%
-    \textcolor{red}{
-	\item Scrambling: The process of scrambling is applied to the bits delivered by the \gls{harq}. Scrambling helps in the mitigation of the effects the interference by the \gls{fec}.}
+	\item Scrambling: The process of scrambling is applied to the bits delivered by the \gls{harq}. Scrambling helps in the mitigation of the effects the interference by the \gls{fec}.
 	%
 	\item Layer mapping: The process of layer mapping is applied to the modulated symbols. It distributes the symbols across different transmission layers.
 	%
@@ -748,7 +747,7 @@ In light of this, the basics components of a \gls{rl} problem are:
 \end{itemize}
 
 
-The goal of the \gls{rl} agent is to find the optimal policy $\pi^{*}(s_t)$, whose state-action mapping leads to the maximum long term discounted reward given by \textcolor{blue}{$G_t = \sum_{k=0}^{\infty} \gamma^{k} R_{t+k+1} = R_{t+1} + \gamma G_{t+1} $} \cite{kaelbling1996reinforcement}.
+The goal of the \gls{rl} agent is to find the optimal policy $\pi^{*}(s_t)$, whose state-action mapping leads to the maximum long term discounted reward given by $G_t = \sum_{k=0}^{\infty} \gamma^{k} R_{t+k+1} = R_{t+1} + \gamma G_{t+1} $ \cite{kaelbling1996reinforcement}.
 % , where $r_t$ is the received reward at time step $t$.
 %
 The agent finds its best policy by taking into consideration the value of the Q-function to a state-action pair.
