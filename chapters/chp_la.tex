@@ -140,11 +140,11 @@ The \gls{cqi} is a measure of the \gls{snr}, and the number of possible \gls{cqi
 	(\max {(0, \textrm{CQI}^{\prime} ) }, n_{\text{cqis}} - 1)},
 \end{equation}
 %
-\noindent where $\textrm{CQI}^{\prime}$ is calculated from the \gls{snr}s in dB as:
+\noindent where $\textrm{CQI}^{\prime}$ is calculated from the \gls{snr} in dB as:
 \begin{equation}\label{eq:cqi_prime}
-\textrm{CQI}^{\prime} = \floor[\Big]{(n_{\text{cqis}}-1)\frac{\textrm{SNR} - \textrm{SNR}_{\text{min}}}{\textrm{SNR}_{\text{max}}-\textrm{SNR}_{\text{min}}}}
+\textrm{CQI}^{\prime} = \floor[\Big]{(n_{\text{cqis}}-1)\frac{\textrm{SNR} - \textrm{SNR}_{\text{min}}}{\textrm{SNR}_{\text{max}}-\textrm{SNR}_{\text{min}}}},
 \end{equation}
-
+\noindent
 
 The \gls{ri} indicates the transmission rank, number of layers, that the \gls{ue} deems the most suitable.
 %
@@ -237,7 +237,7 @@ Figure \ref{fig:la-rl-frame-sa} shows the proposed single agent solution.
 
 In the proposed centralized \gls{la} solution, it is evaluated two state spaces:
 \begin{enumerate}
-    \item The set of all possible \gls{cqi}s, from $0$ to $(n_{\text{cqi}}-1)$, for both agents;
+    \item The set of all possible \gls{cqi}s, from $0$ to $(n_{\text{cqi}}-1)$;
     \item The set of all the combinations of \glspl{cqi} and \glspl{ri}.
 \end{enumerate}
 %
