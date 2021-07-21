@@ -811,7 +811,7 @@ This leads to a better decision-making because of the information the agent has 
 
 There are different strategies to control the exploring and exploiting trade off. The reader have a deep discussion on that topic in \cite{exploration2016}.
 %
-In this work, we make use of two strategies:
+In this work, we make use of the first two strategies:
 \begin{enumerate}
   \item $\epsilon$-greedy: One of the most common exploration strategies. It selects the greedy action with probability $1-\epsilon$, and a random action with probability $\epsilon$. So, a higher $\epsilon$ means that the agent gives more importance to exploration.
   \item adaptive $\epsilon$-greedy: There are numerous different methods that adapt the $\epsilon$ over time or as a function of the error \cite{improvingBandits}. A commonly used approach is to start with a high $\epsilon$ and decrease it over time.
